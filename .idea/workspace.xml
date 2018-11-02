@@ -2,43 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="289e1b26-027c-4623-aa7e-461a9dd7e406" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/block_chain_client/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/block_chain_client/crypto_wallet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/block_chain_client/transaction.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/blockchain/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/blockchain_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/blockchain_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc.png" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc_disabled.png" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc_disabled.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_both.png" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_both.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc.png" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc_disabled.png" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc_disabled.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/DataTables/css/datatables.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/DataTables/css/datatables.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/DataTables/js/datatables.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/DataTables/js/datatables.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/DataTables/js/ellipsis.js" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/DataTables/js/ellipsis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/css/bootstrap.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/css/bootstrap.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/css/bootstrap.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/js/bootstrap.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/js/bootstrap.bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/js/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/js/bootstrap.bundle.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/js/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/js/bootstrap.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/js/bootstrap.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/js/bootstrap.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/bootstrap/js/bootstrap.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/bootstrap/js/bootstrap.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/jquery/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/jquery/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/jquery/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/jquery/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/jquery/jquery.min.map" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/jquery/jquery.min.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/jquery/jquery.slim.js" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/jquery/jquery.slim.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/jquery/jquery.slim.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/jquery/jquery.slim.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/static/vendor/jquery/jquery.slim.min.map" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/static/vendor/jquery/jquery.slim.min.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/templates/make_transaction.html" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/templates/make_transaction.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain_client/templates/view_transactions.html" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/templates/view_transactions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/block_chain_client/transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/block_chain_client/transaction.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,20 +16,20 @@
         <counts>
           <entry key="project.closed" value="3" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="267" />
-          <entry key="py" value="1169" />
+          <entry key="Python Console" value="397" />
+          <entry key="py" value="1296" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1436" />
+          <entry key="Python" value="1693" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -87,10 +51,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/block_chain_client/blockchain_client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1015">
-              <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
+            <state relative-caret-position="-406">
+              <caret line="30" column="23" lean-forward="true" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
               <folding>
-                <element signature="e#782#840#0" expanded="true" />
                 <marker date="1541156031412" expanded="true" signature="1500:1501" ph="..." />
               </folding>
             </state>
@@ -100,8 +63,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/block_chain_client/transaction.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+            <state relative-caret-position="388">
+              <caret line="35" column="63" selection-start-line="35" selection-start-column="63" selection-end-line="35" selection-end-column="63" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -277,12 +240,12 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4967462" visible="true" weight="0.25342464" />
-      <window_info id="Structure" order="1" sideWeight="0.5032538" side_tool="true" visible="true" weight="0.25342464" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49508196" visible="true" weight="0.12223393" />
+      <window_info id="Structure" order="1" sideWeight="0.50491804" side_tool="true" visible="true" weight="0.12223393" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.15184382" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4164859" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -290,7 +253,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.19088937" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="10" visible="true" weight="0.3383948" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -318,37 +281,21 @@
     <entry file="file://$PROJECT_DIR$/blockchain/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_package/test_package.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_package/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blockchain_client/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test_package/test_package.py" />
+    <entry file="file://$PROJECT_DIR$/test_package/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/blockchain_client/__init__.py" />
     <entry file="file://$PROJECT_DIR$/block_chain_client/crypto_wallet.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1131">
           <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1541155182502" expanded="true" signature="174:179" ph="..." />
-            <marker date="1541155182502" expanded="true" signature="792:994" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/block_chain_client/blockchain_client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1015">
-          <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
+        <state relative-caret-position="-406">
+          <caret line="30" column="23" lean-forward="true" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
           <folding>
-            <element signature="e#782#840#0" expanded="true" />
             <marker date="1541156031412" expanded="true" signature="1500:1501" ph="..." />
           </folding>
         </state>
@@ -356,8 +303,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/block_chain_client/transaction.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+        <state relative-caret-position="388">
+          <caret line="35" column="63" selection-start-line="35" selection-start-column="63" selection-end-line="35" selection-end-column="63" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
