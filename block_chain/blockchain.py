@@ -24,13 +24,13 @@ class Blockchain:
         """
         constructor method
         """
-        self.transactions = []
-        self.chain = []
-        self.nodes = set()
+        self.transactions = []  # trasanctions that will be added to the block
+        self.chain = []  # chain containing the valid blocks
+        self.nodes = set()  # blockchain nodes
         # Generate random number to be used as node_id
         self.node_id = str(uuid4()).replace('-', '')
         # Create genesis block
-        self.create_block(0, '00')
+        self.create_block(0, '00')  # genesis block
 
     def register_node(self, node_url):
         """
