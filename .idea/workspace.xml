@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain_client/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain_node/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,30 +14,31 @@
     <session id="2117071795">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.32" value="1" />
           <entry key="project.open.time.5" value="3" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="html" value="2" />
-          <entry key="py" value="16" />
+          <entry key="py" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="HTML" value="2" />
-          <entry key="Python" value="16" />
+          <entry key="Python" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="765" />
+          <entry key="Python Console" value="1023" />
           <entry key="dummy" value="15" />
           <entry key="html" value="40" />
           <entry key="py" value="3360" />
@@ -48,27 +48,29 @@
         <counts>
           <entry key="HTML" value="40" />
           <entry key="PLAIN_TEXT" value="15" />
-          <entry key="Python" value="4125" />
+          <entry key="Python" value="4383" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/block_chain_node/templates/index.html">
+        <entry file="file://$PROJECT_DIR$/src/block_chain/crypto_wallet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="-486">
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/block_chain_client/templates/index.html">
+        <entry file="file://$PROJECT_DIR$/src/block_chain/transaction.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="23" column="51" selection-start-line="23" selection-start-column="51" selection-end-line="23" selection-end-column="51" />
+            <state relative-caret-position="-864">
+              <caret line="4" column="3" lean-forward="true" selection-start-line="4" selection-end-line="8" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -127,6 +129,12 @@
               <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
               <item name="project-t" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project-t" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="block_chain" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
@@ -311,15 +319,14 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49662617" visible="true" weight="0.16438356" />
-      <window_info id="Structure" order="1" sideWeight="0.5033738" side_tool="true" visible="true" weight="0.16438356" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4943274" visible="true" weight="0.16438356" />
+      <window_info id="Structure" order="1" sideWeight="0.50567263" side_tool="true" visible="true" weight="0.16438356" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.19631237" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.5021692" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39262474" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -327,7 +334,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.3383948" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="10" visible="true" weight="0.33798283" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -407,13 +414,7 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/numpy/core/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/numpy/core/__init__.py" />
     <entry file="file://$PROJECT_DIR$/tests/block_chain/transaction_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="261">
@@ -448,27 +449,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/block_chain/transaction.py">
+    <entry file="file://$PROJECT_DIR$/src/block_chain_client/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
-          <folding>
-            <element signature="e#79#94#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="298">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/block_chain_node/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="249">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/block_chain_client/templates/index.html">
+    <entry file="file://$PROJECT_DIR$/src/block_chain/crypto_wallet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="23" column="51" selection-start-line="23" selection-start-column="51" selection-end-line="23" selection-end-column="51" />
+        <state relative-caret-position="-486">
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain/transaction.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-864">
+          <caret line="4" column="3" lean-forward="true" selection-start-line="4" selection-end-line="8" selection-end-column="39" />
         </state>
       </provider>
     </entry>
