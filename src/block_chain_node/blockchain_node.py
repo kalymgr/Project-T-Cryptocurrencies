@@ -64,7 +64,7 @@ def new_transaction():
 
 @app.route('/transactions/get', methods=['GET'])
 def get_transactions():
-    #Get transactions from transactions pool
+    # Get transactions from transactions pool
     transactions = blockchain.transactions
 
     response = {'transactions': transactions}
@@ -98,10 +98,10 @@ def mine():
 
     response = {
         'message': "New Block Forged",
-        'block_number': block.to_dict()['block_number'],
-        'transactions': block.to_dict()['transactions'],
-        'nonce': block.to_dict()['nonce'],
-        'previous_hash': block.to_dict()['previous_hash'],
+        'block_number': block.blockNumber,
+        'transactions': block.transactions,
+        'nonce': block.nonce,
+        'previous_hash': block.previousHash,
     }
     return jsonify(response), 200
 

@@ -2,17 +2,12 @@
 This module contains some classes related to the blockchain
 """
 from collections import OrderedDict
-import binascii
-from Crypto.Hash import SHA
-from Crypto.PublicKey import RSA
-from Crypto.Signature import PKCS1_v1_5
 import hashlib
 import json
 from time import time
 from urllib.parse import urlparse
 from uuid import uuid4
 import requests
-
 from src.block_chain.transaction import Transaction
 
 
@@ -35,7 +30,38 @@ class Blockchain:
         # Generate random number to be used as node_id
         self.node_id = str(uuid4()).replace('-', '')
         # Create genesis block
-        self.create_block(0, '00')  # genesis block
+        # self.create_block(0, '00')  # genesis block
+        self.createGenesisBlock()
+
+    def createGenesisBlock(self):
+        """
+        method that creates the genesis block
+        :return:
+        """
+
+        # create the only transaction of the genesis block
+        senderAddress = 'THE CREATOR'
+        recipientAddress = "30819f300d06092a864886f70d010101050003818d0030818902818100eeef" \
+                           "22fe3af6ef151b89893f8b42a3448ea5fce1706f9546c73a41d4dbb303ca25ee" \
+                           "376335b435662b3de429ef892c2b48d4f85b400295c30d81eec4b00b61bfbd4cd" \
+                           "885b76460585ec3350247fa050fa2e1de2ceb428ea4a76ef81484ee875c89bedc" \
+                           "520238c2b13180f524cdf939a468271a68c57f477e5484be319a475a110203010001"
+        value = 100  # 100 coins for the genesis transaction
+        genesisTransaction = Transaction(senderAddress, recipientAddress, value)
+
+        # append the genesis transaction to the transaction list that will be included in the genesis block
+        self.transactions.append(genesisTransaction.to_dict())
+
+        # create the genesis block with and the following nonce and previousHash
+        nonce = 0
+        previousHash = '00'
+        b = Block(self.chain, self.transactions, nonce, previousHash)
+
+        # clear the transactions list
+        self.transactions = []
+
+        self.chain.append(b.to_dict())
+        return b.to_dict()
 
     def register_node(self, node_url):
         """
@@ -88,13 +114,15 @@ class Blockchain:
         :return:
         """
 
-        # create the new block
+        # create the new block, containing the pending transactions
         b = Block(self.chain, self.transactions, nonce, previous_hash)
 
         # Reset the current list of transactions
         self.transactions = []
 
+        # append the block to the chain
         self.chain.append(b.to_dict())
+
         return b.to_dict()
 
     def proof_of_work(self):

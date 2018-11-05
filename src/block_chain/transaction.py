@@ -1,3 +1,7 @@
+"""
+contains the Transaction class, responsible for handling transactions
+"""
+
 import binascii
 from collections import OrderedDict
 from Crypto.Hash import SHA
@@ -32,7 +36,7 @@ class Transaction:
         Sign the transaction with the private key
         :return: the transaction hash signed with the private key
         """
-        if self.sender_private_key is not None:
+        if self.sender_private_key is not None:  # if there is a private key
             # create the private key in a form that will make signing possible
             private_key = RSA.importKey(binascii.unhexlify(self.sender_private_key))
             # create the signer
