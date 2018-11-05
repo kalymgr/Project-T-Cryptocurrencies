@@ -19,8 +19,7 @@ References      : [1] https://github.com/dvf/blockchain/blob/master/blockchain.p
 
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-from src.block_chain.blockchain import Blockchain
-
+from src.block_chain.blockchain import Blockchain, Block
 
 # Instantiate the Node
 app = Flask(__name__)
@@ -84,22 +83,25 @@ def full_chain():
 @app.route('/mine', methods=['GET'])
 def mine():
     # We run the proof of work algorithm to get the next proof...
-    last_block = blockchain.chain[-1]
+    last_block = Block()
+    last_block.setBlockContentFromDict(blockchain.chain[-1])
+
     nonce = blockchain.proof_of_work()
 
     # We must receive a reward for finding the proof.
     blockchain.submit_transaction(sender_address=MINING_SENDER, recipient_address=blockchain.node_id, value=MINING_REWARD, signature="")
 
     # Forge the new Block by adding it to the chain
-    previous_hash = blockchain.hash(last_block)
-    block = blockchain.create_block(nonce, previous_hash)
+    previous_hash = last_block.blockHash()
+    block = Block()
+    block.setBlockContentFromDict(blockchain.create_block(nonce, previous_hash))
 
     response = {
         'message': "New Block Forged",
-        'block_number': block['block_number'],
-        'transactions': block['transactions'],
-        'nonce': block['nonce'],
-        'previous_hash': block['previous_hash'],
+        'block_number': block.get_block_content_as_dict()['block_number'],
+        'transactions': block.get_block_content_as_dict()['transactions'],
+        'nonce': block.get_block_content_as_dict()['nonce'],
+        'previous_hash': block.get_block_content_as_dict()['previous_hash'],
     }
     return jsonify(response), 200
 

@@ -1,3 +1,6 @@
+"""
+This module contains some classes related to the blockchain
+"""
 from collections import OrderedDict
 import binascii
 from Crypto.Hash import SHA
@@ -98,29 +101,14 @@ class Blockchain:
         :return:
         """
 
-        block = {'block_number': len(self.chain) + 1,
-                 'timestamp': time(),
-                 'transactions': self.transactions,
-                 'nonce': nonce,
-                 'previous_hash': previous_hash}
+        # create the new block
+        b = Block(self.chain, self.transactions, nonce, previous_hash)
 
         # Reset the current list of transactions
         self.transactions = []
 
-        self.chain.append(block)
-        return block
-
-    def hash(self, block):
-        """
-        Create a SHA-256 hash of a block
-        :param block:
-        :return:
-        """
-
-        # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
-        block_string = json.dumps(block, sort_keys=True).encode()
-
-        return hashlib.sha256(block_string).hexdigest()
+        self.chain.append(b.get_block_content_as_dict())
+        return b.get_block_content_as_dict()
 
     def proof_of_work(self):
         """
@@ -128,8 +116,11 @@ class Blockchain:
         :return: nonce when proof of work successfully completed
         """
 
-        last_block = self.chain[-1]
-        last_hash = self.hash(last_block)
+        # get the last block from the chain
+        lastBlock = Block()
+        lastBlock.setBlockContentFromDict(self.chain[-1])
+        # get the hash of the last block
+        last_hash = lastBlock.blockHash()
 
         nonce = 0
         while self.valid_proof(self.transactions, last_hash, nonce) is False:
@@ -158,30 +149,36 @@ class Blockchain:
         :return:
         """
 
-        last_block = chain[0]
+        # get the last block
+        last_block = Block()
+        last_block.setBlockContentFromDict(chain[0])
+
         current_index = 1
 
         while current_index < len(chain):
-            block = chain[current_index]
+            # block = chain[current_index]
+            b = Block()
+            b.setBlockContentFromDict(chain[current_index])
             # print(last_block)
             # print(block)
             # print("\n-----------\n")
             # Check that the hash of the block is correct
-            if block['previous_hash'] != self.hash(last_block):
+            if b.previousHash != last_block.blockHash():
                 return False
 
             # Check that the Proof of Work is correct
             # Delete the reward transaction
-            transactions = block['transactions'][:-1]
+            transactions = b.transactions[:-1]
             # Need to make sure that the dictionary is ordered. Otherwise we'll get a different hash
             transaction_elements = ['sender_address', 'recipient_address', 'value']
             transactions = [OrderedDict((k, transaction[k]) for k in transaction_elements) for transaction in
                             transactions]
 
-            if not self.valid_proof(transactions, block['previous_hash'], block['nonce'], Blockchain.MINING_DIFFICULTY):
+            if not self.valid_proof(transactions, b.previousHash,
+                                    b.nonce, Blockchain.MINING_DIFFICULTY):
                 return False
 
-            last_block = block
+            last_block = b
             current_index += 1
 
         return True
@@ -219,3 +216,59 @@ class Blockchain:
             return True
 
         return False
+
+
+class Block:
+    """
+    This class is for holding block data
+    """
+
+    def __init__(self, chain=None, transactions=None, nonce=None, previousHash=None):
+        """
+        Constructor method for the block. Sets the block content
+        :param chain: the chain that contains the blocks
+        :param nonce: the nonce
+        :param transactions: the transactions that will be included in the block
+        :param previousHash: the hash of the previous block
+        """
+
+        if chain is not None:  # if the constructor has data to initialize the object
+            self.blockNumber = len(chain) + 1
+            self.timeStamp = time()
+            self.transactions = transactions
+            self.nonce = nonce
+            self.previousHash = previousHash
+
+    def setBlockContentFromDict(self, blockContentDict):
+        """
+        Sets the block content from a dictionary
+        :param blockContentDict: the block content dictionary
+        """
+        self.blockNumber = blockContentDict['block_number']
+        self.timeStamp = blockContentDict['timestamp']
+        self.transactions = blockContentDict['transactions']
+        self.nonce = blockContentDict['nonce']
+        self.previousHash = blockContentDict['previous_hash']
+
+    def get_block_content_as_dict(self):
+        """
+        returns the block content as a dictionary
+        :return: the block content as dictionary
+        """
+        return {
+            'block_number': self.blockNumber,
+            'timestamp': self.timeStamp,
+            'transactions': self.transactions,
+            'nonce': self.nonce,
+            'previous_hash': self.previousHash
+        }
+
+    def blockHash(self):
+        """
+        returns the SHA-256 hash of the block content
+        :return: the hash of the block content as dictionary
+        """
+        # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
+        block_string = json.dumps(self.get_block_content_as_dict(), sort_keys=True).encode()
+
+        return hashlib.sha256(block_string).hexdigest()
