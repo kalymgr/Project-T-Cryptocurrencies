@@ -16,8 +16,8 @@ References      : [1] https://github.com/julienr/ipynb_playground/blob/master/bi
 '''
 
 from flask import Flask, jsonify, request, render_template
-from block_chain_client.crypto_wallet import CryptoWallet
-from block_chain_client.transaction import Transaction
+from src.block_chain.crypto_wallet import CryptoWallet
+from src.block_chain.transaction import Transaction
 
 app = Flask(__name__)
 
