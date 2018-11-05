@@ -326,21 +326,27 @@ class Block:
                 )
 
             l = len(transactionDoubleHashes)
+            iterNo = 0  # no of iteration. Level of the tree
+            finalDoubleHashes = list()
+            finalDoubleHashes.append(transactionDoubleHashes)
             while l / 2 != 0:  # till you reach the merkle root
-                finalDoubleHash = []  # every time you go a level higher, the list with the double hashes resets
+
+                iterNo = iterNo + 1  # increase the number of the iteration
+
+                # if the number of elements is even, add one more
+                if len(finalDoubleHashes[iterNo-1]) % 2 == 1:
+                    finalDoubleHashes[iterNo-1].append(finalDoubleHashes[iterNo-1][len(finalDoubleHashes[iterNo-1])-1])
+
+                finalDoubleHashes.append([])  # add a new empty list
                 # concatenate the double hashes and then double hash, until you get to the root
                 i = 0
                 for i in range(0, l, 2):
-                    finalDoubleHash.append(
-                        self.doubleHash(transactionDoubleHashes[i] + transactionDoubleHashes[i+1])
+                    finalDoubleHashes[iterNo].append(
+                        self.doubleHash(finalDoubleHashes[iterNo-1][i] + finalDoubleHashes[iterNo-1][i+1])
                     )
-                l = int(l/2)
+                l = int(l/2)  # divide to 2, to get the number of elements of the tree level above
 
-            return finalDoubleHash
-
-
-
-
+            return finalDoubleHashes[iterNo][0]
 
         else:  # no transactions in the block
             return None
