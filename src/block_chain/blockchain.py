@@ -13,6 +13,8 @@ from urllib.parse import urlparse
 from uuid import uuid4
 import requests
 
+from src.block_chain.transaction import Transaction
+
 
 class Blockchain:
     """
@@ -51,20 +53,6 @@ class Blockchain:
         else:
             raise ValueError('Invalid URL')
 
-    def verify_transaction_signature(self, sender_address, signature, transaction):
-        """
-        Check that the provided signature corresponds to transaction
-        signed by the public key (sender_address)
-        :param sender_address: the public key of the sender
-        :param signature: the signature of the sender
-        :param transaction: the transaction data
-        :return: True of False, depending of the result of the verification
-        """
-        public_key = RSA.importKey(binascii.unhexlify(sender_address))
-        verifier = PKCS1_v1_5.new(public_key)
-        h = SHA.new(str(transaction).encode('utf8'))
-        return verifier.verify(h, binascii.unhexlify(signature))
-
     def submit_transaction(self, sender_address, recipient_address, value, signature):
         """
         Add a transaction to transactions array if the signature verified
@@ -75,20 +63,19 @@ class Blockchain:
         :return:
         """
 
-        transaction = OrderedDict({'sender_address': sender_address,
-                                   'recipient_address': recipient_address,
-                                   'value': value})
+        # create a new transaction instance
+        t = Transaction(sender_address, recipient_address, value)
 
         # Reward for mining a block. No verification needed
         if sender_address == Blockchain.MINING_SENDER:
-            self.transactions.append(transaction)
+            self.transactions.append(t.to_dict())
             return len(self.chain) + 1
 
         # Manages transactions from wallet to another wallet
         else:
-            transaction_verification = self.verify_transaction_signature(sender_address, signature, transaction)
+            transaction_verification = t.verifySignature(signature)
             if transaction_verification:
-                self.transactions.append(transaction)
+                self.transactions.append(t.to_dict())
                 return len(self.chain) + 1
             else:
                 return False
@@ -107,8 +94,8 @@ class Blockchain:
         # Reset the current list of transactions
         self.transactions = []
 
-        self.chain.append(b.get_block_content_as_dict())
-        return b.get_block_content_as_dict()
+        self.chain.append(b.to_dict())
+        return b.to_dict()
 
     def proof_of_work(self):
         """
@@ -250,7 +237,7 @@ class Block:
         self.nonce = blockContentDict['nonce']
         self.previousHash = blockContentDict['previous_hash']
 
-    def get_block_content_as_dict(self):
+    def to_dict(self):
         """
         returns the block content as a dictionary
         :return: the block content as dictionary
@@ -269,6 +256,6 @@ class Block:
         :return: the hash of the block content as dictionary
         """
         # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
-        block_string = json.dumps(self.get_block_content_as_dict(), sort_keys=True).encode()
+        block_string = json.dumps(self.to_dict(), sort_keys=True).encode()
 
         return hashlib.sha256(block_string).hexdigest()

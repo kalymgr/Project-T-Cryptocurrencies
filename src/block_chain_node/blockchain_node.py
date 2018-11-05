@@ -98,10 +98,10 @@ def mine():
 
     response = {
         'message': "New Block Forged",
-        'block_number': block.get_block_content_as_dict()['block_number'],
-        'transactions': block.get_block_content_as_dict()['transactions'],
-        'nonce': block.get_block_content_as_dict()['nonce'],
-        'previous_hash': block.get_block_content_as_dict()['previous_hash'],
+        'block_number': block.to_dict()['block_number'],
+        'transactions': block.to_dict()['transactions'],
+        'nonce': block.to_dict()['nonce'],
+        'previous_hash': block.to_dict()['previous_hash'],
     }
     return jsonify(response), 200
 

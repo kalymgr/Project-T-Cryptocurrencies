@@ -7,9 +7,10 @@ from Crypto.Signature import PKCS1_v1_5
 
 class Transaction:
     """
-    class for managing the transaction
+    class for managing the transaction.
+    The private key is not required
     """
-    def __init__(self, sender_address, sender_private_key, recipient_address, value):
+    def __init__(self, sender_address, recipient_address, value, sender_private_key=None):
         self.sender_address = sender_address
         self.sender_private_key = sender_private_key
         self.recipient_address = recipient_address
@@ -31,11 +32,27 @@ class Transaction:
         Sign the transaction with the private key
         :return: the transaction hash signed with the private key
         """
-        # create the private key in a form that will make signing possible
-        private_key = RSA.importKey(binascii.unhexlify(self.sender_private_key))
-        # create the signer
-        signer = PKCS1_v1_5.new(private_key)
-        # create the hash of the transaction
+        if self.sender_private_key is not None:
+            # create the private key in a form that will make signing possible
+            private_key = RSA.importKey(binascii.unhexlify(self.sender_private_key))
+            # create the signer
+            signer = PKCS1_v1_5.new(private_key)
+            # create the hash of the transaction
+            h = SHA.new(str(self.to_dict()).encode('utf8'))
+            # sign the hash of the transaction with the private key
+            return binascii.hexlify(signer.sign(h)).decode('ascii')
+        else:  # not private key for this transaction
+            return False
+
+    def verifySignature(self, signature):
+        """
+        Check that the provided signature corresponds to transaction
+        signed by the public key (sender_address)
+        :param signature:
+        :return:
+        """
+
+        public_key = RSA.importKey(binascii.unhexlify(self.sender_address))
+        verifier = PKCS1_v1_5.new(public_key)
         h = SHA.new(str(self.to_dict()).encode('utf8'))
-        # sign the hash of the transaction with the private key
-        return binascii.hexlify(signer.sign(h)).decode('ascii')
+        return verifier.verify(h, binascii.unhexlify(signature))

@@ -50,7 +50,7 @@ def generate_transaction():
     sender_private_key = request.form['sender_private_key']
     recipient_address = request.form['recipient_address']
     value = request.form['amount']
-    transaction = Transaction(sender_address, sender_private_key, recipient_address, value)
+    transaction = Transaction(sender_address, recipient_address, value, sender_private_key)
 
     response = {'transaction': transaction.to_dict(), 'signature': transaction.sign_transaction()}
 
