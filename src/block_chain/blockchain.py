@@ -8,6 +8,8 @@ from time import time
 from urllib.parse import urlparse
 from uuid import uuid4
 import requests
+from Crypto.Hash import SHA256
+
 from src.block_chain.transaction import Transaction
 
 
@@ -235,7 +237,7 @@ class Blockchain:
 
 class Block:
     """
-    This class is for holding block data
+    This class is for holding block data and some operations
     """
 
     def __init__(self, chain=None, transactions=None, nonce=None, previousHash=None):
@@ -287,3 +289,59 @@ class Block:
         block_string = json.dumps(self.to_dict(), sort_keys=True).encode()
 
         return hashlib.sha256(block_string).hexdigest()
+
+    def doubleHash(self, transactionString):
+        """
+        method that calculates the double SHA256 hash for a transaction string. Used for merkle tree
+        :param transactionString:
+        :return: the double hash of the transaction string
+        """
+
+        textHash = SHA256.new(transactionString.encode('utf8'))
+        textDoubleHash = SHA256.new(textHash.hexdigest().encode('utf8'))
+
+        return textDoubleHash.hexdigest()
+
+    def getMerkleRoot(self):
+        """
+        method that calculates and returns the merkle root of the block
+        :return: the merkle root if there are transactions, else None
+        """
+
+        if len(self.transactions) > 0:  # if there are transactions
+            # get the string content of all the transactions and put it in a list
+            transactionStrings = []
+            for transaction in self.transactions:
+                transactionStrings.append(str(transaction.to_dict()))
+
+            # if the number of items is even, add the last one, one more time
+            if len(transactionStrings) % 2 == 1:
+                transactionStrings.append(transactionStrings[len(transactionStrings)-1])
+
+            # create the double hashes for all the transaction strings
+            transactionDoubleHashes = []
+            for tString in transactionStrings:
+                transactionDoubleHashes.append(
+                    self.doubleHash(tString)
+                )
+
+            l = len(transactionDoubleHashes)
+            while l / 2 != 0:  # till you reach the merkle root
+                finalDoubleHash = []  # every time you go a level higher, the list with the double hashes resets
+                # concatenate the double hashes and then double hash, until you get to the root
+                i = 0
+                for i in range(0, l, 2):
+                    finalDoubleHash.append(
+                        self.doubleHash(transactionDoubleHashes[i] + transactionDoubleHashes[i+1])
+                    )
+                l = int(l/2)
+
+            return finalDoubleHash
+
+
+
+
+
+        else:  # no transactions in the block
+            return None
+
