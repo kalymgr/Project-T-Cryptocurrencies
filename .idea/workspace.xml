@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="" />
+    <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/nodeids" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,13 +28,13 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="html" value="2" />
-          <entry key="py" value="26" />
+          <entry key="py" value="27" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="HTML" value="2" />
-          <entry key="Python" value="26" />
+          <entry key="Python" value="27" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -57,23 +59,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/block_chain/test_block.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="67">
-              <caret line="46" column="55" selection-start-line="46" selection-start-column="55" selection-end-line="46" selection-end-column="55" />
+            <state relative-caret-position="1297">
+              <caret line="50" column="11" lean-forward="true" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1541485063220" expanded="true" signature="216:288" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/block_chain/blockchain.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1898">
-              <caret line="247" column="66" selection-start-line="247" selection-start-column="66" selection-end-line="247" selection-end-column="66" />
-              <folding>
-                <element signature="e#68#103#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -170,7 +159,22 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_block.TestBlock.test_getMerkleRoot">
+  <component name="RunManager" selected="Python tests.pytest for test_block.TestBlock">
+    <configuration name="pytest for test_block.TestBlock" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="project-t" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_block.TestBlock&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="pytest for test_block.TestBlock.test_doubleHash256" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -183,21 +187,6 @@
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_block.TestBlock.test_doubleHash256&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest for test_block.TestBlock.test_dummy" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="project-t" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_block.TestBlock.test_dummy&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -247,19 +236,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python tests.pytest for test_block.TestBlock.test_dummy" />
       <item itemvalue="Python tests.pytest for test_block.test_something" />
       <item itemvalue="Python tests.pytest for test_block.TestBlock.test_something" />
       <item itemvalue="Python tests.pytest for test_block.TestBlock.test_getMerkleRoot" />
       <item itemvalue="Python tests.pytest for test_block.TestBlock.test_doubleHash256" />
+      <item itemvalue="Python tests.pytest for test_block.TestBlock" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_block.TestBlock" />
         <item itemvalue="Python tests.pytest for test_block.TestBlock.test_getMerkleRoot" />
         <item itemvalue="Python tests.pytest for test_block.TestBlock.test_doubleHash256" />
         <item itemvalue="Python tests.pytest for test_block.TestBlock.test_something" />
         <item itemvalue="Python tests.pytest for test_block.test_something" />
-        <item itemvalue="Python tests.pytest for test_block.TestBlock.test_dummy" />
       </list>
     </recent_temporary>
   </component>
@@ -277,9 +266,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 00m 15s.xml">
-      <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 01m 35s.xml">
       <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
     </history-entry>
@@ -307,22 +293,25 @@
     <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 17m 45s.xml">
       <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_for_test_block_TestBlock - 2018.11.06 at 08h 42m 34s.xml">
+      <configuration name="pytest for test_block.TestBlock" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49367088" visible="true" weight="0.21496312" />
-      <window_info id="Structure" order="1" sideWeight="0.5063291" side_tool="true" visible="true" weight="0.21496312" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4940476" visible="true" weight="0.21496312" />
+      <window_info id="Structure" order="1" sideWeight="0.50595236" side_tool="true" visible="true" weight="0.21496312" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.55531454" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.62472886" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.42407808" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32939914" />
-      <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" visible="true" weight="0.31453362" />
+      <window_info active="true" anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" visible="true" weight="0.45336226" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.22559653" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -505,11 +494,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/block_chain/test_block.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="46" column="55" selection-start-line="46" selection-start-column="55" selection-end-line="46" selection-end-column="55" />
+        <state relative-caret-position="1297">
+          <caret line="50" column="11" lean-forward="true" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <marker date="1541485063220" expanded="true" signature="216:288" ph="..." />
           </folding>
         </state>
       </provider>
