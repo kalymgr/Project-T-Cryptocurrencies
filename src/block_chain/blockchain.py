@@ -245,7 +245,7 @@ class Block:
         Constructor method for the block. Sets the block content
         :param chain: the chain that contains the blocks
         :param nonce: the nonce
-        :param transactions: the transactions that will be included in the block
+        :param transactions: the transactions (Transaction objects) that will be included in the block
         :param previousHash: the hash of the previous block
         """
 
@@ -304,7 +304,9 @@ class Block:
 
     def getMerkleRoot(self):
         """
-        method that calculates and returns the merkle root of the block
+        method that calculates and returns the merkle root of the block.
+        It uses a two dimensional array (finalDoubleHashes) which stores the double hashes
+        of each level (the first dimension is the level and the second the items of the level)
         :return: the merkle root if there are transactions, else None
         """
 
@@ -329,7 +331,7 @@ class Block:
             iterNo = 0  # no of iteration. Level of the tree
             finalDoubleHashes = list()
             finalDoubleHashes.append(transactionDoubleHashes)
-            while l / 2 != 0:  # till you reach the merkle root
+            while l / 2 >= 1:  # till you reach the merkle root
 
                 iterNo = iterNo + 1  # increase the number of the iteration
 
