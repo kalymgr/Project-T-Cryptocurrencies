@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/T-Project Product features.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/T-Project Product features.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/block_chain/blockchain.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/blockchain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/block_chain/crypto_wallet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/crypto_wallet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/block_chain/transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/transaction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/lastfailed" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/lastfailed" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/nodeids" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/block_chain/test_block.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/test_block.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,28 +35,28 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="html" value="2" />
-          <entry key="py" value="27" />
+          <entry key="py" value="39" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="HTML" value="2" />
-          <entry key="Python" value="27" />
+          <entry key="Python" value="39" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="1848" />
+          <entry key="Python Console" value="1954" />
           <entry key="dummy" value="15" />
           <entry key="html" value="40" />
-          <entry key="py" value="6833" />
+          <entry key="py" value="7496" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="40" />
           <entry key="PLAIN_TEXT" value="15" />
-          <entry key="Python" value="8681" />
+          <entry key="Python" value="9450" />
         </counts>
       </usages-collector>
     </session>
@@ -57,12 +64,36 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tests/block_chain/test_block.py">
+        <entry file="file://$PROJECT_DIR$/src/block_chain/blockchain.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1297">
-              <caret line="50" column="11" lean-forward="true" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
+            <state relative-caret-position="128">
+              <caret line="290" column="24" lean-forward="true" selection-start-line="290" selection-start-column="24" selection-end-line="290" selection-end-column="24" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#68#103#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/block_chain_node/blockchain_node.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="85" column="22" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="22" />
+              <folding>
+                <element signature="e#906#964#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/block_chain/transaction.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="58">
+              <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+              <folding>
+                <element signature="e#79#94#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -91,12 +122,13 @@
       <list>
         <option value="$PROJECT_DIR$/src/block_chain_client/blockchain_client.py" />
         <option value="$PROJECT_DIR$/tests/block_chain/transaction_test.py" />
-        <option value="$PROJECT_DIR$/src/block_chain/transaction.py" />
         <option value="$PROJECT_DIR$/src/block_chain_node/blockchain_node.py" />
         <option value="$PROJECT_DIR$/src/block_chain_node/templates/index.html" />
         <option value="$PROJECT_DIR$/src/block_chain_client/templates/index.html" />
-        <option value="$PROJECT_DIR$/src/block_chain/blockchain.py" />
         <option value="$PROJECT_DIR$/tests/block_chain/test_block.py" />
+        <option value="$PROJECT_DIR$/src/block_chain/crypto_wallet.py" />
+        <option value="$PROJECT_DIR$/src/block_chain/transaction.py" />
+        <option value="$PROJECT_DIR$/src/block_chain/blockchain.py" />
       </list>
     </option>
   </component>
@@ -123,6 +155,18 @@
               <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
               <item name="project-t" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project-t" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="block_chain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project-t" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="block_chain_node" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
@@ -159,7 +203,49 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_block.TestBlock">
+  <component name="RunManager" selected="Python.blockchain_node">
+    <configuration name="blockchain_client" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="project-t" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/block_chain_client" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/block_chain_client/blockchain_client.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="blockchain_node" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="project-t" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/block_chain_node" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/block_chain_node/blockchain_node.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="pytest for test_block.TestBlock" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -175,7 +261,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_block.TestBlock.test_doubleHash256" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_block.TestBlock.test_tryMe" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -186,11 +272,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_block.TestBlock.test_doubleHash256&quot;" />
+      <option name="_new_target" value="&quot;test_block.TestBlock.test_tryMe&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_block.TestBlock.test_var_types" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -201,54 +287,24 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_block.TestBlock.test_getMerkleRoot&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest for test_block.TestBlock.test_something" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="project-t" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_block.TestBlock.test_something&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest for test_block.test_something" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="project-t" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_block.test_something&quot;" />
+      <option name="_new_target" value="&quot;test_block.TestBlock.test_var_types&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python tests.pytest for test_block.test_something" />
-      <item itemvalue="Python tests.pytest for test_block.TestBlock.test_something" />
-      <item itemvalue="Python tests.pytest for test_block.TestBlock.test_getMerkleRoot" />
-      <item itemvalue="Python tests.pytest for test_block.TestBlock.test_doubleHash256" />
       <item itemvalue="Python tests.pytest for test_block.TestBlock" />
+      <item itemvalue="Python.blockchain_client" />
+      <item itemvalue="Python.blockchain_node" />
+      <item itemvalue="Python tests.pytest for test_block.TestBlock.test_var_types" />
+      <item itemvalue="Python tests.pytest for test_block.TestBlock.test_tryMe" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.blockchain_node" />
+        <item itemvalue="Python.blockchain_client" />
+        <item itemvalue="Python tests.pytest for test_block.TestBlock.test_tryMe" />
+        <item itemvalue="Python tests.pytest for test_block.TestBlock.test_var_types" />
         <item itemvalue="Python tests.pytest for test_block.TestBlock" />
-        <item itemvalue="Python tests.pytest for test_block.TestBlock.test_getMerkleRoot" />
-        <item itemvalue="Python tests.pytest for test_block.TestBlock.test_doubleHash256" />
-        <item itemvalue="Python tests.pytest for test_block.TestBlock.test_something" />
-        <item itemvalue="Python tests.pytest for test_block.test_something" />
       </list>
     </recent_temporary>
   </component>
@@ -266,52 +322,53 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 01m 35s.xml">
-      <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 02m 39s.xml">
-      <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 09m 43s.xml">
-      <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 11m 01s.xml">
-      <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 11m 13s.xml">
-      <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 11m 37s.xml">
-      <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 11m 42s.xml">
-      <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 13m 03s.xml">
-      <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_block_TestBlock_test_getMerkleRoot - 2018.11.06 at 08h 17m 45s.xml">
       <configuration name="pytest for test_block.TestBlock.test_getMerkleRoot" configurationId="tests" />
     </history-entry>
     <history-entry file="pytest_for_test_block_TestBlock - 2018.11.06 at 08h 42m 34s.xml">
       <configuration name="pytest for test_block.TestBlock" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_for_test_block_TestBlock - 2018.11.06 at 09h 08m 13s.xml">
+      <configuration name="pytest for test_block.TestBlock" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_block_TestBlock - 2018.11.06 at 09h 08m 54s.xml">
+      <configuration name="pytest for test_block.TestBlock" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_block_TestBlock - 2018.11.06 at 09h 13m 01s.xml">
+      <configuration name="pytest for test_block.TestBlock" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_block_TestBlock_test_var_types - 2018.11.06 at 09h 15m 42s.xml">
+      <configuration name="pytest for test_block.TestBlock.test_var_types" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_block_TestBlock_test_var_types - 2018.11.06 at 09h 16m 11s.xml">
+      <configuration name="pytest for test_block.TestBlock.test_var_types" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_block_TestBlock_test_var_types - 2018.11.06 at 09h 16m 36s.xml">
+      <configuration name="pytest for test_block.TestBlock.test_var_types" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_block_TestBlock_test_var_types - 2018.11.06 at 09h 16m 54s.xml">
+      <configuration name="pytest for test_block.TestBlock.test_var_types" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_block_TestBlock_test_tryMe - 2018.11.06 at 09h 21m 31s.xml">
+      <configuration name="pytest for test_block.TestBlock.test_tryMe" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4940476" visible="true" weight="0.21496312" />
-      <window_info id="Structure" order="1" sideWeight="0.50595236" side_tool="true" visible="true" weight="0.21496312" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49325627" visible="true" weight="0.1406744" />
+      <window_info id="Structure" order="1" sideWeight="0.5067437" side_tool="true" visible="true" weight="0.1406744" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.62472886" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.42407808" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.5520607" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4370933" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32939914" />
-      <window_info active="true" anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" visible="true" weight="0.45336226" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.3286334" />
+      <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.2516269" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.22559653" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -332,40 +389,37 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/block_chain_node/blockchain_node.py</url>
-          <line>54</line>
-          <option name="timeStamp" value="13" />
+          <line>105</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/block_chain/blockchain.py</url>
-          <line>99</line>
-          <option name="timeStamp" value="14" />
+          <line>127</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/block_chain_node/blockchain_node.py</url>
+          <line>85</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/block_chain/blockchain.py</url>
-          <line>348</line>
-          <option name="timeStamp" value="17" />
+          <line>291</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/block_chain/blockchain.py</url>
-          <line>350</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/block_chain/blockchain.py</url>
-          <line>333</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/block_chain/blockchain.py</url>
-          <line>346</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/block_chain/blockchain.py</url>
-          <line>344</line>
-          <option name="timeStamp" value="24" />
+          <line>139</line>
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -383,47 +437,47 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>finalDoubleHashes</expression-string>
+        <expression-string>json.dumps(self.to_dict(), sort_keys=True).encode()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>finalDoubleHashes[iterNo-1]</expression-string>
+        <expression-string>lastBlock.blockHash()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>finalDoubleHashes[iterNo-1][i]</expression-string>
+        <expression-string>Block()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>finalDoubleHashes[iterNo-1][i+1]</expression-string>
+        <expression-string>Block</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>doubleHash(finalDoubleHashes[iterNo-1][i]</expression-string>
+        <expression-string>self.chain</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>finalDoubleHashes[iterNo][0]</expression-string>
+        <expression-string>lastBlock</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>finalDoubleHashes[iterNo]</expression-string>
+        <expression-string>blockchain</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>len(finalDoubleHashes[iterNo-1])-1</expression-string>
+        <expression-string>self.getMerkleRoot()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>finalDoubleHashes[iterNo-1][len(finalDoubleHashes[iterNo-1]-1)]</expression-string>
+        <expression-string>block</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -431,23 +485,6 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/numpy/core/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/src/block_chain_client/blockchain_client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="45" column="22" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/block_chain_node/blockchain_node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="54" column="51" selection-start-line="54" selection-start-column="51" selection-end-line="54" selection-end-column="51" />
-          <folding>
-            <element signature="e#906#964#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/block_chain_client/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
@@ -462,18 +499,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/block_chain/transaction.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-864">
-          <caret line="4" column="3" lean-forward="true" selection-start-line="4" selection-end-line="8" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/block_chain/crypto_wallet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-486" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/block_chain/transaction_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -482,22 +507,59 @@
       </provider>
     </entry>
     <entry file="file://E:/ProgramData/Anaconda3/Lib/site-packages/numpy/core/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/src/block_chain/blockchain.py">
+    <entry file="file://$PROJECT_DIR$/src/block_chain_client/blockchain_client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1898">
-          <caret line="247" column="66" selection-start-line="247" selection-start-column="66" selection-end-line="247" selection-end-column="66" />
-          <folding>
-            <element signature="e#68#103#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="99">
+          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/block_chain/test_block.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1297">
-          <caret line="50" column="11" lean-forward="true" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
+        <state relative-caret-position="265">
+          <caret line="59" column="18" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="18" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain/crypto_wallet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1130">
+          <caret line="40" column="28" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain/transaction.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+          <folding>
+            <element signature="e#79#94#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain_node/blockchain_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="85" column="22" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="22" />
+          <folding>
+            <element signature="e#906#964#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain/blockchain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="290" column="24" lean-forward="true" selection-start-line="290" selection-start-column="24" selection-end-line="290" selection-end-column="24" />
+          <folding>
+            <element signature="e#68#103#0" expanded="true" />
           </folding>
         </state>
       </provider>

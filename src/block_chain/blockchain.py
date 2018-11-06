@@ -65,7 +65,7 @@ class Blockchain:
         self.chain.append(b.to_dict())
         return b.to_dict()
 
-    def register_node(self, node_url):
+    def register_node(self, node_url: str):
         """
         Add a new node to the list of nodes
         :param node_url: the url of the node
@@ -240,7 +240,7 @@ class Block:
     This class is for holding block data and some operations
     """
 
-    def __init__(self, chain=None, transactions=None, nonce=None, previousHash=None):
+    def __init__(self, chain: list=None, transactions: list=None, nonce=None, previousHash: str=None):
         """
         Constructor method for the block. Sets the block content
         :param chain: the chain that contains the blocks
@@ -255,8 +255,9 @@ class Block:
             self.transactions = transactions
             self.nonce = nonce
             self.previousHash = previousHash
+            self.merkleRoot = self.getMerkleRoot()  # set the merkle root of the block
 
-    def setBlockContentFromDict(self, blockContentDict):
+    def setBlockContentFromDict(self, blockContentDict: dict):
         """
         Sets the block content from a dictionary
         :param blockContentDict: the block content dictionary
@@ -266,8 +267,9 @@ class Block:
         self.transactions = blockContentDict['transactions']
         self.nonce = blockContentDict['nonce']
         self.previousHash = blockContentDict['previous_hash']
+        self.merkleRoot = blockContentDict['merkle_root']
 
-    def to_dict(self):
+    def to_dict(self)->dict:
         """
         returns the block content as a dictionary
         :return: the block content as dictionary
@@ -277,10 +279,11 @@ class Block:
             'timestamp': self.timeStamp,
             'transactions': self.transactions,
             'nonce': self.nonce,
-            'previous_hash': self.previousHash
+            'previous_hash': self.previousHash,
+            'merkle_root': self.merkleRoot
         }
 
-    def blockHash(self):
+    def blockHash(self)->str:
         """
         returns the SHA-256 hash of the block content
         :return: the hash of the block content as dictionary
@@ -290,7 +293,7 @@ class Block:
 
         return hashlib.sha256(block_string).hexdigest()
 
-    def doubleHash(self, transactionString):
+    def doubleHash(self, transactionString: str):
         """
         method that calculates the double SHA256 hash for a transaction string. Used for merkle tree
         :param transactionString:
@@ -302,7 +305,7 @@ class Block:
 
         return textDoubleHash.hexdigest()
 
-    def getMerkleRoot(self):
+    def getMerkleRoot(self)->str:
         """
         method that calculates and returns the merkle root of the block.
         It uses a two dimensional array (finalDoubleHashes) which stores the double hashes
@@ -314,7 +317,7 @@ class Block:
             # get the string content of all the transactions and put it in a list
             transactionStrings = []
             for transaction in self.transactions:
-                transactionStrings.append(str(transaction.to_dict()))
+                transactionStrings.append(str(transaction))
 
             # if the number of items is even, add the last one, one more time
             if len(transactionStrings) % 2 == 1:

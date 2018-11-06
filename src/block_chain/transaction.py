@@ -14,7 +14,7 @@ class Transaction:
     class for managing the transaction.
     The private key is not required
     """
-    def __init__(self, sender_address, recipient_address, value, sender_private_key=None):
+    def __init__(self, sender_address: str, recipient_address: str, value, sender_private_key: str=None):
         self.sender_address = sender_address
         self.sender_private_key = sender_private_key
         self.recipient_address = recipient_address
@@ -23,7 +23,7 @@ class Transaction:
     def __getattr__(self, attr):
         return self.data[attr]
 
-    def to_dict(self):
+    def to_dict(self)->OrderedDict:
         """
         :return: returns the transaction data as an ordered dictionary
         """
@@ -31,7 +31,7 @@ class Transaction:
                             'recipient_address': self.recipient_address,
                             'value': self.value})
 
-    def sign_transaction(self):
+    def sign_transaction(self)->binascii:
         """
         Sign the transaction with the private key
         :return: the transaction hash signed with the private key
@@ -48,7 +48,7 @@ class Transaction:
         else:  # not private key for this transaction
             return False
 
-    def verifySignature(self, signature):
+    def verifySignature(self, signature)->bool:
         """
         Check that the provided signature corresponds to transaction
         signed by the public key (sender_address)

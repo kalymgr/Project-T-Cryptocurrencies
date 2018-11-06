@@ -15,7 +15,7 @@ class CryptoWallet:
     RSA_BITS = 1024  # the bits that will be used for creating the private key with the RSA algorithm
 
     @staticmethod
-    def getNewPrivateKey():
+    def getNewPrivateKey()->Crypto.PublicKey.RSA:
         """
         static method for creating an new private key
         :return: the private key
@@ -28,7 +28,7 @@ class CryptoWallet:
         return privateKey
 
     @staticmethod
-    def getNewPublicKey(privateKey):
+    def getNewPublicKey(privateKey: Crypto.PublicKey.RSA)-> Crypto.PublicKey.RSA:
         """
         static method
         :param privateKey: the private key
@@ -38,7 +38,7 @@ class CryptoWallet:
         return privateKey.publickey()
 
     @staticmethod
-    def getNewWallet():
+    def getNewWallet()->dict:
         """
         static method for creating and returning a new crypto wallet (set of private and public key)
         :return: the set of public and private key as dictionary

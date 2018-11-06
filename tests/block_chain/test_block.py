@@ -14,7 +14,7 @@ class TestBlock(unittest.TestCase):
         t1 = Transaction('me', 'him', 3)
         t2 = Transaction('you', 'someone else', 5)
         # get manually the merkle root
-        b = Block('chain', [t1, t2])
+        b = Block('chain', [t1.to_dict(), t2.to_dict()])
 
         t1DoubleHash = b.doubleHash(str(t1.to_dict()))
         t2DoubleHash = b.doubleHash(str(t2.to_dict()))
@@ -59,5 +59,8 @@ class TestBlock(unittest.TestCase):
 
         b = Block()
         assert doubleHash256.hexdigest() == b.doubleHash(text)
+
+
+
 
 

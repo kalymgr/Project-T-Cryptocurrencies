@@ -1,4 +1,3 @@
 [
-  "test_block.py::TestBlock::test_doubleHash256",
-  "test_block.py::TestBlock::test_getMerkleRoot"
+  "test_block.py::TestBlock::test_tryMe"
 ]
