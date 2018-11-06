@@ -245,7 +245,8 @@ class Block:
         Constructor method for the block. Sets the block content
         :param chain: the chain that contains the blocks
         :param nonce: the nonce
-        :param transactions: the transactions (Transaction objects) that will be included in the block
+        :param transactions: the transactions ordered dictionaries(OrderedDict objects)
+        that will be included in the block
         :param previousHash: the hash of the previous block
         """
 

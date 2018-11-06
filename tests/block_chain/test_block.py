@@ -22,7 +22,6 @@ class TestBlock(unittest.TestCase):
         t1t2DoubleHash = b.doubleHash(t1t2)
 
         # create the block
-        b = Block('chain', [t1, t2])
         mRoot = b.getMerkleRoot()
 
         assert t1t2DoubleHash == mRoot
@@ -32,7 +31,7 @@ class TestBlock(unittest.TestCase):
         t5 = Transaction('you', 'someone else', 5)
         t6 = Transaction('him', 'uknown', 5)
 
-        b2 = Block('chain2', [t4, t5, t6])  # create the block
+        b2 = Block('chain2', [t4.to_dict(), t5.to_dict(), t6.to_dict()])  # create the block
 
         t4DoubleHash = b2.doubleHash(str(t4.to_dict()))
         t5DoubleHash = b2.doubleHash(str(t5.to_dict()))
@@ -45,7 +44,6 @@ class TestBlock(unittest.TestCase):
         t4t5t6t6DoubleHash = b2.doubleHash(t4t5t6t6)
 
         assert t4t5t6t6DoubleHash == b2.getMerkleRoot()
-
 
     def test_doubleHash256(self):
         """
