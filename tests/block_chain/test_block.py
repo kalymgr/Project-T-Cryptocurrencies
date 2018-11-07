@@ -57,8 +57,3 @@ class TestBlock(unittest.TestCase):
 
         b = Block()
         assert doubleHash256.hexdigest() == b.doubleHash(text)
-
-
-
-
-

@@ -15,6 +15,7 @@ class Transaction:
     The private key is not required
     """
     def __init__(self, sender_address: str, recipient_address: str, value, sender_private_key: str=None):
+        self.versionNo = 1  # the version of the transaction format
         self.sender_address = sender_address
         self.sender_private_key = sender_private_key
         self.recipient_address = recipient_address
