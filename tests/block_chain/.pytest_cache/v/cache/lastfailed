@@ -1,3 +1,5 @@
 {
-  "test_block.py": true
+  "test_block.py": true,
+  "test_transactions.py": true,
+  "test_transactions.py::TestTransactions::test_coinTransfer": true
 }
