@@ -16,10 +16,22 @@ class Transaction:
     """
     def __init__(self, sender_address: str, recipient_address: str, value, sender_private_key: str=None):
         self.versionNo = 1  # the version of the transaction format
+
+        self.flag = None  # indicates the presence of witness data
+        self.witnesses = []  # list of witnesses, 1 for each input, omitted if flag variable is missing
+
+        self.listOfInputs = []  # the list of inputs
+        self.inCounter = len(self.listOfInputs)  # the size of the list of inputs
+        self.listOfOutputs = []  # the list of outputs
+        self.outCounter = len(self.listOfOutputs)  # the size of the list of outputs
+
+        self.lockTime = None  # TODO:// read the bitcoin transaction documentation
+
         self.sender_address = sender_address
         self.sender_private_key = sender_private_key
         self.recipient_address = recipient_address
-        self.value = value
+
+        self.value = value   # value measured in taliroshi - 1 coin is equal to 100,000,000 taliroshi
 
     def __getattr__(self, attr):
         return self.data[attr]
@@ -61,3 +73,68 @@ class Transaction:
         verifier = PKCS1_v1_5.new(public_key)
         h = SHA.new(str(self.to_dict()).encode('utf8'))
         return verifier.verify(h, binascii.unhexlify(signature))
+
+    def createTransactionInputs(self, prevTransactionOutputs: list):
+        """
+        method for creating the transaction inputs and returning the total value of the inputs
+        "param prevTransactionOutputs: list of the previous transaction outputs
+        :return: the total value of the previous transaction outputs
+        """
+        totalTransOutputValue = 0  # the total value of the previous transaction outputs
+        for preTransactionOutput in prevTransactionOutputs:  # for each of the previous transaction outputs
+            # create the list of transaction inputs and calculate the total value
+            totalTransOutputValue = totalTransOutputValue + preTransactionOutput.value
+
+
+
+        return totalTransOutputValue
+
+    def generateOutputs(self, prevTransactionOutputs):
+        """
+        method for generating the outputs
+        :return:
+        """
+
+        TransactionOutputs = self.createTransactionInputs(prevTransactionOutputs)
+        # get the value from all the inputs
+        totalValue = 0  # this is the total value of the inputs
+        for transactionInput in self.listOfInputs:
+            totalValue = totalValue + transactionInput.
+
+class TransactionInput:
+    """
+    class for handling the transaction inputs
+    """
+    def __init__(self, prevTransactionHash: str,
+                 prevTxoutIndex: int,txInScriptLength: int,
+                 txInScript: bytes, sequenceNo: str='ffffffff' ):
+        """
+        Construction method
+        :param prevTransactionHash: doubled SHA256-hashed of a (previous) to-be-used transaction
+        :param prevTxoutIndex: non negative integer indexing an output of the to-be-used transaction
+        :param txInScriptLength: non negative integer
+        :param txInScript: the Script
+        :param sequenceNo: normally 0xFFFFFFFF; irrelevant unless transaction's lock_time is > 0
+        """
+        self.prevTransactionHash = prevTransactionHash
+        self.prevTxoutIndex= prevTxoutIndex
+        self.txInScriptLength = txInScriptLength
+        self.txInScript = txInScript
+        self.sequenceNo = sequenceNo
+
+
+class TransactionOutput:
+    """
+    class for handling the transaction outputs
+    """
+    def __init__(self, value: int,txoutScriptLength: int, txOutScript: bytes ):
+        """
+        constructor method
+        :param value: non negative integer giving the number of Taliroshis(TLC/10^8) to be transferred
+        :param txoutScriptLength: non negative integer
+        :param txOutScript: Script
+        """
+        self.value = value
+        self.txOutScriptLength = txoutScriptLength
+        self.txOutScript = txOutScript
+
