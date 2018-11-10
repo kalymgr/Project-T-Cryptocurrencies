@@ -96,4 +96,4 @@ class TestTransactions(unittest.TestCase):
         for txOutput in txOutputList:
             t.addTransactionOutput(txOutput)
 
-        print(t.getDoubleHash256())
+        print(t.__getDoubleHash256())

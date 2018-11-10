@@ -10,15 +10,15 @@ class TransactionInput:
     class that handles transaction inputs
     """
 
-    def __init__(self, value: int, recipient: str, previousTransactionHash: str, referenceNo: int):
+    def __init__(self, value: int, recipient: str, previousTransactionHash: str, prevTxOutIndex: int=None):
         """
         constructor method
         :param recipient: the address of the recipient
-        :param referenceNo: the reference number of the relevant output from a previous transaction
+        :param prevTxOutIndex: the reference number of the relevant output from a previous transaction
         """
         self.__value = value
         self.__recipient = recipient
-        self.__referenceNo = referenceNo
+        self.__prevTxOutIndex = prevTxOutIndex
         self.__previousTransactionHash = previousTransactionHash
 
     def getOrderedDict(self) -> OrderedDict:
@@ -30,7 +30,7 @@ class TransactionInput:
             {
                 'value': self.__value,
                 'recipient': self.__recipient,
-                'referenceNo': self.__referenceNo,
+                'referenceNo': self.__prevTxOutIndex,
                 'previousTransactionHash': self.__previousTransactionHash
             }
         )
@@ -173,7 +173,14 @@ class Transaction:
 
         self.__transactionHash = None  # the transactionHash
 
-
+    def getTransactionHash(self) -> str:
+        """
+        Method that returns the transaction hash. It should return the same result as __getDoubleHash256, but it gets
+        the data from the transaction object property __transactionHash. Therefore, it doesn't need to make the
+        calculations again
+        :return: the transaction hash string
+        """
+        return self.__transactionHash
 
     def getOrderedDict(self) -> OrderedDict:
         """
@@ -204,7 +211,7 @@ class Transaction:
             }
         )
 
-    def getDoubleHash256(self) -> str:
+    def __getDoubleHash256(self) -> str:
         """
         Method that calculates the double SHA256 hash for a transaction string. Used for merkle tree
         :return: the double hash string for the transaction
@@ -229,7 +236,7 @@ class Transaction:
         inputs and outputs are ok and the transaction is ready to be executed
         :return:
         """
-        self.__transactionHash = self.getDoubleHash256()
+        self.__transactionHash = self.__getDoubleHash256()
 
     def getInCounter(self) -> int:
         """
@@ -403,12 +410,12 @@ class Blockchain:
         """
         method for adding initial transaction inputs to the system. Just pouring some money into the system.
         """
-        self.__addTransactionInputToPool(TransactionInput(20, 'michalis', '-', 0))
-        self.__addTransactionInputToPool(TransactionInput(30, 'evdoxia', '-', 0))
-        self.__addTransactionInputToPool(TransactionInput(10, 'stefanos', '-', 0))
-        self.__addTransactionInputToPool(TransactionInput(20, 'stefanos', '-', 0))
-        self.__addTransactionInputToPool(TransactionInput(30, 'stefanos', '-', 0))
-        self.__addTransactionInputToPool(TransactionInput(40, 'stefanos', '-', 0))
+        self.__addTransactionInputToPool(TransactionInput(20, 'michalis', '-', -1))
+        self.__addTransactionInputToPool(TransactionInput(30, 'evdoxia', '-', -1))
+        self.__addTransactionInputToPool(TransactionInput(10, 'stefanos', '-', -1))
+        self.__addTransactionInputToPool(TransactionInput(20, 'stefanos', '-', -1))
+        self.__addTransactionInputToPool(TransactionInput(30, 'stefanos', '-', -1))
+        self.__addTransactionInputToPool(TransactionInput(40, 'stefanos', '-', -1))
 
     def __addTransactionInputToPool(self, tInput: TransactionInput):
         """
@@ -436,9 +443,12 @@ class Blockchain:
             changeTransactionOutput = TransactionOutput(change, transaction.getSender(), transaction.getSender())
             transaction.addTransactionOutput(changeTransactionOutput)  # add change tx output to the list of tx output
 
+        transaction.setTransactionHash()  # set the transaction hash of the transaction
+
         # for each transaction output, create a transaction input that will be added to the blockchain pool
         for txOutput in transaction.getTransactionOutputList():
-            txInput = TransactionInput(txOutput.getValue(), txOutput.getRecipient(), '-', 0)
+            txInput = TransactionInput(txOutput.getValue(), txOutput.getRecipient(),
+            transaction.getTransactionHash(), transaction.getTransactionOutputList().index(txOutput))
             # if the recipient address is a new recipient, then add it to the blockchain tx input pool
             txInputRecipient = self.__transactionInputPool.get(txInput.getRecipient())  # the recipient of the input
             if txInputRecipient is None:
@@ -447,7 +457,6 @@ class Blockchain:
 
         # add the transaction to the transaction list of the blockchain, if it is not empty
         if transaction.getInCounter()>0 and transaction.getOutCounter()>0:
-            transaction.setTransactionHash()
             self.__transactionList.append(transaction)
 
     def printAccountTotals(self):
