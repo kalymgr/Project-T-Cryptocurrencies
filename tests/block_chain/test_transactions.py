@@ -1,4 +1,6 @@
 import unittest
+
+from src.block_chain.crypto_wallet import CryptoWallet
 from src.block_chain.transactions import Blockchain, Transaction, TransactionInput, TransactionOutput
 
 
@@ -30,12 +32,17 @@ class TestTransactions(unittest.TestCase):
         blockchain = Blockchain()  # initialize the blockchain
         blockchain.printAccountTotals()
 
+        # create the wallet for Stefanos
+        stefanosWallet = CryptoWallet.getNewWallet()
+        stefanosPrivateKeyASCII = stefanosWallet.get('private_key')
+        stefanosPublicKeyASCII = stefanosWallet.get('public_key')
+
         blockchain.getAccountTotal('a')
         # first coin transfer
         coinTransfer1 = [
             ['evdoxia', 10], ['michalis', 10], ['michalis', 5]
         ]
-        blockchain.transfer('stefanos', coinTransfer1)  # transfer the funds
+        blockchain.transfer('stefanos', coinTransfer1, stefanosPrivateKeyASCII)  # transfer the funds
 
         blockchain.printAccountTotals()
         assert blockchain.getAccountTotal('evdoxia') == 40
@@ -46,7 +53,7 @@ class TestTransactions(unittest.TestCase):
         coinTransfer2 = [
             ['kyriakos', 10]
         ]
-        blockchain.transfer('stefanos', coinTransfer2)  # transfer the funds
+        blockchain.transfer('stefanos', coinTransfer2, stefanosPrivateKeyASCII)  # transfer the funds
         blockchain.printAccountTotals()
         assert blockchain.getAccountTotal('stefanos') == 65
         assert blockchain.getAccountTotal('kyriakos') == 10
@@ -57,7 +64,7 @@ class TestTransactions(unittest.TestCase):
             ['michalis', 200],
             ['evdoxia', 10]
         ]
-        blockchain.transfer('stefanos', coinTransfer3)
+        blockchain.transfer('stefanos', coinTransfer3, stefanosPrivateKeyASCII)
 
         blockchain.printAccountTotals()
         assert blockchain.getAccountTotal('stefanos') == 65
@@ -70,7 +77,7 @@ class TestTransactions(unittest.TestCase):
             ['michalis', 10],
             ['evdoxia', 500]
         ]
-        blockchain.transfer('stefanos', coinTransfer4)
+        blockchain.transfer('stefanos', coinTransfer4, stefanosPrivateKeyASCII)
         assert blockchain.getAccountTotal('stefanos') == 55
         assert blockchain.getAccountTotal('evdoxia') == 40
         assert blockchain.getAccountTotal('michalis') == 45

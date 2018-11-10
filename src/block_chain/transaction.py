@@ -99,7 +99,7 @@ class Transaction:
         # get the value from all the inputs
         totalValue = 0  # this is the total value of the inputs
         for transactionInput in self.listOfInputs:
-            totalValue = totalValue + transactionInput.
+            totalValue = totalValue + 2
 
 class TransactionInput:
     """

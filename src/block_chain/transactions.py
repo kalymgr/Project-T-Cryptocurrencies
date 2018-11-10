@@ -1,9 +1,12 @@
 # Updated version of my classes (9-11-2018)
 # Maybe I can make a Blockchain class method that waits for 5 minutes and then tries to execute a transaction. It will be called
 # in the constructor method. Or a transaction can be executed each time one wishes to transfer money
-
+import binascii
 from collections import OrderedDict
-from Crypto.Hash import SHA256
+from Crypto.Hash import SHA256, SHA
+from Crypto.PublicKey import RSA
+from Crypto.Signature import PKCS1_v1_5
+
 
 class TransactionInput:
     """
@@ -172,6 +175,16 @@ class Transaction:
         self.__outCounter = 0  # the counter for the number of transaction outputs
 
         self.__transactionHash = None  # the transactionHash
+
+        self.__transactionSignature = None  # the signed transaction hash - the signature of the transaction
+
+    def setTransactionSignature(self, signedTransactionHash: str):
+        """
+        Method that sets the signed transaction hash (the signature of the transaction)
+        :param signedTransactionHash:
+        :return:
+        """
+        self.__transactionSignature = signedTransactionHash
 
     def getTransactionHash(self) -> str:
         """
@@ -430,10 +443,11 @@ class Blockchain:
 
         self.__transactionInputPool[tInput.getRecipient()].append(tInput)
 
-    def __executeTransaction(self, transaction: Transaction):
+    def __executeTransaction(self, transaction: Transaction, privateKey: str):
         """
         This method executes the transaction and gives back the change
         :param transaction:
+        :param privateKey: the private key of the sender
         :return:
         """
 
@@ -455,8 +469,11 @@ class Blockchain:
                 self.__transactionInputPool[txInput.getRecipient()] = list()
             self.__transactionInputPool.get(txInput.getRecipient()).append(txInput)
 
-        # add the transaction to the transaction list of the blockchain, if it is not empty
+        # sign the transaction and add it to the blockchain, if it is not empty
         if transaction.getInCounter()>0 and transaction.getOutCounter()>0:
+            # sign the transaction
+            self.signTransaction(transaction, privateKey)
+            # add it to the blockchain
             self.__transactionList.append(transaction)
 
     def printAccountTotals(self):
@@ -476,13 +493,14 @@ class Blockchain:
                 " is " + str(self.getAccountTotal(accountAddress))
             )
 
-    def transfer(self, sender: str, coinTransfers: list):
+    def transfer(self, sender: str, coinTransfers: list, privateKey: str):
         """
         Method for transferring value to lots of recipients. Because of the way that the method __transferCoins
         work, coin transfers will start adding to the transaction output list untill a coin transfer is found
         that cannot be made (insufficient recipient)
         :param sender: the sender address
         :param coinTransfers: the list of coin transfers
+        :param privateKey: the private key of the sender
         :return:
         """
         t = Transaction(sender)  # initiate a transaction for the sender
@@ -492,4 +510,37 @@ class Blockchain:
             result = self.__transferCoins(sender, coinTransfer[0], coinTransfer[1], t)
             if result is None or result is False:
                 break
-        self.__executeTransaction(t)
+        self.__executeTransaction(t, privateKey)
+
+    def signTransaction(self, transaction: Transaction, privateKeyString: str) -> bool:
+        """
+        Method that signs the transaction and adds the signature to the transaction data that will be appended
+        to the blockchain
+        :param transaction: the Transaction to be signed
+        :param privateKeyString: the private key of the signer
+        :return: True if the signature has been signed, else false
+        """
+
+        # get the transaction hash string
+        transactionString = transaction.getTransactionHash()
+
+        if privateKeyString is None:  # empty private key
+            return False
+        else:
+            # create the private key in a form that will make signing possible
+            privateKey = RSA.importKey(binascii.unhexlify(privateKeyString))
+
+            # create the signer
+            signer = PKCS1_v1_5.new(privateKey)
+            # create the hash of the transaction
+            h = SHA.new(transactionString.encode('utf8'))
+            # sign the hash of the transaction with the private key
+            signedTransactionHash = binascii.hexlify(signer.sign(h)).decode('ascii')
+            # set the transaction property (signedTransactionHash) and return true
+            transaction.setTransactionSignature(signedTransactionHash)
+            return True
+
+
+
+
+

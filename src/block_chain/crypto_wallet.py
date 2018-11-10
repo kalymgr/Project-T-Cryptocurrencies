@@ -52,6 +52,22 @@ class CryptoWallet:
             'private_key': binascii.hexlify(privateKey.exportKey(format='DER')).decode('ascii'),
             'public_key': binascii.hexlify(publicKey.exportKey(format='DER')).decode('ascii')
         }
-
         return walletKeySet
+
+    @staticmethod
+    def getPrivateKeyasASCII(privateKey):
+        """
+        :param privateKey: RSA Object
+        :return: the private key as ascii
+        """
+        return binascii.hexlify(privateKey.exportKey(format='DER')).decode('ascii')
+
+    @staticmethod
+    def getPublicKeyAsASCII(publicKey):
+        """
+        :param publicKey: RSA object
+        :return: the public key as ascii
+        """
+        return binascii.hexlify(publicKey.exportKey(format='DER')).decode('ascii')
+
 
