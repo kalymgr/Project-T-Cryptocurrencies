@@ -30,6 +30,7 @@ class TestTransactions(unittest.TestCase):
         blockchain = Blockchain()  # initialize the blockchain
         blockchain.printAccountTotals()
 
+        blockchain.getAccountTotal('a')
         # first coin transfer
         coinTransfer1 = [
             ['evdoxia', 10], ['michalis', 10], ['michalis', 5]
@@ -64,12 +65,14 @@ class TestTransactions(unittest.TestCase):
         assert blockchain.getAccountTotal('michalis') == 35
 
         # try to transfer coins. The first transfer is feasible but the second won't be.
-        # In this case, none of the transfers should be made
+        # In this case, only the first transfer will be made
         coinTransfer4 = [
             ['michalis', 10],
             ['evdoxia', 500]
         ]
         blockchain.transfer('stefanos', coinTransfer4)
-        assert blockchain.getAccountTotal('stefanos') == 65
+        assert blockchain.getAccountTotal('stefanos') == 55
         assert blockchain.getAccountTotal('evdoxia') == 40
-        assert blockchain.getAccountTotal('michalis') == 35
+        assert blockchain.getAccountTotal('michalis') == 45
+        print('FINAL')
+        blockchain.printAccountTotals()

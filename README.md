@@ -4,5 +4,7 @@
 <h2>Transactions</h2>
 Each transaction has one owner (the one who sends the money) and many recipients<br>
 Transaction rules:
-- If a user tries to transfer some money to various recipients and his account 
-total is not enough, then None of his transfers should be made.
+- Let's suppose a sender wants to send money to many recipients. Then a list of the coin
+transfers is made. The list of coin transfers will start executing untill a coin transfer is
+found that surpasses the sender account total. <b>This functionality may change, depending on 
+the needs.</b>

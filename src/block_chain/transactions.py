@@ -84,7 +84,7 @@ class TransactionOutput:
     def getSender(self) -> str:
         """
         returns the sender of the tx output
-        :return:
+        :return: the sender address
         """
         return self.__sender
 
@@ -99,7 +99,7 @@ class TransactionOutput:
     def getRecipient(self)-> str:
         """
         returns the recipient of the tx output
-        :return:
+        :return: the recipient address
         """
         return self.__recipient
 
@@ -151,7 +151,7 @@ class Transaction:
     def getTransactionInputsTotalValue(self) -> int:
         """
         method that calculates and returns the total value of the transaction inputs
-        :return the total value of the transaction inputs (int)
+        :return: the total value of the transaction inputs (int)
         """
         totalValue = 0
         for tInput in self.__transactionInputList:
@@ -162,7 +162,7 @@ class Transaction:
         """
         method that calculates and returns the total value of the transaction inputs
         :param recipient: the recipient address of the transaction input
-        :returns the value of the transaction inputs for the specific recipient (int)
+        :return: the value of the transaction inputs for the specific recipient (int)
         """
         recipientValue = 0
         for tInput in self.__transactionInputList:
@@ -173,7 +173,7 @@ class Transaction:
     def getTransactionOutputsTotalValue(self) -> int:
         """
         method for calculating the total value of all transaction outputs
-        :returns the total value of all transaction outputs in taliroshis (int)
+        :return: the total value of all transaction outputs in taliroshis (int)
         """
         transactionOutputsTotalValue = 0
         for tOutput in self.__transactionOutputList:
@@ -210,7 +210,7 @@ class Transaction:
         Scenario A: The transaction either executes in total (for all outputs) or fails.
         Scenario B: Some of the transaction outputs are executed and others fails.
         In this implementation we implement only Scenario A
-        :returns True if properly executed, else False (eg in case of not sufficient input value)
+        :return: True if properly executed, else False (eg in case of not sufficient input value)
         """
         # first check that the total value of outputs is ge to the total value of inputs. If not, return false
         if self.getTransactionOutputsTotalValue < self.getTransactionInputsTotalValue:
@@ -228,9 +228,9 @@ class Blockchain:
         """
         self.__transactionInputPool = dict()  # pool with transaction inputs. These are the unspent money
         self.__transactionList = list()  # the list that contains all the executed transactions
-        self.addInitialTransactionInputs()  # add money to the system
+        self.__addInitialTransactionInputs()  # add money to the system
 
-    def transferCoins(self, sender: str, recipient: str, value: int, transaction: Transaction=None):
+    def __transferCoins(self, sender: str, recipient: str, value: int, transaction: Transaction=None):
         """
         Method for transferring coins. First it checks if the transfer can be made. If yes, it removes money from the
         transaction input pool and adds the trasanction inputs needed to a new Transaction. It returns the transaction.
@@ -240,7 +240,7 @@ class Blockchain:
         :param recipient: the recipient of the coins
         :param value: the value of the coins transfered
         :param transaction: the existing transaction, or None if it's a new one
-        :returns Transaction object if coins can be transferred, else None
+        :return: Transaction object if coins can be transferred, else None
         """
 
         # create a new transaction, if no Transaction parameter was given
@@ -287,7 +287,9 @@ class Blockchain:
         """
         method for getting the total for an account address. It calculates the total from the transaction inputs that exist
         in the transaction input pool
+        :return: the account total (int)
         """
+
         accountAddressInputs = self.__transactionInputPool.get(accountAddress)
         if accountAddressInputs is None:  # case the address does not exist in the transaction input pool
             return 0
@@ -297,18 +299,18 @@ class Blockchain:
                 total = total + tInput.getValue()
             return total
 
-    def addInitialTransactionInputs(self):
+    def __addInitialTransactionInputs(self):
         """
         method for adding initial transaction inputs to the system. Just pouring some money into the system.
         """
-        self.addTransactionInputToPool(TransactionInput(20, 'michalis', '-', 0))
-        self.addTransactionInputToPool(TransactionInput(30, 'evdoxia', '-', 0))
-        self.addTransactionInputToPool(TransactionInput(10, 'stefanos', '-', 0))
-        self.addTransactionInputToPool(TransactionInput(20, 'stefanos', '-', 0))
-        self.addTransactionInputToPool(TransactionInput(30, 'stefanos', '-', 0))
-        self.addTransactionInputToPool(TransactionInput(40, 'stefanos', '-', 0))
+        self.__addTransactionInputToPool(TransactionInput(20, 'michalis', '-', 0))
+        self.__addTransactionInputToPool(TransactionInput(30, 'evdoxia', '-', 0))
+        self.__addTransactionInputToPool(TransactionInput(10, 'stefanos', '-', 0))
+        self.__addTransactionInputToPool(TransactionInput(20, 'stefanos', '-', 0))
+        self.__addTransactionInputToPool(TransactionInput(30, 'stefanos', '-', 0))
+        self.__addTransactionInputToPool(TransactionInput(40, 'stefanos', '-', 0))
 
-    def addTransactionInputToPool(self, tInput: TransactionInput):
+    def __addTransactionInputToPool(self, tInput: TransactionInput):
         """
         method that adds a transaction input to the transaction input pool. The transaction input pool is a dictionary
         whose keys are the recipient addresses and the values the transaction input objects.
@@ -321,7 +323,7 @@ class Blockchain:
 
         self.__transactionInputPool[tInput.getRecipient()].append(tInput)
 
-    def executeTransaction(self, transaction: Transaction):
+    def __executeTransaction(self, transaction: Transaction):
         """
         This method executes the transaction and gives back the change
         :param transaction:
@@ -364,7 +366,9 @@ class Blockchain:
 
     def transfer(self, sender: str, coinTransfers: list):
         """
-        Method for transferring value to lots of recipients
+        Method for transferring value to lots of recipients. Because of the way that the method __transferCoins
+        work, coin transfers will start adding to the transaction output list untill a coin transfer is found
+        that cannot be made (insufficient recipient)
         :param sender: the sender address
         :param coinTransfers: the list of coin transfers
         :return:
@@ -373,7 +377,7 @@ class Blockchain:
 
         for coinTransfer in coinTransfers:
             # make the coin transfer if possible, else stop the coin transfers
-            result = self.transferCoins(sender, coinTransfer[0], coinTransfer[1], t)
+            result = self.__transferCoins(sender, coinTransfer[0], coinTransfer[1], t)
             if result is None or result is False:
                 break
-        self.executeTransaction(t)
+        self.__executeTransaction(t)
