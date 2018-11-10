@@ -1,5 +1,5 @@
 import unittest
-from src.block_chain.transactions import Blockchain
+from src.block_chain.transactions import Blockchain, Transaction, TransactionInput, TransactionOutput
 
 
 class TestTransactions(unittest.TestCase):
@@ -76,3 +76,24 @@ class TestTransactions(unittest.TestCase):
         assert blockchain.getAccountTotal('michalis') == 45
         print('FINAL')
         blockchain.printAccountTotals()
+
+    def test_convertTransactionToDoubleHash(self):
+        """
+        test the conversion of a transaction to ordered dictionary
+        :return:
+        """
+        t = Transaction('michalis')
+        txInputList = [
+            TransactionInput(2, 'stefanos', '', 0),
+            TransactionInput(3, 'someone', 'aaa', 2)
+        ]
+        txOutputList = [
+            TransactionOutput(2, 'stefanos', 'a'),
+            TransactionOutput(5, 'evdoxia', 'b')
+        ]
+        # add tx inputs and outputs to the transaction
+        t.extendTransactionInputList(txInputList)
+        for txOutput in txOutputList:
+            t.addTransactionOutput(txOutput)
+
+        print(t.getDoubleHash256())

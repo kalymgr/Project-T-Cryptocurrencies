@@ -2,6 +2,8 @@
 # Maybe I can make a Blockchain class method that waits for 5 minutes and then tries to execute a transaction. It will be called
 # in the constructor method. Or a transaction can be executed each time one wishes to transfer money
 
+from collections import OrderedDict
+from Crypto.Hash import SHA256
 
 class TransactionInput:
     """
@@ -18,6 +20,20 @@ class TransactionInput:
         self.__recipient = recipient
         self.__referenceNo = referenceNo
         self.__previousTransactionHash = previousTransactionHash
+
+    def getOrderedDict(self) -> OrderedDict:
+        """
+        Method that returns the transaction input as an ordered dictionary
+        :return: the TransactionInput object as an OrderedDictionary
+        """
+        return OrderedDict(
+            {
+                'value': self.__value,
+                'recipient': self.__recipient,
+                'referenceNo': self.__referenceNo,
+                'previousTransactionHash': self.__previousTransactionHash
+            }
+        )
 
     def getValue(self) -> int:
         """
@@ -65,6 +81,19 @@ class TransactionOutput:
         self.__value = value
         self.__sender = sender
         self.__recipient = recipient
+
+    def getOrderedDict(self) -> OrderedDict:
+        """
+        Method that returns the tx output object as an ordered dict
+        :return: the TransactionOutput object as OrderedDictionary
+        """
+        return OrderedDict(
+            {
+                'value': self.__value,
+                'sender': self.__sender,
+                'recipient': self.__recipient
+            }
+        )
 
     def getValue(self) -> int:
         """
@@ -117,6 +146,8 @@ class Transaction:
     class that handles transactions
     """
 
+    VERSION_NO = 1  # the version number for the transactions
+
     def __init__(self, senderAddress: str, transactionInputList: list=None, transactionOutputList: list=None):
         """
         constructor method.
@@ -125,7 +156,7 @@ class Transaction:
         :param transactionInputList: a list with the TransactionInput objects
         :param transactionOutputList: a list with the TransactionOutput objects
         """
-        self.senderAddress = senderAddress
+        self.__senderAddress = senderAddress # the address of the sender
         if transactionInputList is None:
             self.__transactionInputList = list()  # new transaction input list
         else:
@@ -134,6 +165,85 @@ class Transaction:
             self.__transactionOutputList = list()  # new transaction output list
         else:
             self.__transactionOutputList = transactionOutputList  # set the transaction output list
+
+        self.__versionNo = Transaction.VERSION_NO  # the version number of the transaction. One for now.
+
+        self.__inCounter = 0  # the counter for the number of transaction inputs
+        self.__outCounter = 0  # the counter for the number of transaction outputs
+
+        self.__transactionHash = None  # the transactionHash
+
+
+
+    def getOrderedDict(self) -> OrderedDict:
+        """
+        Method that returns the transaction object to an ordered dict, which includes the transaction inputs and
+        outputs
+        :return: the transaction object as an ordered dictionary
+        """
+
+        # first create the string for the transaction inputs
+        txInputsString = ''
+        for txInput in self.__transactionInputList:
+            txInputsString += str(txInput.getOrderedDict())
+
+        # then create the string for the transaction outputs
+        txOutputsString = ''
+        for txOutput in self.__transactionOutputList:
+            txOutputsString += str(txOutput.getOrderedDict())
+
+        # finally create and return the ordered dictionary
+        return OrderedDict(
+            {
+                'sender': self.__senderAddress,
+                'txInputList': txInputsString,
+                'txOutputList': txOutputsString,
+                'versionNo': self.__versionNo,
+                'inCounter': self.__inCounter,
+                'outCounter': self.__outCounter
+            }
+        )
+
+    def getDoubleHash256(self) -> str:
+        """
+        Method that calculates the double SHA256 hash for a transaction string. Used for merkle tree
+        :return: the double hash string for the transaction
+        """
+        transactionString = str(self.getOrderedDict())
+        hash = SHA256.new(transactionString.encode('utf8'))
+        doubleHash = SHA256.new(hash.hexdigest().encode('utf8'))
+
+        return doubleHash.hexdigest()
+
+    def getSender(self) -> str:
+        """
+        Method that returns the sender address
+        :return: the sender address
+        """
+        return self.__senderAddress
+
+
+    def setTransactionHash(self):
+        """
+        method that calculates and sets the transaction hash of the transaction. It is called when the transaction
+        inputs and outputs are ok and the transaction is ready to be executed
+        :return:
+        """
+        self.__transactionHash = self.getDoubleHash256()
+
+    def getInCounter(self) -> int:
+        """
+        returns the number of transaction inputs
+        :return: in-counter. Number of transaction inputs
+        """
+        return self.__inCounter
+
+    def getOutCounter(self) -> int:
+        """
+        returns the number of transaction outputs
+        :return: out-counter. Number of transaction outputs
+        """
+        return self.__outCounter
 
     def getTransactionOutputList(self)-> list:
         """
@@ -182,19 +292,21 @@ class Transaction:
 
     def extendTransactionInputList(self, tInputsNecessary: list):
         """
-        Method that extends the tx input list
+        Method that extends the tx input list and increases the in-counter
         :param tInputsNecessary: list of transaction input objects
         :return:
         """
-        self.__transactionInputList.extend(tInputsNecessary)
+        self.__transactionInputList.extend(tInputsNecessary)  # add the list of inputs
+        self.__inCounter += len(tInputsNecessary)  # increase the in-counter
 
     def addTransactionOutput(self, txOutput: TransactionOutput):
         """
-        method for adding a tx output to the transaction output list
+        method for adding a tx output to the transaction output list and increasing the out-counter
         :param txOutput: the TransactionOutput object
         :return:
         """
-        self.__transactionOutputList.append(txOutput)
+        self.__transactionOutputList.append(txOutput)  # add the output
+        self.__outCounter += 1  # increase the out-counter
 
     def printTransactionInputsRecipientValue(self, recipient: str):
         """
@@ -203,18 +315,6 @@ class Transaction:
         """
         print('- The total value of the transaction inputs for recipient ' + recipient + ' is ' +
               str(self.getTransactionInputsRecipientValue(recipient)))
-
-    def execute(self) -> bool:
-        """
-        method for executing the transaction
-        Scenario A: The transaction either executes in total (for all outputs) or fails.
-        Scenario B: Some of the transaction outputs are executed and others fails.
-        In this implementation we implement only Scenario A
-        :return: True if properly executed, else False (eg in case of not sufficient input value)
-        """
-        # first check that the total value of outputs is ge to the total value of inputs. If not, return false
-        if self.getTransactionOutputsTotalValue < self.getTransactionInputsTotalValue:
-            return False
 
 
 class Blockchain:
@@ -332,8 +432,9 @@ class Blockchain:
 
         # calculate the change and make an extra transaction output
         change = transaction.getTransactionInputsTotalValue() - transaction.getTransactionOutputsTotalValue()
-        changeTransactionOutput = TransactionOutput(change, transaction.senderAddress, transaction.senderAddress)
-        transaction.addTransactionOutput(changeTransactionOutput)  # add change tx output to the list of tx output
+        if change > 0:  # if there is change, then make the extra transaction output
+            changeTransactionOutput = TransactionOutput(change, transaction.getSender(), transaction.getSender())
+            transaction.addTransactionOutput(changeTransactionOutput)  # add change tx output to the list of tx output
 
         # for each transaction output, create a transaction input that will be added to the blockchain pool
         for txOutput in transaction.getTransactionOutputList():
@@ -344,8 +445,10 @@ class Blockchain:
                 self.__transactionInputPool[txInput.getRecipient()] = list()
             self.__transactionInputPool.get(txInput.getRecipient()).append(txInput)
 
-        # add the transaction to the transaction list of the blockchain
-        self.__transactionList.append(transaction)
+        # add the transaction to the transaction list of the blockchain, if it is not empty
+        if transaction.getInCounter()>0 and transaction.getOutCounter()>0:
+            transaction.setTransactionHash()
+            self.__transactionList.append(transaction)
 
     def printAccountTotals(self):
         """
