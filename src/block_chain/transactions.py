@@ -14,10 +14,40 @@ class TransactionInput:
         :param recipient: the address of the recipient
         :param referenceNo: the reference number of the relevant output from a previous transaction
         """
-        self.value = value
-        self.recipient = recipient
-        self.referenceNo = referenceNo
-        self.previousTransactionHash = previousTransactionHash
+        self.__value = value
+        self.__recipient = recipient
+        self.__referenceNo = referenceNo
+        self.__previousTransactionHash = previousTransactionHash
+
+    def getValue(self) -> int:
+        """
+        method that returns the value of the tx input
+        :return: the value of the tx input
+        """
+        return self.__value
+
+    def setValue(self, value: int):
+        """
+        method that sets the tx input value
+        :param value: the tx input value (int)
+        :return:
+        """
+        self.__value = value
+
+    def getRecipient(self) -> str:
+        """
+        Method for getting the tx input recipient
+        :return: the recipient address
+        """
+        return self.__recipient
+
+    def setRecipient(self, recipient: str):
+        """
+        Method that sets the recipient
+        :param recipient:  the recipient address
+        :return:
+        """
+        self.__recipient = recipient
 
 
 class TransactionOutput:
@@ -32,9 +62,54 @@ class TransactionOutput:
         :param sender: the sender (str)
         :param recipient: the recipient (str)
         """
-        self.value = value
-        self.sender = sender
-        self.recipient = recipient
+        self.__value = value
+        self.__sender = sender
+        self.__recipient = recipient
+
+    def getValue(self) -> int:
+        """
+        method for getting the value
+        :return: the value of the tx output
+        """
+        return self.__value
+
+    def setValue(self, value: int):
+        """
+        set the value of the tx output
+        :param value:
+        :return:
+        """
+        self.__value = value
+
+    def getSender(self) -> str:
+        """
+        returns the sender of the tx output
+        :return:
+        """
+        return self.__sender
+
+    def setSender(self, sender: str):
+        """
+        sets the sender of the tx output
+        :param sender: sender address
+        :return:
+        """
+        self.__sender = sender
+
+    def getRecipient(self)-> str:
+        """
+        returns the recipient of the tx output
+        :return:
+        """
+        return self.__recipient
+
+    def setRecipient(self, recipient: str):
+        """
+        sets the recipient of the tx output
+        :param recipient:
+        :return:
+        """
+        self.__recipient = recipient
 
 
 class Transaction:
@@ -52,13 +127,26 @@ class Transaction:
         """
         self.senderAddress = senderAddress
         if transactionInputList is None:
-            self.transactionInputList = list()  # new transaction input list
+            self.__transactionInputList = list()  # new transaction input list
         else:
-            self.transactionInputList = transactionInputList  # set the transaction input list
+            self.__transactionInputList = transactionInputList  # set the transaction input list
         if transactionOutputList is None:
-            self.transactionOutputList = list()  # new transaction output list
+            self.__transactionOutputList = list()  # new transaction output list
         else:
-            self.transactionOutputList = transactionOutputList  # set the transaction output list
+            self.__transactionOutputList = transactionOutputList  # set the transaction output list
+
+    def getTransactionOutputList(self)-> list:
+        """
+        method that returns the list of transaction output objects
+        :return: list of TransactionOutput Objects
+        """
+        return self.__transactionOutputList
+
+    def getTransactionInputList(self) -> list:
+        """
+        method for returning the list of transaction inputs
+        :return: a list of TransactionInput objects
+        """
 
     def getTransactionInputsTotalValue(self) -> int:
         """
@@ -66,8 +154,8 @@ class Transaction:
         :return the total value of the transaction inputs (int)
         """
         totalValue = 0
-        for tInput in self.transactionInputList:
-            totalValue = totalValue + tInput.value
+        for tInput in self.__transactionInputList:
+            totalValue = totalValue + tInput.getValue()
         return totalValue
 
     def getTransactionInputsRecipientValue(self, recipient: str) -> int:
@@ -77,7 +165,7 @@ class Transaction:
         :returns the value of the transaction inputs for the specific recipient (int)
         """
         recipientValue = 0
-        for tInput in self.transactionInputList:
+        for tInput in self.__transactionInputList:
             if tInput.recipient == recipient:
                 recipientValue = recipientValue + tInput.value
         return recipientValue
@@ -88,9 +176,25 @@ class Transaction:
         :returns the total value of all transaction outputs in taliroshis (int)
         """
         transactionOutputsTotalValue = 0
-        for tOutput in self.transactionOutputList:
-            transactionOutputsTotalValue = transactionOutputsTotalValue + tOutput.value
+        for tOutput in self.__transactionOutputList:
+            transactionOutputsTotalValue = transactionOutputsTotalValue + tOutput.getValue()
         return transactionOutputsTotalValue
+
+    def extendTransactionInputList(self, tInputsNecessary: list):
+        """
+        Method that extends the tx input list
+        :param tInputsNecessary: list of transaction input objects
+        :return:
+        """
+        self.__transactionInputList.extend(tInputsNecessary)
+
+    def addTransactionOutput(self, txOutput: TransactionOutput):
+        """
+        method for adding a tx output to the transaction output list
+        :param txOutput: the TransactionOutput object
+        :return:
+        """
+        self.__transactionOutputList.append(txOutput)
 
     def printTransactionInputsRecipientValue(self, recipient: str):
         """
@@ -122,8 +226,8 @@ class Blockchain:
         """
         constructor method
         """
-        self.transactionInputPool = dict()  # pool with transaction inputs. These are the unspent money
-        self.transactionList = list()  # the list that contains all the executed transactions
+        self.__transactionInputPool = dict()  # pool with transaction inputs. These are the unspent money
+        self.__transactionList = list()  # the list that contains all the executed transactions
         self.addInitialTransactionInputs()  # add money to the system
 
     def transferCoins(self, sender: str, recipient: str, value: int, transaction: Transaction=None):
@@ -149,32 +253,32 @@ class Blockchain:
         amountInTransactionOutputs = transaction.getTransactionOutputsTotalValue()
 
         if (amountInPool + amountInTransactionInputs) < (amountInTransactionOutputs + value) \
-                and self.transactionInputPool.get(sender) is not None:
+                and self.__transactionInputPool.get(sender) is not None:
             return None  # the money of the sender are not enough to make the transaction
 
         # check if the the transaction inputs in the transaction are enough to make the coin transfer
         # if the transaction inputs are not enough, then get more from the pool
         if transaction.getTransactionInputsTotalValue() < transaction.getTransactionOutputsTotalValue() + value:
             i = 0
-            senderTransactionInputs = self.transactionInputPool.get(sender)  # all the transaction inputs of the sender
+            senderTransactionInputs = self.__transactionInputPool.get(sender)  # all the transaction inputs of the sender
             tInputsNecessary = list()  # transaction inputs necessary
             tInputsTotal = 0  # the total of the transaction inputs necessary
-            while i < len(senderTransactionInputs) and tInputsTotal + senderTransactionInputs[i].value < value:
+            while i < len(senderTransactionInputs) and tInputsTotal + senderTransactionInputs[i].getValue() < value:
                 tInputsNecessary.append(senderTransactionInputs[i])  # add the tr. input to the list of those necessary
                 # remove the t. input from the pool
-                self.transactionInputPool.get(sender).remove(senderTransactionInputs[i])
+                self.__transactionInputPool.get(sender).remove(senderTransactionInputs[i])
                 tInputsTotal = tInputsTotal + senderTransactionInputs[i]
                 i = i + 1
             tInputsNecessary.append(senderTransactionInputs[i])  # append the last transaction needed
-            tInputsTotal = tInputsTotal + senderTransactionInputs[i].value  # add the last transaction needed to the total
+            tInputsTotal = tInputsTotal + senderTransactionInputs[i].getValue()  # add the last transaction needed to the total
             # also remove this transaction input from the pool
-            self.transactionInputPool.get(sender).remove(senderTransactionInputs[i])
+            self.__transactionInputPool.get(sender).remove(senderTransactionInputs[i])
 
             # Add the transaction input list to the transaction
-            transaction.transactionInputList.extend(tInputsNecessary)
+            transaction.extendTransactionInputList(tInputsNecessary)
 
         # add a transaction output to the transaction
-        transaction.transactionOutputList.append(TransactionOutput(value, sender, recipient))
+        transaction.addTransactionOutput(TransactionOutput(value, sender, recipient))
 
         return Transaction
         # make the transaction
@@ -184,13 +288,13 @@ class Blockchain:
         method for getting the total for an account address. It calculates the total from the transaction inputs that exist
         in the transaction input pool
         """
-        accountAddressInputs = self.transactionInputPool.get(accountAddress)
+        accountAddressInputs = self.__transactionInputPool.get(accountAddress)
         if accountAddressInputs is None:  # case the address does not exist in the transaction input pool
             return 0
         else:
             total = 0
             for tInput in accountAddressInputs:  # for each of the accounts transaction inputs
-                total = total + tInput.value
+                total = total + tInput.getValue()
             return total
 
     def addInitialTransactionInputs(self):
@@ -210,12 +314,12 @@ class Blockchain:
         whose keys are the recipient addresses and the values the transaction input objects.
         :param tInput: the transaction input object that will be added to the pool
         """
-        if self.transactionInputPool.get(
-                tInput.recipient) is None:  # if the specific recipient does not exist in the dictionary
-            self.transactionInputPool[
-                tInput.recipient] = list()  # create a list with the recipient's transaction inputs
+        if self.__transactionInputPool.get(
+                tInput.getRecipient()) is None:  # if the specific recipient does not exist in the dictionary
+            self.__transactionInputPool[
+                tInput.getRecipient()] = list()  # create a list with the recipient's transaction inputs
 
-        self.transactionInputPool[tInput.recipient].append(tInput)
+        self.__transactionInputPool[tInput.getRecipient()].append(tInput)
 
     def executeTransaction(self, transaction: Transaction):
         """
@@ -227,19 +331,19 @@ class Blockchain:
         # calculate the change and make an extra transaction output
         change = transaction.getTransactionInputsTotalValue() - transaction.getTransactionOutputsTotalValue()
         changeTransactionOutput = TransactionOutput(change, transaction.senderAddress, transaction.senderAddress)
-        transaction.transactionOutputList.append(changeTransactionOutput)  # added to the list of tx outputs
+        transaction.addTransactionOutput(changeTransactionOutput)  # add change tx output to the list of tx output
 
         # for each transaction output, create a transaction input that will be added to the blockchain pool
-        for txOutput in transaction.transactionOutputList:
-            txInput = TransactionInput(txOutput.value, txOutput.recipient, '-', 0)
+        for txOutput in transaction.getTransactionOutputList():
+            txInput = TransactionInput(txOutput.getValue(), txOutput.getRecipient(), '-', 0)
             # if the recipient address is a new recipient, then add it to the blockchain tx input pool
-            txInputRecipient = self.transactionInputPool.get(txInput.recipient)  # the recipient of the input
+            txInputRecipient = self.__transactionInputPool.get(txInput.getRecipient())  # the recipient of the input
             if txInputRecipient is None:
-                self.transactionInputPool[txInput.recipient] = list()
-            self.transactionInputPool.get(txInput.recipient).append(txInput)
+                self.__transactionInputPool[txInput.getRecipient()] = list()
+            self.__transactionInputPool.get(txInput.getRecipient()).append(txInput)
 
         # add the transaction to the transaction list of the blockchain
-        self.transactionList.append(transaction)
+        self.__transactionList.append(transaction)
 
     def printAccountTotals(self):
         """
@@ -248,7 +352,7 @@ class Blockchain:
         """
 
         # get all the keys (account addresses) of the transaction input pool
-        accountAddresses = list(self.transactionInputPool.keys())
+        accountAddresses = list(self.__transactionInputPool.keys())
 
         print('\n--- BLOCKCHAIN ACCOUNT TOTALS ---')
         # for each key (account address), print the account total
