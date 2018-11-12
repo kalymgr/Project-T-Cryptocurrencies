@@ -1,59 +1,48 @@
 import unittest
-from src.block_chain.blockchain import Block
-from src.block_chain.transaction import Transaction
-from Crypto.Hash import SHA256
+
+from src.block_chain.crypto_wallet import CryptoWallet
+from src.block_chain.transactions import Blockchain, Transaction, TransactionInput, TransactionOutput, Block
 
 
 class TestBlock(unittest.TestCase):
+    """
+    class for testing the Block manipulation
+    """
+    blockChain = Blockchain()  # class variable used by the methods
 
-    def test_getMerkleRoot(self):
-
-        # test getMerkleRoot with odd number of transactions
-
-        # create some transactions
-        t1 = Transaction('me', 'him', 3)
-        t2 = Transaction('you', 'someone else', 5)
-        # get manually the merkle root
-        b = Block('chain', [t1.to_dict(), t2.to_dict()])
-
-        t1DoubleHash = b.doubleHash(str(t1.to_dict()))
-        t2DoubleHash = b.doubleHash(str(t2.to_dict()))
-        t1t2 = t1DoubleHash + t2DoubleHash
-        t1t2DoubleHash = b.doubleHash(t1t2)
-
-        # create the block
-        mRoot = b.getMerkleRoot()
-
-        assert t1t2DoubleHash == mRoot
-
-        # test getMerkleRoot with even number of transactions
-        t4 = Transaction('me', 'him', 3)  # create the transactions
-        t5 = Transaction('you', 'someone else', 5)
-        t6 = Transaction('him', 'uknown', 5)
-
-        b2 = Block('chain2', [t4.to_dict(), t5.to_dict(), t6.to_dict()])  # create the block
-
-        t4DoubleHash = b2.doubleHash(str(t4.to_dict()))
-        t5DoubleHash = b2.doubleHash(str(t5.to_dict()))
-        t6DoubleHash = b2.doubleHash(str(t6.to_dict()))
-        t4t5 = t4DoubleHash + t5DoubleHash
-        t6t6 = t6DoubleHash + t6DoubleHash
-        t4t5DoubleHash = b2.doubleHash(t4t5)
-        t6t6DoubleHash = b2.doubleHash(t6t6)
-        t4t5t6t6 = t4t5DoubleHash + t6t6DoubleHash
-        t4t5t6t6DoubleHash = b2.doubleHash(t4t5t6t6)
-
-        assert t4t5t6t6DoubleHash == b2.getMerkleRoot()
-
-    def test_doubleHash256(self):
+    def setUp(self):
         """
-        testing the doubleHash256 method
+        Method that sets up some things needed for testing. It will be called for each test we will be running
         :return:
         """
-        # case of hashing a normal text
-        text = 'hello'
-        hash256 = SHA256.new(text.encode('utf8'))
-        doubleHash256 = SHA256.new(hash256.hexdigest().encode('utf8'))
+        # initialize a blockchain object for test purposes
+        self.blockChain = Blockchain()
+        txInputList1 = [
+            TransactionInput(2, 'stefanos', '0', 0),
+            TransactionInput(5, 'stefanos', '0', 0),
+        ]
+        txOutputList1 = [
+            TransactionOutput(3, 'stefanos', 'michalis'),
+            TransactionOutput(1, 'stefanos', 'evdoxia')
+        ]
+        t1 = Transaction('sender address', transactionInputList=txInputList1, transactionOutputList=txOutputList1)
 
-        b = Block()
-        assert doubleHash256.hexdigest() == b.doubleHash(text)
+        # initialize a block object for test purposes
+        self.block = Block(chain=self.blockChain.getChain(), transactions=[t1], nonce=0, previousHash='00')
+
+    def test_BlockCreation(self):
+        """
+        test method for creating the creation of a new block
+        :return:
+        """
+
+        b = self.block
+        print('end of testing')
+
+    def test_getOrderedDictionary(self):
+        """
+        testing the getOrderedDictionary
+        :return:
+        """
+
+        print(self.block.getOrderedDictionary())

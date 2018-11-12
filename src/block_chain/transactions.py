@@ -6,7 +6,8 @@ from collections import OrderedDict
 from Crypto.Hash import SHA256, SHA
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
-
+from time import time
+import hashlib, json
 from src.block_chain.crypto_wallet import CryptoWallet
 
 
@@ -353,6 +354,127 @@ class Transaction:
               str(self.getTransactionInputsRecipientValue(recipient)))
 
 
+class Block:
+    """
+    Class for implementing the transaction Blocks
+    """
+
+    def __init__(self, chain: list = None, transactions: list = None,
+                 nonce: int = None, previousHash: str = None):
+        """
+        Constructor method for the block. Sets the block content
+        :param chain: the chain that contains the blocks
+        :param nonce: the nonce
+        :param transactions: the list of the Transaction Objects
+        that will be included in the block
+        :param previousHash: the hash of the previous block
+        """
+
+        if chain is not None:  # if the constructor has data to initialize the object
+            self.blockNumber = len(chain) + 1
+            self.timeStamp = time()
+            self.transactions = transactions
+            self.nonce = nonce
+            self.previousHash = previousHash
+            self.merkleRoot = self.getMerkleRoot()  # set the merkle root of the block
+
+    def getOrderedDictionary(self) -> OrderedDict:
+        """
+        returns the block content as a dictionary.
+        The transactions are included as ordered dictionaries converted to string. Therefore, for the transactions
+        the result is a long string.
+        :return: the block content as dictionary
+        """
+
+        # setup the transactions dict
+        transactionsString = ''
+        for transaction in self.transactions:
+            transactionsString += str(transaction.getOrderedDict())
+
+        return OrderedDict({
+            'block_number': self.blockNumber,
+            'timestamp': self.timeStamp,
+            'transactions': transactionsString,  # long string-concatenation of the string of the tx ordered dicts
+            'nonce': self.nonce,
+            'previous_hash': self.previousHash,
+            'merkle_root': self.merkleRoot
+        })
+
+    def blockHash(self) -> str:
+        """
+        returns the SHA-256 hash of the block content
+        :return: the hash of the block content as dictionary
+        """
+        # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
+        block_string = json.dumps(self.to_dict(), sort_keys=True).encode()
+
+        return hashlib.sha256(block_string).hexdigest()
+
+    def doubleHash(self, transactionString: str):
+        """
+        method that calculates the double SHA256 hash for a transaction string. Used for merkle tree
+        :param transactionString:
+        :return: the double hash of the transaction string
+        """
+
+        textHash = SHA256.new(transactionString.encode('utf8'))
+        textDoubleHash = SHA256.new(textHash.hexdigest().encode('utf8'))
+
+        return textDoubleHash.hexdigest()
+
+    def getMerkleRoot(self) -> str:
+        """
+        method that calculates and returns the merkle root of the block.
+        It uses a two dimensional array (finalDoubleHashes) which stores the double hashes
+        of each level (the first dimension is the level and the second the items of the level)
+        :return: the merkle root if there are transactions, else None
+        """
+
+        if len(self.transactions) > 0:  # if there are transactions
+            # get the string content of all the transactions and put it in a list
+            transactionStrings = []
+            for transaction in self.transactions:
+                transactionStrings.append(str(transaction))
+
+            # if the number of items is even, add the last one, one more time
+            if len(transactionStrings) % 2 == 1:
+                transactionStrings.append(transactionStrings[len(transactionStrings) - 1])
+
+            # create the double hashes for all the transaction strings
+            transactionDoubleHashes = []
+            for tString in transactionStrings:
+                transactionDoubleHashes.append(
+                    self.doubleHash(tString)
+                )
+
+            l = len(transactionDoubleHashes)
+            iterNo = 0  # no of iteration. Level of the tree
+            finalDoubleHashes = list()
+            finalDoubleHashes.append(transactionDoubleHashes)
+            while l / 2 >= 1:  # till you reach the merkle root
+
+                iterNo = iterNo + 1  # increase the number of the iteration
+
+                # if the number of elements is even, add one more
+                if len(finalDoubleHashes[iterNo - 1]) % 2 == 1:
+                    finalDoubleHashes[iterNo - 1].append(
+                        finalDoubleHashes[iterNo - 1][len(finalDoubleHashes[iterNo - 1]) - 1])
+
+                finalDoubleHashes.append([])  # add a new empty list
+                # concatenate the double hashes and then double hash, until you get to the root
+                i = 0
+                for i in range(0, l, 2):
+                    finalDoubleHashes[iterNo].append(
+                        self.doubleHash(finalDoubleHashes[iterNo - 1][i] + finalDoubleHashes[iterNo - 1][i + 1])
+                    )
+                l = int(l / 2)  # divide to 2, to get the number of elements of the tree level above
+
+            return finalDoubleHashes[iterNo][0]
+
+        else:  # no transactions in the block
+            return None
+
+
 class Blockchain:
     """
     class that handles the blockchain
@@ -371,8 +493,14 @@ class Blockchain:
 
         self.__executeGenesisTransaction()  # the genesis transaction of the system
 
-        # self.__addInitialTransactionInputs()  # add money to the system
+        self.__chain = list()  # the chain of blocks
 
+    def getChain(self) -> list:
+        """
+        Method that returns the chain of the blocks
+        :return: list of Block objects
+        """
+        return self.__chain
 
     def getTransactionInputPool(self) -> dict:
         """
@@ -587,3 +715,5 @@ class Blockchain:
             # set the transaction property (signedTransactionHash) and return true
             transaction.setTransactionSignature(signedTransactionHash)
             return signedTransactionHash
+
+

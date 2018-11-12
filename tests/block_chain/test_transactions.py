@@ -1,7 +1,7 @@
 import unittest
 
 from src.block_chain.crypto_wallet import CryptoWallet
-from src.block_chain.transactions import Blockchain, Transaction, TransactionInput, TransactionOutput
+from src.block_chain.transactions import Blockchain, Transaction, TransactionInput, TransactionOutput, Block
 
 
 class TestTransactions(unittest.TestCase):
@@ -130,3 +130,6 @@ class TestTransactions(unittest.TestCase):
             assert transaction.getTransactionSignature() == \
                    blockchain.signTransaction(transaction,
                                               blockchain._Blockchain__cryptoWallet._CryptoWallet__privateKey)
+
+
+
