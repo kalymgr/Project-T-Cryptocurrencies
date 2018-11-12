@@ -7,6 +7,8 @@ from Crypto.Hash import SHA256, SHA
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 
+from src.block_chain.crypto_wallet import CryptoWallet
+
 
 class TransactionInput:
     """
@@ -348,7 +350,24 @@ class Blockchain:
         """
         self.__transactionInputPool = dict()  # pool with transaction inputs. These are the unspent money
         self.__transactionList = list()  # the list that contains all the executed transactions
+
         self.__addInitialTransactionInputs()  # add money to the system
+
+        # generate a crypto wallet for the genesis transaction
+        self.__cryptoWallet = CryptoWallet()
+
+        self.__name = 'TLC Creator'  # the name of the blockchain creator
+
+    def __executeGenesisTransaction(self):
+        """
+        Method that executes the genesis transaction (the first transaction of the blockchain)
+        :return:
+        """
+        coinTransfer = [
+            ['evdoxia', 30], ['michalis', 20], ['stefanos', 100]
+        ]
+        self.transfer(self.__name, coinTransfer, self.__cryptoWallet)
+
 
     def __transferCoins(self, sender: str, recipient: str, value: int, transaction: Transaction=None):
         """
@@ -539,8 +558,3 @@ class Blockchain:
             # set the transaction property (signedTransactionHash) and return true
             transaction.setTransactionSignature(signedTransactionHash)
             return True
-
-
-
-
-

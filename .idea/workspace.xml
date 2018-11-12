@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/block_chain/crypto_wallet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/crypto_wallet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/block_chain/transactions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/transactions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/lastfailed" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/lastfailed" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/nodeids" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/block_chain/test_transaction.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/block_chain/test_transactions.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/test_transactions.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,50 +19,51 @@
     <session id="2117071795">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="13" />
+          <entry key="project.closed" value="14" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.22" value="1" />
+          <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.32" value="1" />
           <entry key="project.open.time.4" value="2" />
           <entry key="project.open.time.5" value="3" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.60" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="14" />
+          <entry key="project.opened" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="html" value="2" />
           <entry key="md" value="1" />
-          <entry key="py" value="50" />
+          <entry key="py" value="56" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="HTML" value="2" />
           <entry key="Markdown" value="1" />
-          <entry key="Python" value="50" />
+          <entry key="Python" value="56" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="2394" />
-          <entry key="dummy" value="158" />
+          <entry key="dummy" value="162" />
           <entry key="html" value="40" />
           <entry key="md" value="712" />
-          <entry key="py" value="20388" />
+          <entry key="py" value="22035" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="40" />
           <entry key="Markdown" value="712" />
-          <entry key="PLAIN_TEXT" value="158" />
-          <entry key="Python" value="22782" />
+          <entry key="PLAIN_TEXT" value="162" />
+          <entry key="Python" value="24429" />
         </counts>
       </usages-collector>
     </session>
@@ -68,44 +71,23 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="225">
-                <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="474" column="56" selection-start-line="474" selection-start-column="56" selection-end-line="474" selection-end-column="56" />
+            <state relative-caret-position="451">
+              <caret line="368" column="68" selection-start-line="368" selection-start-column="68" selection-end-line="368" selection-end-column="68" />
               <folding>
                 <element signature="e#274#289#0" expanded="true" />
-                <marker date="1541843971491" expanded="true" signature="1060:1514" ph="..." />
-                <marker date="1541843971491" expanded="true" signature="1726:1893" ph="..." />
-                <marker date="1541843971491" expanded="true" signature="2789:3146" ph="..." />
-                <marker date="1541843971491" expanded="true" signature="5872:6105" ph="..." />
-                <marker date="1541843971491" expanded="true" signature="6141:6511" ph="..." />
-                <marker date="1541843971491" expanded="true" signature="8069:8219" ph="..." />
-                <marker date="1541843971491" expanded="true" signature="8248:8547" ph="..." />
-                <marker date="1541843971491" expanded="true" signature="8777:8950" ph="..." />
-                <marker date="1541843971491" expanded="true" signature="9226:9368" ph="..." />
-                <marker date="1541843971491" expanded="true" signature="11444:11581" ph="..." />
+                <marker date="1542004367116" expanded="true" signature="12695:13008" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/block_chain/test_transactions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="32" column="30" lean-forward="true" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
+            <state relative-caret-position="397">
+              <caret line="123" column="18" lean-forward="true" selection-start-line="123" selection-start-column="12" selection-end-line="123" selection-end-column="45" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -113,20 +95,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/block_chain/blockchain.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/block_chain/crypto_wallet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-end-line="10" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/block_chain/transaction.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="6" column="27" lean-forward="true" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+            <state relative-caret-position="638">
+              <caret line="37" column="31" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+              <folding>
+                <marker date="1542004425515" expanded="true" signature="611:982" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -159,14 +135,14 @@
         <option value="$PROJECT_DIR$/src/block_chain_node/blockchain_node.py" />
         <option value="$PROJECT_DIR$/src/block_chain_node/templates/index.html" />
         <option value="$PROJECT_DIR$/src/block_chain_client/templates/index.html" />
-        <option value="$PROJECT_DIR$/src/block_chain/crypto_wallet.py" />
         <option value="$PROJECT_DIR$/src/block_chain/blockchain.py" />
         <option value="$PROJECT_DIR$/tests/block_chain/test_block.py" />
+        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/block_chain/transaction.py" />
         <option value="$PROJECT_DIR$/tests/block_chain/test_transaction.py" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/block_chain/transactions.py" />
         <option value="$PROJECT_DIR$/tests/block_chain/test_transactions.py" />
+        <option value="$PROJECT_DIR$/src/block_chain/transactions.py" />
+        <option value="$PROJECT_DIR$/src/block_chain/crypto_wallet.py" />
       </list>
     </option>
   </component>
@@ -200,6 +176,23 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="block_chain" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project-t" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="block_chain_client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project-t" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project-t" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+              <item name="block_chain" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -224,7 +217,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.blockchain_client">
+  <component name="RunManager" selected="Python tests.pytest for test_transactions.TestTransactions.test_transactionSignaturesAndHashes">
     <configuration name="blockchain_client" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -291,7 +284,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_transactions.TestTransactions.test_initialAccountTotals" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_transactions.TestTransactions.test_transactionSignaturesAndHashes" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -302,24 +295,24 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_transactions.TestTransactions.test_initialAccountTotals&quot;" />
+      <option name="_new_target" value="&quot;test_transactions.TestTransactions.test_transactionSignaturesAndHashes&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python tests.pytest for test_transactions.TestTransactions.test_initialAccountTotals" />
       <item itemvalue="Python tests.pytest for test_transactions.TestTransactions.test_coinTransfer" />
       <item itemvalue="Python tests.pytest for test_transactions.TestTransactions.test_convertTransactionToOrderedDict" />
       <item itemvalue="Python tests.pytest for test_transactions.TestTransactions.test_convertTransactionToDoubleHash" />
       <item itemvalue="Python.blockchain_client" />
+      <item itemvalue="Python tests.pytest for test_transactions.TestTransactions.test_transactionSignaturesAndHashes" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.blockchain_client" />
+        <item itemvalue="Python tests.pytest for test_transactions.TestTransactions.test_transactionSignaturesAndHashes" />
         <item itemvalue="Python tests.pytest for test_transactions.TestTransactions.test_coinTransfer" />
+        <item itemvalue="Python.blockchain_client" />
         <item itemvalue="Python tests.pytest for test_transactions.TestTransactions.test_convertTransactionToDoubleHash" />
         <item itemvalue="Python tests.pytest for test_transactions.TestTransactions.test_convertTransactionToOrderedDict" />
-        <item itemvalue="Python tests.pytest for test_transactions.TestTransactions.test_initialAccountTotals" />
       </list>
     </recent_temporary>
   </component>
@@ -337,27 +330,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 11h 01m 20s.xml">
-      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 11h 02m 43s.xml">
-      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 11h 03m 21s.xml">
-      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 11h 20m 57s.xml">
-      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 11h 22m 17s.xml">
-      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 11h 28m 01s.xml">
-      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 11h 30m 29s.xml">
-      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 11h 31m 58s.xml">
       <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
     </history-entry>
@@ -367,23 +339,44 @@
     <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 11h 57m 28s.xml">
       <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 12h 02m 40s.xml">
+      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 12h 07m 19s.xml">
+      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 12h 08m 45s.xml">
+      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 12h 10m 22s.xml">
+      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_transactions_TestTransactions_test_coinTransfer - 2018.11.10 at 12h 11m 20s.xml">
+      <configuration name="pytest for test_transactions.TestTransactions.test_coinTransfer" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_transactions_TestTransactions_test_transactionSignaturesAndHashes - 2018.11.12 at 08h 19m 08s.xml">
+      <configuration name="pytest for test_transactions.TestTransactions.test_transactionSignaturesAndHashes" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_transactions_TestTransactions_test_transactionSignaturesAndHashes - 2018.11.12 at 08h 20m 35s.xml">
+      <configuration name="pytest for test_transactions.TestTransactions.test_transactionSignaturesAndHashes" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48480242" visible="true" weight="0.21496312" />
-      <window_info id="Structure" order="1" sideWeight="0.5151976" side_tool="true" visible="true" weight="0.21496312" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48481563" visible="true" weight="0.21496312" />
+      <window_info id="Structure" order="1" sideWeight="0.5151844" side_tool="true" visible="true" weight="0.21496312" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32939914" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.37017167" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.29399142" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3286334" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.43058568" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.13991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32832617" />
-      <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.26502147" />
+      <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.2537961" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.2725322" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -403,8 +396,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/tests/block_chain/test_transactions.py</url>
-          <line>79</line>
-          <option name="timeStamp" value="8" />
+          <line>128</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -497,20 +490,6 @@
       </provider>
     </entry>
     <entry file="file://E:/ProgramData/Anaconda3/Lib/site-packages/numpy/core/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/src/block_chain_client/blockchain_client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/block_chain/crypto_wallet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1130">
-          <caret line="40" column="28" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/block_chain_node/blockchain_node.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="99">
@@ -518,7 +497,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/block_chain/test_transaction.py" />
     <entry file="file://$PROJECT_DIR$/tests/block_chain/test_block.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
@@ -532,53 +510,71 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="225">
-            <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+          <first_editor relative-caret-position="232">
+            <caret line="8" selection-start-line="8" selection-end-line="8" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain_client/blockchain_client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="986">
+          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/block_chain/blockchain.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-end-line="10" selection-end-column="30" />
+        <state relative-caret-position="290">
+          <caret line="10" column="3" selection-start-line="10" selection-end-line="10" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/block_chain/transaction.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="27" lean-forward="true" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+        <state relative-caret-position="2813">
+          <caret line="101" column="39" selection-start-line="101" selection-start-column="39" selection-end-line="101" selection-end-column="39" />
+          <folding>
+            <element signature="e#79#94#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
+    <entry file="file://$PROJECT_DIR$/tests/block_chain/test_transaction.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="474" column="56" selection-start-line="474" selection-start-column="56" selection-end-line="474" selection-end-column="56" />
-          <folding>
-            <element signature="e#274#289#0" expanded="true" />
-            <marker date="1541843971491" expanded="true" signature="1060:1514" ph="..." />
-            <marker date="1541843971491" expanded="true" signature="1726:1893" ph="..." />
-            <marker date="1541843971491" expanded="true" signature="2789:3146" ph="..." />
-            <marker date="1541843971491" expanded="true" signature="5872:6105" ph="..." />
-            <marker date="1541843971491" expanded="true" signature="6141:6511" ph="..." />
-            <marker date="1541843971491" expanded="true" signature="8069:8219" ph="..." />
-            <marker date="1541843971491" expanded="true" signature="8248:8547" ph="..." />
-            <marker date="1541843971491" expanded="true" signature="8777:8950" ph="..." />
-            <marker date="1541843971491" expanded="true" signature="9226:9368" ph="..." />
-            <marker date="1541843971491" expanded="true" signature="11444:11581" ph="..." />
-          </folding>
+        <state relative-caret-position="350">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/block_chain/test_transactions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="32" column="30" lean-forward="true" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
+        <state relative-caret-position="397">
+          <caret line="123" column="18" lean-forward="true" selection-start-line="123" selection-start-column="12" selection-end-line="123" selection-end-column="45" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="368" column="68" selection-start-line="368" selection-start-column="68" selection-end-line="368" selection-end-column="68" />
+          <folding>
+            <element signature="e#274#289#0" expanded="true" />
+            <marker date="1542004367116" expanded="true" signature="12695:13008" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain/crypto_wallet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="37" column="31" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+          <folding>
+            <marker date="1542004425515" expanded="true" signature="611:982" ph="..." />
           </folding>
         </state>
       </provider>

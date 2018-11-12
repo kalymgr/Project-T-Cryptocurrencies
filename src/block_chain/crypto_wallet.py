@@ -14,8 +14,30 @@ class CryptoWallet:
 
     RSA_BITS = 1024  # the bits that will be used for creating the private key with the RSA algorithm
 
-    @staticmethod
-    def getNewPrivateKey()->Crypto.PublicKey.RSA:
+    def __init__(self):
+        """
+        constructor method
+        """
+        wallet = self.__getNewWallet()  # create the wallet
+        # store the private and public key
+        self.__privateKey = wallet['private_key']
+        self.__publicKey = wallet['public_key']
+
+    def getPrivateKey(self):
+        """
+        Method that returns the private key of the wallet
+        :return: the private key as ascii
+        """
+        return self.__privateKey
+
+    def getPublicKey(self):
+        """
+        Method that returns the public key of the wallet
+        :return: the public key as ascii
+        """
+        return self.__publicKey
+
+    def __getNewPrivateKey(self)->Crypto.PublicKey.RSA:
         """
         static method for creating an new private key
         :return: the private key
@@ -27,8 +49,7 @@ class CryptoWallet:
 
         return privateKey
 
-    @staticmethod
-    def getNewPublicKey(privateKey: Crypto.PublicKey.RSA)-> Crypto.PublicKey.RSA:
+    def __getNewPublicKey(self, privateKey: Crypto.PublicKey.RSA)-> Crypto.PublicKey.RSA:
         """
         static method
         :param privateKey: the private key
@@ -37,15 +58,14 @@ class CryptoWallet:
 
         return privateKey.publickey()
 
-    @staticmethod
-    def getNewWallet()->dict:
+    def __getNewWallet(self)->dict:
         """
         static method for creating and returning a new crypto wallet (set of private and public key)
         :return: the set of public and private key as dictionary
         """
         # get the public and private key
-        privateKey = CryptoWallet.getNewPrivateKey()
-        publicKey = CryptoWallet.getNewPublicKey(privateKey)
+        privateKey = self.__getNewPrivateKey()
+        publicKey = self.__getNewPublicKey(privateKey)
 
         # create the dictionary containing the public and private key
         walletKeySet = {
@@ -54,20 +74,5 @@ class CryptoWallet:
         }
         return walletKeySet
 
-    @staticmethod
-    def getPrivateKeyasASCII(privateKey):
-        """
-        :param privateKey: RSA Object
-        :return: the private key as ascii
-        """
-        return binascii.hexlify(privateKey.exportKey(format='DER')).decode('ascii')
-
-    @staticmethod
-    def getPublicKeyAsASCII(publicKey):
-        """
-        :param publicKey: RSA object
-        :return: the public key as ascii
-        """
-        return binascii.hexlify(publicKey.exportKey(format='DER')).decode('ascii')
 
 

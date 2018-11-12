@@ -33,9 +33,9 @@ class TestTransactions(unittest.TestCase):
         blockchain.printAccountTotals()
 
         # create the wallet for Stefanos
-        stefanosWallet = CryptoWallet.getNewWallet()
-        stefanosPrivateKeyASCII = stefanosWallet.get('private_key')
-        stefanosPublicKeyASCII = stefanosWallet.get('public_key')
+        stefanosWallet = CryptoWallet()
+        stefanosPrivateKeyASCII = stefanosWallet.getPrivateKey()
+        stefanosPublicKeyASCII = stefanosWallet.getPublicKey()
 
         blockchain.getAccountTotal('a')
         # first coin transfer
@@ -104,3 +104,26 @@ class TestTransactions(unittest.TestCase):
             t.addTransactionOutput(txOutput)
 
         print(t.__getDoubleHash256())
+
+    def test_transactionSignaturesAndHashes(self):
+        """
+        method to test that the transactions are properly signed and that
+        they are properly linked via their transaction hash
+        :return:
+        """
+        # initialize the blockchain
+        blockchain = Blockchain()
+
+        # create the wallet for Stefanos
+        stefanosWallet = CryptoWallet()
+        stefanosPrivateKeyASCII = stefanosWallet.getPrivateKey()
+        stefanosPublicKeyASCII = stefanosWallet.getPublicKey()
+
+        # create a new transfer and transfer the money
+        coinTransfer1 = [
+            ['evdoxia', 10], ['michalis', 10], ['michalis', 5]
+        ]
+        blockchain.transfer('stefanos', coinTransfer1, stefanosPrivateKeyASCII)
+
+        # get the genesis transaction hash
+        print('\nend of test method')
