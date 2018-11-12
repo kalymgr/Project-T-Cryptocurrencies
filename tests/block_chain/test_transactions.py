@@ -119,11 +119,14 @@ class TestTransactions(unittest.TestCase):
         stefanosPrivateKeyASCII = stefanosWallet.getPrivateKey()
         stefanosPublicKeyASCII = stefanosWallet.getPublicKey()
 
-        # create a new transfer and transfer the money
-        coinTransfer1 = [
-            ['evdoxia', 10], ['michalis', 10], ['michalis', 5]
-        ]
-        blockchain.transfer('stefanos', coinTransfer1, stefanosPrivateKeyASCII)
+        # for each of the transaction inputs in the transaction input pool, the prev transaction hash
+        # should be the hash of the first transaction of the blockchain
+        for txInputList in blockchain.getTransactionInputPool().values():
+            for txInput in txInputList:
+                assert txInput.getPreviousTransactionHash() == blockchain.getTransactionList()[0].getTransactionHash()
 
-        # get the genesis transaction hash
-        print('\nend of test method')
+        # for each transaction in the blockchain, check that the transaction signature is properly stored
+        for transaction in blockchain.getTransactionList():
+            assert transaction.getTransactionSignature() == \
+                   blockchain.signTransaction(transaction,
+                                              blockchain._Blockchain__cryptoWallet._CryptoWallet__privateKey)

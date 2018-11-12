@@ -70,6 +70,13 @@ class TransactionInput:
         """
         self.__recipient = recipient
 
+    def getPreviousTransactionHash(self) -> str:
+        """
+        method that returns the hash of the previous (referenced) transaction
+        :return: __previousTransactionHash class property
+        """
+        return self.__previousTransactionHash
+
 
 class TransactionOutput:
     """
@@ -187,6 +194,13 @@ class Transaction:
         :return:
         """
         self.__transactionSignature = signedTransactionHash
+
+    def getTransactionSignature(self) -> str:
+        """
+        Method that returns the signature of the transaction
+        :return: __transactionSignature class property
+        """
+        return self.__transactionSignature
 
     def getTransactionHash(self) -> str:
         """
@@ -348,25 +362,45 @@ class Blockchain:
         """
         constructor method
         """
+        self.__name = 'TLC Creator'  # the name of the blockchain creator
         self.__transactionInputPool = dict()  # pool with transaction inputs. These are the unspent money
         self.__transactionList = list()  # the list that contains all the executed transactions
-
-        self.__addInitialTransactionInputs()  # add money to the system
 
         # generate a crypto wallet for the genesis transaction
         self.__cryptoWallet = CryptoWallet()
 
-        self.__name = 'TLC Creator'  # the name of the blockchain creator
+        self.__executeGenesisTransaction()  # the genesis transaction of the system
+
+        # self.__addInitialTransactionInputs()  # add money to the system
+
+
+    def getTransactionInputPool(self) -> dict:
+        """
+        method that returns the transaction input pool of the blockchain
+        :return:  __transactionInputPool class property
+        """
+        return self.__transactionInputPool
+
+    def getTransactionList(self) -> list:
+        """
+        Method that returns the transaction list of the blockchain
+        :return: __transactionList class property
+        """
+        return self.__transactionList
 
     def __executeGenesisTransaction(self):
         """
         Method that executes the genesis transaction (the first transaction of the blockchain)
         :return:
         """
+
+        # first add a transaction input, towards the creator
+        self.__addInitialTransactionInputs()
+
         coinTransfer = [
-            ['evdoxia', 30], ['michalis', 20], ['stefanos', 100]
+            ['evdoxia', 30], ['michalis', 20], ['stefanos', 50]
         ]
-        self.transfer(self.__name, coinTransfer, self.__cryptoWallet)
+        self.transfer(self.__name, coinTransfer, self.__cryptoWallet.getPrivateKey())
 
 
     def __transferCoins(self, sender: str, recipient: str, value: int, transaction: Transaction=None):
@@ -442,12 +476,7 @@ class Blockchain:
         """
         method for adding initial transaction inputs to the system. Just pouring some money into the system.
         """
-        self.__addTransactionInputToPool(TransactionInput(20, 'michalis', '-', -1))
-        self.__addTransactionInputToPool(TransactionInput(30, 'evdoxia', '-', -1))
-        self.__addTransactionInputToPool(TransactionInput(10, 'stefanos', '-', -1))
-        self.__addTransactionInputToPool(TransactionInput(20, 'stefanos', '-', -1))
-        self.__addTransactionInputToPool(TransactionInput(30, 'stefanos', '-', -1))
-        self.__addTransactionInputToPool(TransactionInput(40, 'stefanos', '-', -1))
+        self.__addTransactionInputToPool(TransactionInput(100, self.__name, '-', -1))
 
     def __addTransactionInputToPool(self, tInput: TransactionInput):
         """
@@ -531,20 +560,20 @@ class Blockchain:
                 break
         self.__executeTransaction(t, privateKey)
 
-    def signTransaction(self, transaction: Transaction, privateKeyString: str) -> bool:
+    def signTransaction(self, transaction: Transaction, privateKeyString: str) -> str:
         """
         Method that signs the transaction and adds the signature to the transaction data that will be appended
         to the blockchain
         :param transaction: the Transaction to be signed
         :param privateKeyString: the private key of the signer
-        :return: True if the signature has been signed, else false
+        :return: the transaction signature if everything ok, else None
         """
 
         # get the transaction hash string
         transactionString = transaction.getTransactionHash()
 
         if privateKeyString is None:  # empty private key
-            return False
+            return None
         else:
             # create the private key in a form that will make signing possible
             privateKey = RSA.importKey(binascii.unhexlify(privateKeyString))
@@ -557,4 +586,4 @@ class Blockchain:
             signedTransactionHash = binascii.hexlify(signer.sign(h)).decode('ascii')
             # set the transaction property (signedTransactionHash) and return true
             transaction.setTransactionSignature(signedTransactionHash)
-            return True
+            return signedTransactionHash
