@@ -16,7 +16,7 @@ References      : [1] https://github.com/julienr/ipynb_playground/blob/master/bi
 '''
 
 from flask import Flask, jsonify, request, render_template
-from src.block_chain.crypto_wallet import CryptoWallet
+from src.block_chain.crypto_account import CryptoAccount
 from src.block_chain.transaction import Transaction
 
 app = Flask(__name__)
@@ -39,7 +39,7 @@ def view_transaction():
 
 @app.route('/wallet/new', methods=['GET'])
 def new_wallet():
-    newWallet = CryptoWallet.getNewWallet()
+    newWallet = CryptoAccount.getNewWallet()
     return jsonify(newWallet), 200
 
 
