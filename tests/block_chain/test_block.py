@@ -1,6 +1,6 @@
 import unittest
 
-from src.block_chain.crypto_wallet import CryptoWallet
+from src.block_chain.crypto_wallet import CryptoAccount
 from src.block_chain.transactions import Blockchain, Transaction, TransactionInput, TransactionOutput, Block
 
 

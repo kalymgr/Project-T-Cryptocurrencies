@@ -16,3 +16,4 @@ class TLCUtilities:
         hash = SHA256.new(str.encode('utf8'))
         doubleHash = SHA256.new(hash.hexdigest().encode('utf8'))
         return doubleHash.hexdigest()
+

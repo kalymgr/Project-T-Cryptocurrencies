@@ -1,6 +1,9 @@
 <h1>Project - T</h1>
 <i>Last updated on 12 Nov 2018</i>
 
+<h2> Blockchain Initialization </h2>
+When the blockchain initializes, it transfers to itself some money (eg 100)
+
 <h2>Transactions</h2>
 Each transaction has one owner (the one who sends the money) and many recipients<br>
 Transaction rules:

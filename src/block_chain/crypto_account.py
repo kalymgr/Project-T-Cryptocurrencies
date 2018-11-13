@@ -2,14 +2,14 @@ import binascii
 
 import Crypto
 import Crypto.Random
-from Crypto.Hash import SHA
+from Crypto.Hash import RIPEMD, SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 
 
-class CryptoWallet:
+class CryptoAccount:
     """
-    class for managing the crypto wallet
+    class for managing the crypto account (wallet, address etc.)
     """
 
     RSA_BITS = 1024  # the bits that will be used for creating the private key with the RSA algorithm
@@ -22,6 +22,25 @@ class CryptoWallet:
         # store the private and public key
         self.__privateKey = wallet['private_key']
         self.__publicKey = wallet['public_key']
+
+        self.__version = 1  # the version of the bitcoin address
+        self.__address = self.__createAddress()
+
+    def __createAddress(self) -> str:
+        """
+        Method for creating the address which will be used for transferring coins
+        :return: the address string
+        """
+        text = str(self.__version) + self.__publicKey
+        textSHA256Hash = SHA256.new(text.encode('utf8')).hexdigest()
+        return RIPEMD.new(textSHA256Hash).hexdigest()
+
+    def getAddress(self) -> str:
+        """
+        Method that returns the address of the crypto account
+        :return: address string
+        """
+        return self.__address
 
     def getPrivateKey(self):
         """
@@ -45,7 +64,7 @@ class CryptoWallet:
         # create something random
         randomGen = Crypto.Random.new().read
         # generate the private key with the RSA algorithm - 1024 bits
-        privateKey = RSA.generate(CryptoWallet.RSA_BITS, randomGen)
+        privateKey = RSA.generate(CryptoAccount.RSA_BITS, randomGen)
 
         return privateKey
 

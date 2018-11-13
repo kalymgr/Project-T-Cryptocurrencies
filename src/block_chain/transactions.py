@@ -8,8 +8,36 @@ from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from time import time
 import hashlib, json
-from src.block_chain.crypto_wallet import CryptoWallet
+from src.block_chain.crypto_account import CryptoAccount
 from src.block_chain.utilities import TLCUtilities
+
+
+class CoinTransfer:
+    """
+    simple class that holds data related to coin transfers
+    """
+    def __init__(self, recipient: str, value: int):
+        """
+        Constructor method
+        :param recipient: the recipient address string
+        :param value: the value of the transfer (int)
+        """
+        self.__recipient = recipient
+        self.__value = value
+
+    def getRecipient(self):
+        """
+        get the coin transfer recipient
+        :return: the recipient address string
+        """
+        return self.__recipient
+
+    def getValue(self):
+        """
+        get the value (int) transferred
+        :return:
+        """
+        return self.__value
 
 
 class TransactionInput:
@@ -462,11 +490,18 @@ class Blockchain:
         self.__transactionList = list()  # the list that contains all the executed transactions
 
         # generate a crypto wallet for the genesis transaction
-        self.__cryptoWallet = CryptoWallet()
+        self.__cryptoAccount = CryptoAccount()
 
         self.__executeGenesisTransaction()  # the genesis transaction of the system
 
         self.__chain = list()  # the chain of blocks
+
+    def getAccount(self) -> CryptoAccount:
+        """
+        Method that returns the crypto wallet of the blockchain
+        :return: CryptoWallet object
+        """
+        return self.__cryptoAccount
 
     def getChain(self) -> list:
         """
@@ -498,12 +533,6 @@ class Blockchain:
         # first add a transaction input, towards the creator
         self.__addInitialTransactionInputs()
 
-        coinTransfer = [
-            ['evdoxia', 30], ['michalis', 20], ['stefanos', 50]
-        ]
-        self.transfer(self.__name, coinTransfer, self.__cryptoWallet.getPrivateKey())
-
-
     def __transferCoins(self, sender: str, recipient: str, value: int, transaction: Transaction=None):
         """
         Method for transferring coins. First it checks if the transfer can be made. If yes, it removes money from the
@@ -527,7 +556,7 @@ class Blockchain:
         amountInTransactionOutputs = transaction.getTransactionOutputsTotalValue()
 
         if (amountInPool + amountInTransactionInputs) < (amountInTransactionOutputs + value) \
-                and self.__transactionInputPool.get(sender) is not None:
+                or self.__transactionInputPool.get(sender) is None:
             return None  # the money of the sender are not enough to make the transaction
 
         # check if the the transaction inputs in the transaction are enough to make the coin transfer
@@ -577,7 +606,7 @@ class Blockchain:
         """
         method for adding initial transaction inputs to the system. Just pouring some money into the system.
         """
-        self.__addTransactionInputToPool(TransactionInput(100, self.__name, '-', -1))
+        self.__addTransactionInputToPool(TransactionInput(100, self.__cryptoAccount.getAddress(), '-', -1))
 
     def __addTransactionInputToPool(self, tInput: TransactionInput):
         """
@@ -645,10 +674,10 @@ class Blockchain:
     def transfer(self, sender: str, coinTransfers: list, privateKey: str):
         """
         Method for transferring value to lots of recipients. Because of the way that the method __transferCoins
-        work, coin transfers will start adding to the transaction output list untill a coin transfer is found
+        work, coin transfers will start adding to the transaction output list until a coin transfer is found
         that cannot be made (insufficient recipient)
         :param sender: the sender address
-        :param coinTransfers: the list of coin transfers
+        :param coinTransfers: the list of coin transfers (CoinTransfer objects)
         :param privateKey: the private key of the sender
         :return:
         """
@@ -656,7 +685,7 @@ class Blockchain:
 
         for coinTransfer in coinTransfers:
             # make the coin transfer if possible, else stop the coin transfers
-            result = self.__transferCoins(sender, coinTransfer[0], coinTransfer[1], t)
+            result = self.__transferCoins(sender, coinTransfer.getRecipient(), coinTransfer.getValue(), t)
             if result is None or result is False:
                 break
         self.__executeTransaction(t, privateKey)

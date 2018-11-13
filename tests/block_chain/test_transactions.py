@@ -1,7 +1,8 @@
 import unittest
 
-from src.block_chain.crypto_wallet import CryptoWallet
-from src.block_chain.transactions import Blockchain, Transaction, TransactionInput, TransactionOutput, Block
+from src.block_chain.crypto_account import CryptoAccount
+from src.block_chain.transactions import Blockchain, Transaction, TransactionInput, TransactionOutput, Block, \
+    CoinTransfer
 
 
 class TestTransactions(unittest.TestCase):
@@ -9,127 +10,156 @@ class TestTransactions(unittest.TestCase):
     methods for testing the new classes
     """
 
+    def setUp(self):
+        """
+        Setup for testing
+        :return:
+        """
+
+        # create the blockchain
+        self.blockchain = Blockchain()
+
+        # create some wallets
+        self.blockchainAccount = self.blockchain.getAccount()
+        self.stefanosAccount = CryptoAccount()
+        self.michalisAccount = CryptoAccount()
+        self.evdoxiaAccount = CryptoAccount()
+        self.kyriakosAccount = CryptoAccount()
+
     def test_initialAccountTotals(self):
         """
         Testing that the initial account totals are ok
         :return:
         """
-        blockhain = Blockchain()  # initialize the blockchain
-        blockhain.printAccountTotals()
 
-        # test that initial account totals are ok
-        assert blockhain.getAccountTotal("michalis") == 20
-        assert blockhain.getAccountTotal("evdoxia") == 30
-        assert blockhain.getAccountTotal("stefanos") == 100
+        # print the existing account balances in the blockchain
+        self.blockchain.printAccountTotals()
+
+        # test that initial account balance is ok
+        blockchainAddress = self.blockchain.getAccount().getAddress()
+        assert self.blockchain.getAccountTotal(blockchainAddress) == 100
+
+        # make a coin transfer and then check the results
+        coinTransferList = [
+            CoinTransfer(self.evdoxiaAccount.getAddress(), 20),
+            CoinTransfer(self.michalisAccount.getAddress(), 30)
+        ]
+
+        self.blockchain.transfer(blockchainAddress, coinTransferList, self.blockchain.getAccount().getPrivateKey())
+
+        assert self.blockchain.getAccountTotal(
+            self.evdoxiaAccount.getAddress()
+        ) == 20
+        assert self.blockchain.getAccountTotal(
+            self.michalisAccount.getAddress()
+        ) == 30
+        assert self.blockchain.getAccountTotal(blockchainAddress) == 50
+
+        self.blockchain.printAccountTotals()
+
         # kyriakos account does not have account total, because it does not exist in the blockchain
-        assert blockhain.getAccountTotal("kyriakos") == 0
+        assert self.blockchain.getAccountTotal("kyriakos") == 0
 
     def test_coinTransfer(self):
         """
         Various scenarios for transferring coins
         :return:
         """
-        blockchain = Blockchain()  # initialize the blockchain
-        blockchain.printAccountTotals()
 
-        # create the wallet for Stefanos
-        stefanosWallet = CryptoWallet()
-        stefanosPrivateKeyASCII = stefanosWallet.getPrivateKey()
-        stefanosPublicKeyASCII = stefanosWallet.getPublicKey()
+        # get stefanos account info
+        stefanosPrivateKey = self.stefanosAccount.getPrivateKey()
+        stefanosPublicKey = self.stefanosAccount.getPublicKey()
+        stefanosAddress = self.stefanosAccount.getAddress()
 
-        blockchain.getAccountTotal('a')
+        # transfer some money to stefanos
+        coinTransferList0 = [
+            CoinTransfer(stefanosAddress, 50)
+        ]
+        self.blockchain.transfer(self.blockchain.getAccount().getAddress(), coinTransferList0,
+                                 self.blockchain.getAccount().getPrivateKey())
+
+        assert self.blockchain.getAccountTotal(stefanosAddress) == 50
+
         # first coin transfer
-        coinTransfer1 = [
-            ['evdoxia', 10], ['michalis', 10], ['michalis', 5]
+        coinTransferList1 = [
+            CoinTransfer(self.evdoxiaAccount.getAddress(), 10), CoinTransfer(self.michalisAccount.getAddress(), 10),
+            CoinTransfer(self.michalisAccount.getAddress(), 5)
         ]
-        blockchain.transfer('stefanos', coinTransfer1, stefanosPrivateKeyASCII)  # transfer the funds
 
-        blockchain.printAccountTotals()
-        assert blockchain.getAccountTotal('evdoxia') == 40
-        assert blockchain.getAccountTotal('michalis') == 35
-        assert blockchain.getAccountTotal('stefanos') == 75
+        self.blockchain.transfer(stefanosAddress, coinTransferList1, stefanosPrivateKey)
 
-        # try to transfer coins to a new account
-        coinTransfer2 = [
-            ['kyriakos', 10]
-        ]
-        blockchain.transfer('stefanos', coinTransfer2, stefanosPrivateKeyASCII)  # transfer the funds
-        blockchain.printAccountTotals()
-        assert blockchain.getAccountTotal('stefanos') == 65
-        assert blockchain.getAccountTotal('kyriakos') == 10
+        assert self.blockchain.getAccountTotal(stefanosAddress) == 25
+        assert self.blockchain.getAccountTotal(
+            self.michalisAccount.getAddress()
+        ) == 15
+        assert self.blockchain.getAccountTotal(
+            self.evdoxiaAccount.getAddress()
+        ) == 10
 
         # try to transfer coins, where the first transfer will exceed the sender account total
         # in this case, none of the transfers should be made
-        coinTransfer3 = [
-            ['michalis', 200],
-            ['evdoxia', 10]
+        coinTransferList2 = [
+            CoinTransfer(self.michalisAccount.getAddress(), 200),
+            CoinTransfer(self.evdoxiaAccount.getAddress(), 10)
         ]
-        blockchain.transfer('stefanos', coinTransfer3, stefanosPrivateKeyASCII)
+        self.blockchain.transfer(stefanosAddress, coinTransferList2, stefanosPrivateKey)
 
-        blockchain.printAccountTotals()
-        assert blockchain.getAccountTotal('stefanos') == 65
-        assert blockchain.getAccountTotal('evdoxia') == 40
-        assert blockchain.getAccountTotal('michalis') == 35
+        assert self.blockchain.getAccountTotal(stefanosAddress) == 25
+        assert self.blockchain.getAccountTotal(
+            self.michalisAccount.getAddress()
+        ) == 15
+        assert self.blockchain.getAccountTotal(
+            self.evdoxiaAccount.getAddress()
+        ) == 10
 
         # try to transfer coins. The first transfer is feasible but the second won't be.
         # In this case, only the first transfer will be made
-        coinTransfer4 = [
-            ['michalis', 10],
-            ['evdoxia', 500]
+        coinTransferList3 = [
+            CoinTransfer(self.michalisAccount.getAddress(), 10),
+            CoinTransfer(self.evdoxiaAccount.getAddress(), 500)
         ]
-        blockchain.transfer('stefanos', coinTransfer4, stefanosPrivateKeyASCII)
-        assert blockchain.getAccountTotal('stefanos') == 55
-        assert blockchain.getAccountTotal('evdoxia') == 40
-        assert blockchain.getAccountTotal('michalis') == 45
-        print('FINAL')
-        blockchain.printAccountTotals()
+        self.blockchain.transfer(stefanosAddress, coinTransferList3, stefanosPrivateKey)
 
-    def test_convertTransactionToDoubleHash(self):
-        """
-        test the conversion of a transaction to ordered dictionary
-        :return:
-        """
-        t = Transaction('michalis')
-        txInputList = [
-            TransactionInput(2, 'stefanos', '', 0),
-            TransactionInput(3, 'someone', 'aaa', 2)
-        ]
-        txOutputList = [
-            TransactionOutput(2, 'stefanos', 'a'),
-            TransactionOutput(5, 'evdoxia', 'b')
-        ]
-        # add tx inputs and outputs to the transaction
-        t.extendTransactionInputList(txInputList)
-        for txOutput in txOutputList:
-            t.addTransactionOutput(txOutput)
-
-        print(t.__getDoubleHash256())
+        assert self.blockchain.getAccountTotal(stefanosAddress) == 15
+        assert self.blockchain.getAccountTotal(
+            self.michalisAccount.getAddress()
+        ) == 25
+        assert self.blockchain.getAccountTotal(
+            self.evdoxiaAccount.getAddress()
+        ) == 10
+        assert self.blockchain.getAccountTotal(
+            self.blockchain.getAccount().getAddress()
+        ) == 50
 
     def test_transactionSignaturesAndHashes(self):
         """
         method to test that the transactions are properly signed and that
-        they are properly linked via their transaction hash
+        they are properly linked via their transaction hash.
+        First I make a simple transaction and then I check the signatures and hashes
         :return:
         """
-        # initialize the blockchain
-        blockchain = Blockchain()
 
-        # create the wallet for Stefanos
-        stefanosWallet = CryptoWallet()
-        stefanosPrivateKeyASCII = stefanosWallet.getPrivateKey()
-        stefanosPublicKeyASCII = stefanosWallet.getPublicKey()
+        # make a transaction
+        # transfer some money to stefanos
+        coinTransferList0 = [
+            CoinTransfer(self.stefanosAccount.getAddress(), 50),
+            CoinTransfer(self.michalisAccount.getAddress(), 10),
+            CoinTransfer(self.evdoxiaAccount.getAddress(), 5)
+        ]
+        self.blockchain.transfer(self.blockchain.getAccount().getAddress(), coinTransferList0,
+                                 self.blockchain.getAccount().getPrivateKey())
 
         # for each of the transaction inputs in the transaction input pool, the prev transaction hash
         # should be the hash of the first transaction of the blockchain
-        for txInputList in blockchain.getTransactionInputPool().values():
+        for txInputList in self.blockchain.getTransactionInputPool().values():
             for txInput in txInputList:
-                assert txInput.getPreviousTransactionHash() == blockchain.getTransactionList()[0].getDoubleHash()
+                assert txInput.getPreviousTransactionHash() == self.blockchain.getTransactionList()[0].getDoubleHash()
 
         # for each transaction in the blockchain, check that the transaction signature is properly stored
-        for transaction in blockchain.getTransactionList():
+        for transaction in self.blockchain.getTransactionList():
             assert transaction.getSignature() == \
-                   blockchain.signTransaction(transaction,
-                                              blockchain._Blockchain__cryptoWallet._CryptoWallet__privateKey)
+                   self.blockchain.signTransaction(transaction,
+                                              self.blockchain._Blockchain__cryptoAccount._CryptoAccount__privateKey)
 
 
 
