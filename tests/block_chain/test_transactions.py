@@ -123,11 +123,11 @@ class TestTransactions(unittest.TestCase):
         # should be the hash of the first transaction of the blockchain
         for txInputList in blockchain.getTransactionInputPool().values():
             for txInput in txInputList:
-                assert txInput.getPreviousTransactionHash() == blockchain.getTransactionList()[0].getTransactionHash()
+                assert txInput.getPreviousTransactionHash() == blockchain.getTransactionList()[0].getDoubleHash()
 
         # for each transaction in the blockchain, check that the transaction signature is properly stored
         for transaction in blockchain.getTransactionList():
-            assert transaction.getTransactionSignature() == \
+            assert transaction.getSignature() == \
                    blockchain.signTransaction(transaction,
                                               blockchain._Blockchain__cryptoWallet._CryptoWallet__privateKey)
 

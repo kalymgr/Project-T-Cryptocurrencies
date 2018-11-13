@@ -9,6 +9,7 @@ from Crypto.Signature import PKCS1_v1_5
 from time import time
 import hashlib, json
 from src.block_chain.crypto_wallet import CryptoWallet
+from src.block_chain.utilities import TLCUtilities
 
 
 class TransactionInput:
@@ -188,7 +189,7 @@ class Transaction:
 
         self.__transactionSignature = None  # the signed transaction hash - the signature of the transaction
 
-    def setTransactionSignature(self, signedTransactionHash: str):
+    def setSignature(self, signedTransactionHash: str):
         """
         Method that sets the signed transaction hash (the signature of the transaction)
         :param signedTransactionHash:
@@ -196,14 +197,14 @@ class Transaction:
         """
         self.__transactionSignature = signedTransactionHash
 
-    def getTransactionSignature(self) -> str:
+    def getSignature(self) -> str:
         """
         Method that returns the signature of the transaction
         :return: __transactionSignature class property
         """
         return self.__transactionSignature
 
-    def getTransactionHash(self) -> str:
+    def getDoubleHash(self) -> str:
         """
         Method that returns the transaction hash. It should return the same result as __getDoubleHash256, but it gets
         the data from the transaction object property __transactionHash. Therefore, it doesn't need to make the
@@ -241,17 +242,6 @@ class Transaction:
             }
         )
 
-    def __getDoubleHash256(self) -> str:
-        """
-        Method that calculates the double SHA256 hash for a transaction string. Used for merkle tree
-        :return: the double hash string for the transaction
-        """
-        transactionString = str(self.getOrderedDict())
-        hash = SHA256.new(transactionString.encode('utf8'))
-        doubleHash = SHA256.new(hash.hexdigest().encode('utf8'))
-
-        return doubleHash.hexdigest()
-
     def getSender(self) -> str:
         """
         Method that returns the sender address
@@ -266,7 +256,8 @@ class Transaction:
         inputs and outputs are ok and the transaction is ready to be executed
         :return:
         """
-        self.__transactionHash = self.__getDoubleHash256()
+        transactionString = str(self.getOrderedDict())
+        self.__transactionHash = TLCUtilities.getDoubleHash256(transactionString)
 
     def getInCounter(self) -> int:
         """
@@ -400,52 +391,33 @@ class Block:
             'merkle_root': self.merkleRoot
         })
 
-    def blockHash(self) -> str:
+    def getBlockHash(self) -> str:
         """
         returns the SHA-256 hash of the block content
-        :return: the hash of the block content as dictionary
+        :return: the hash of the block content as string
         """
         # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
-        block_string = json.dumps(self.to_dict(), sort_keys=True).encode()
+        block_string = json.dumps(self.getOrderedDictionary(), sort_keys=True).encode()
 
         return hashlib.sha256(block_string).hexdigest()
-
-    def doubleHash(self, transactionString: str):
-        """
-        method that calculates the double SHA256 hash for a transaction string. Used for merkle tree
-        :param transactionString:
-        :return: the double hash of the transaction string
-        """
-
-        textHash = SHA256.new(transactionString.encode('utf8'))
-        textDoubleHash = SHA256.new(textHash.hexdigest().encode('utf8'))
-
-        return textDoubleHash.hexdigest()
 
     def getMerkleRoot(self) -> str:
         """
         method that calculates and returns the merkle root of the block.
         It uses a two dimensional array (finalDoubleHashes) which stores the double hashes
         of each level (the first dimension is the level and the second the items of the level)
-        :return: the merkle root if there are transactions, else None
+        :return: the merkle root string if there are transactions, else None
         """
 
         if len(self.transactions) > 0:  # if there are transactions
-            # get the string content of all the transactions and put it in a list
-            transactionStrings = []
+            # collect all the transaction hashes
+            transactionDoubleHashes = []
             for transaction in self.transactions:
-                transactionStrings.append(str(transaction))
+                transactionDoubleHashes.append(transaction.getDoubleHash())
 
             # if the number of items is even, add the last one, one more time
-            if len(transactionStrings) % 2 == 1:
-                transactionStrings.append(transactionStrings[len(transactionStrings) - 1])
-
-            # create the double hashes for all the transaction strings
-            transactionDoubleHashes = []
-            for tString in transactionStrings:
-                transactionDoubleHashes.append(
-                    self.doubleHash(tString)
-                )
+            if len(transactionDoubleHashes) % 2 == 1:
+                transactionDoubleHashes.append(transactionDoubleHashes[len(transactionDoubleHashes) - 1])
 
             l = len(transactionDoubleHashes)
             iterNo = 0  # no of iteration. Level of the tree
@@ -465,7 +437,8 @@ class Block:
                 i = 0
                 for i in range(0, l, 2):
                     finalDoubleHashes[iterNo].append(
-                        self.doubleHash(finalDoubleHashes[iterNo - 1][i] + finalDoubleHashes[iterNo - 1][i + 1])
+                        TLCUtilities.
+                            getDoubleHash256(finalDoubleHashes[iterNo - 1][i] + finalDoubleHashes[iterNo - 1][i + 1])
                     )
                 l = int(l / 2)  # divide to 2, to get the number of elements of the tree level above
 
@@ -638,7 +611,7 @@ class Blockchain:
         # for each transaction output, create a transaction input that will be added to the blockchain pool
         for txOutput in transaction.getTransactionOutputList():
             txInput = TransactionInput(txOutput.getValue(), txOutput.getRecipient(),
-            transaction.getTransactionHash(), transaction.getTransactionOutputList().index(txOutput))
+                                       transaction.getDoubleHash(), transaction.getTransactionOutputList().index(txOutput))
             # if the recipient address is a new recipient, then add it to the blockchain tx input pool
             txInputRecipient = self.__transactionInputPool.get(txInput.getRecipient())  # the recipient of the input
             if txInputRecipient is None:
@@ -698,7 +671,7 @@ class Blockchain:
         """
 
         # get the transaction hash string
-        transactionString = transaction.getTransactionHash()
+        transactionString = transaction.getDoubleHash()
 
         if privateKeyString is None:  # empty private key
             return None
@@ -713,7 +686,5 @@ class Blockchain:
             # sign the hash of the transaction with the private key
             signedTransactionHash = binascii.hexlify(signer.sign(h)).decode('ascii')
             # set the transaction property (signedTransactionHash) and return true
-            transaction.setTransactionSignature(signedTransactionHash)
+            transaction.setSignature(signedTransactionHash)
             return signedTransactionHash
-
-

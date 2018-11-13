@@ -8,7 +8,6 @@ class TestBlock(unittest.TestCase):
     """
     class for testing the Block manipulation
     """
-    blockChain = Blockchain()  # class variable used by the methods
 
     def setUp(self):
         """
@@ -26,6 +25,7 @@ class TestBlock(unittest.TestCase):
             TransactionOutput(1, 'stefanos', 'evdoxia')
         ]
         t1 = Transaction('sender address', transactionInputList=txInputList1, transactionOutputList=txOutputList1)
+        t1.setTransactionHash()  # set the transaction hash
 
         # initialize a block object for test purposes
         self.block = Block(chain=self.blockChain.getChain(), transactions=[t1], nonce=0, previousHash='00')
@@ -46,3 +46,19 @@ class TestBlock(unittest.TestCase):
         """
 
         print(self.block.getOrderedDictionary())
+
+    def test_getBlockHash(self):
+        """
+        test the getBlockHash method
+        :return:
+        """
+        blockHash = self.block.getBlockHash()
+        print(blockHash)
+        assert len(blockHash) == 64  # check that the length of the hash is 64 characters
+
+    def test_getMerkleRoot(self):
+        """
+        method for testing the getMerkleRoot method
+        :return:
+        """
+        print(self.block.getMerkleRoot())

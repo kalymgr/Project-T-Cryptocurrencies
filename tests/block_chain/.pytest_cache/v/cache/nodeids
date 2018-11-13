@@ -1,3 +1,6 @@
 [
+  "test_block.py::TestBlock::test_BlockCreation",
+  "test_block.py::TestBlock::test_getBlockHash",
+  "test_block.py::TestBlock::test_getMerkleRoot",
   "test_block.py::TestBlock::test_getOrderedDictionary"
 ]
