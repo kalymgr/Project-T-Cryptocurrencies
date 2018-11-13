@@ -1,5 +1,3 @@
 [
-  "test_transactions.py::TestTransactions::test_coinTransfer",
-  "test_transactions.py::TestTransactions::test_initialAccountTotals",
-  "test_transactions.py::TestTransactions::test_transactionSignaturesAndHashes"
+  "test_transactions.py::TestTransactions::test_initialAccountTotals"
 ]

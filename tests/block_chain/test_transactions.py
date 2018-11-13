@@ -20,7 +20,7 @@ class TestTransactions(unittest.TestCase):
         self.blockchain = Blockchain()
 
         # create some wallets
-        self.blockchainAccount = self.blockchain.getAccount()
+        self.blockchainAccount = self.blockchain.getBlockchainAccount()
         self.stefanosAccount = CryptoAccount()
         self.michalisAccount = CryptoAccount()
         self.evdoxiaAccount = CryptoAccount()
@@ -36,7 +36,7 @@ class TestTransactions(unittest.TestCase):
         self.blockchain.printAccountTotals()
 
         # test that initial account balance is ok
-        blockchainAddress = self.blockchain.getAccount().getAddress()
+        blockchainAddress = self.blockchain.getBlockchainAccount().getAddress()
         assert self.blockchain.getAccountTotal(blockchainAddress) == 100
 
         # make a coin transfer and then check the results
@@ -45,8 +45,20 @@ class TestTransactions(unittest.TestCase):
             CoinTransfer(self.michalisAccount.getAddress(), 30)
         ]
 
-        self.blockchain.transfer(blockchainAddress, coinTransferList, self.blockchain.getAccount().getPrivateKey())
+        # submit the transaction
+        self.blockchain.submitTransaction(
+            blockchainAddress, coinTransferList, self.blockchain.getBlockchainAccount().getPrivateKey()
+        )
+        # add the sender to the accounts dictionary
+        self.blockchain.addAccount(blockchainAddress, self.blockchain.getBlockchainAccount().getPublicKey())
 
+        # transaction not verified, so the balance is the same
+        assert self.blockchain.getAccountTotal(blockchainAddress) == 100
+
+        # verify the pending transactions and add the block of transactions to the blockchain
+        self.blockchain.verifyTransactions()
+
+        # now the balances have changed.
         assert self.blockchain.getAccountTotal(
             self.evdoxiaAccount.getAddress()
         ) == 20
@@ -75,8 +87,8 @@ class TestTransactions(unittest.TestCase):
         coinTransferList0 = [
             CoinTransfer(stefanosAddress, 50)
         ]
-        self.blockchain.transfer(self.blockchain.getAccount().getAddress(), coinTransferList0,
-                                 self.blockchain.getAccount().getPrivateKey())
+        self.blockchain.transfer(self.blockchain.getBlockchainAccount().getAddress(), coinTransferList0,
+                                 self.blockchain.getBlockchainAccount().getPrivateKey())
 
         assert self.blockchain.getAccountTotal(stefanosAddress) == 50
 
@@ -128,7 +140,7 @@ class TestTransactions(unittest.TestCase):
             self.evdoxiaAccount.getAddress()
         ) == 10
         assert self.blockchain.getAccountTotal(
-            self.blockchain.getAccount().getAddress()
+            self.blockchain.getBlockchainAccount().getAddress()
         ) == 50
 
     def test_transactionSignaturesAndHashes(self):
@@ -146,8 +158,8 @@ class TestTransactions(unittest.TestCase):
             CoinTransfer(self.michalisAccount.getAddress(), 10),
             CoinTransfer(self.evdoxiaAccount.getAddress(), 5)
         ]
-        self.blockchain.transfer(self.blockchain.getAccount().getAddress(), coinTransferList0,
-                                 self.blockchain.getAccount().getPrivateKey())
+        self.blockchain.transfer(self.blockchain.getBlockchainAccount().getAddress(), coinTransferList0,
+                                 self.blockchain.getBlockchainAccount().getPrivateKey())
 
         # for each of the transaction inputs in the transaction input pool, the prev transaction hash
         # should be the hash of the first transaction of the blockchain

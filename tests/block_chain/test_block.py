@@ -25,7 +25,7 @@ class TestBlock(unittest.TestCase):
             TransactionOutput(1, 'stefanos', 'evdoxia')
         ]
         t1 = Transaction('sender address', transactionInputList=txInputList1, transactionOutputList=txOutputList1)
-        t1.setTransactionHash()  # set the transaction hash
+        t1.__setTransactionHash()  # set the transaction hash
 
         # initialize a block object for test purposes
         self.block = Block(chain=self.blockChain.getChain(), transactions=[t1], nonce=0, previousHash='00')

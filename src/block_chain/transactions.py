@@ -198,7 +198,7 @@ class Transaction:
         :param transactionInputList: a list with the TransactionInput objects
         :param transactionOutputList: a list with the TransactionOutput objects
         """
-        self.__senderAddress = senderAddress # the address of the sender
+        self.__senderAddress = senderAddress  # the address of the sender
         if transactionInputList is None:
             self.__transactionInputList = list()  # new transaction input list
         else:
@@ -216,6 +216,51 @@ class Transaction:
         self.__transactionHash = None  # the transactionHash
 
         self.__transactionSignature = None  # the signed transaction hash - the signature of the transaction
+
+        self.__blockNumber = None   # the number of the block where the transaction belongs (added after mining)
+
+    def setBlockNumber(self, blockNo: int):
+        """
+        Method that sets the number of the block
+        :param blockNo: the number of the block
+        :return:
+        """
+        self.__blockNumber = blockNo
+
+    def getBlockNumber(self) -> int:
+        """
+        Method that returns the block number of the transaction
+        :return: the number (int) of the transaction if there is one, else None
+        """
+        return self.__blockNumber
+
+    def sign(self, senderPrivateKey: str) -> bool:
+        """
+        Method that signs the transaction by using the sender's private key
+        :param senderPrivateKey:  sender private key
+        :return: True if signing is ok, else False
+        """
+        # first create the transaction hash
+        self.__setTransactionHash()
+        # create the transaction signature
+        # get the transaction hash string
+        transactionString = self.__transactionHash
+
+        if senderPrivateKey is None:  # empty private key
+            return False
+        else:
+            # create the private key in a form that will make signing possible
+            privateKey = RSA.importKey(binascii.unhexlify(senderPrivateKey))
+
+            # create the signer
+            signer = PKCS1_v1_5.new(privateKey)
+            # create the hash of the transaction
+            h = SHA.new(transactionString.encode('utf8'))
+            # sign the hash of the transaction with the private key
+            signedTransactionHash = binascii.hexlify(signer.sign(h)).decode('ascii')
+            # set the transaction property (signedTransactionHash) and return true
+            self.__transactionSignature = signedTransactionHash
+            return True
 
     def setSignature(self, signedTransactionHash: str):
         """
@@ -248,12 +293,14 @@ class Transaction:
         :return: the transaction object as an ordered dictionary
         """
 
+        """
         # first create the string for the transaction inputs
         txInputsString = ''
         for txInput in self.__transactionInputList:
             txInputsString += str(txInput.getOrderedDict())
+        """
 
-        # then create the string for the transaction outputs
+        # create the string for the transaction outputs
         txOutputsString = ''
         for txOutput in self.__transactionOutputList:
             txOutputsString += str(txOutput.getOrderedDict())
@@ -262,10 +309,8 @@ class Transaction:
         return OrderedDict(
             {
                 'sender': self.__senderAddress,
-                'txInputList': txInputsString,
                 'txOutputList': txOutputsString,
                 'versionNo': self.__versionNo,
-                'inCounter': self.__inCounter,
                 'outCounter': self.__outCounter
             }
         )
@@ -278,7 +323,7 @@ class Transaction:
         return self.__senderAddress
 
 
-    def setTransactionHash(self):
+    def __setTransactionHash(self):
         """
         method that calculates and sets the transaction hash of the transaction. It is called when the transaction
         inputs and outputs are ok and the transaction is ready to be executed
@@ -487,7 +532,10 @@ class Blockchain:
         """
         self.__name = 'TLC Creator'  # the name of the blockchain creator
         self.__transactionInputPool = dict()  # pool with transaction inputs. These are the unspent money
-        self.__transactionList = list()  # the list that contains all the executed transactions
+        # the dictionary containing all the accounts (wallets) that make transactions.
+        # the keys are the addresses and the values are dictionaries
+        self.__accounts = dict()
+        self.__pendingTransactionList = list()  # the list that contains all the executed transactions
 
         # generate a crypto wallet for the genesis transaction
         self.__cryptoAccount = CryptoAccount()
@@ -496,7 +544,27 @@ class Blockchain:
 
         self.__chain = list()  # the chain of confirmed transactions
 
-    def getAccount(self) -> CryptoAccount:
+    def addAccount(self, address: str, publicKey: str):
+        """
+        method that adds to the accounts dictionary a new account, if it doesn't already exist
+        :param address:
+        :param publicKey:
+        :return:
+        """
+        if self.__accounts.get(address) is None:  # if the account does not exist in the dictionary
+            self.__accounts[address] = {
+                'publicKey': publicKey
+            }
+
+    def getAccount(self, address: str) -> dict:
+        """
+        method that returns the information about an account based on it's address
+        :param address: the address of th account
+        :return: the account info (dictionary)
+        """
+        return self.__accounts.get(address)
+
+    def getBlockchainAccount(self) -> CryptoAccount:
         """
         Method that returns the crypto wallet of the blockchain
         :return: CryptoWallet object
@@ -522,7 +590,7 @@ class Blockchain:
         Method that returns the transaction list of the blockchain
         :return: __transactionList class property
         """
-        return self.__transactionList
+        return self.__pendingTransactionList
 
     def __executeGenesisTransaction(self):
         """
@@ -635,7 +703,7 @@ class Blockchain:
             changeTransactionOutput = TransactionOutput(change, transaction.getSender(), transaction.getSender())
             transaction.addTransactionOutput(changeTransactionOutput)  # add change tx output to the list of tx output
 
-        transaction.setTransactionHash()  # set the transaction hash of the transaction
+        transaction.__setTransactionHash()  # set the transaction hash of the transaction
 
         # for each transaction output, create a transaction input that will be added to the blockchain pool
         for txOutput in transaction.getTransactionOutputList():
@@ -652,7 +720,7 @@ class Blockchain:
             # sign the transaction
             self.signTransaction(transaction, privateKey)
             # add it to the blockchain
-            self.__transactionList.append(transaction)
+            self.__pendingTransactionList.append(transaction)
 
     def printAccountTotals(self):
         """
@@ -670,6 +738,29 @@ class Blockchain:
                 'The total for the account ' + accountAddress +
                 " is " + str(self.getAccountTotal(accountAddress))
             )
+
+    def submitTransaction(self, sender: str, coinTransfers: list, privateKey: str):
+        """
+        Method for creating and submitting the transaction to the pending transaction list.
+        Only the outputs are added. The inputs will be added at the mining/confirmation phase.
+
+        :param sender: the sender address
+        :param coinTransfers: the list of coin transfers (CoinTransfer objects)
+        :param privateKey: the private key of the sender
+        :return:
+        """
+        # create the transaction
+        t = Transaction(sender)  # initiate a new transaction and add the outputs
+        for coinTransfer in coinTransfers:
+            t.addTransactionOutput(TransactionOutput(
+                coinTransfer.getValue(), sender, coinTransfer.getRecipient()))
+
+        # sign the transaction
+        t.sign(privateKey)
+
+        # add the transaction to the pending transaction list
+        self.__pendingTransactionList.append(t)
+        pass
 
     def transfer(self, sender: str, coinTransfers: list, privateKey: str):
         """
@@ -717,3 +808,23 @@ class Blockchain:
             # set the transaction property (signedTransactionHash) and return true
             transaction.setSignature(signedTransactionHash)
             return signedTransactionHash
+
+    def verifyTransactions(self):
+        """
+        Method that verifies the transactions that are in the pending list, forges a new blocks and adds them
+        to the blockchain
+        :return:
+        """
+        # for each transaction in the pending transaction list
+        for pendingTransaction in self.__pendingTransactionList:
+            # verify the signature of the transaction using the public key of the sender
+            senderPublicKey = self.getAccount(pendingTransaction.getSender()).get('publicKey')
+
+            # verify that the sender account balance is enough for the transaction to take place
+
+            # mine the transaction (add it to the block, add block number etc.)
+
+            # add a tx output for change
+
+            # add the tx outputs as tx inputs in the tx input pool
+            pass
