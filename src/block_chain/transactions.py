@@ -1,6 +1,6 @@
 # Updated version of my classes (9-11-2018)
-# Maybe I can make a Blockchain class method that waits for 5 minutes and then tries to execute a transaction. It will be called
-# in the constructor method. Or a transaction can be executed each time one wishes to transfer money
+# Maybe I can make a Blockchain class method that waits for 5 minutes and then tries to execute a transaction.
+# It will be called in the constructor method. Or a transaction can be executed each time one wishes to transfer money
 import binascii
 from collections import OrderedDict
 from Crypto.Hash import SHA256, SHA
@@ -494,7 +494,7 @@ class Blockchain:
 
         self.__executeGenesisTransaction()  # the genesis transaction of the system
 
-        self.__chain = list()  # the chain of blocks
+        self.__chain = list()  # the chain of confirmed transactions
 
     def getAccount(self) -> CryptoAccount:
         """
