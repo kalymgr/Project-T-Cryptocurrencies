@@ -28,7 +28,8 @@ class TestBlock(unittest.TestCase):
         t1.__setTransactionHash()  # set the transaction hash
 
         # initialize a block object for test purposes
-        self.block = Block(chain=self.blockChain.getChain(), transactions=[t1], nonce=0, previousHash='00')
+        self.block = Block(chain=self.blockChain.getChain(), nonce=0, previousHash='00')
+        self.block.setTransactionList([t1])
 
     def test_BlockCreation(self):
         """

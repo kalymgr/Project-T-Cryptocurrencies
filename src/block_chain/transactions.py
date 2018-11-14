@@ -209,11 +209,17 @@ class Transaction:
             self.__transactionOutputList = transactionOutputList  # set the transaction output list
 
         self.__versionNo = Transaction.VERSION_NO  # the version number of the transaction. One for now.
+        if transactionInputList is None:  # the counter for the number of transaction inputs
+            self.__inCounter = 0
+        else:
+            self.__inCounter = len(transactionInputList)
 
-        self.__inCounter = 0  # the counter for the number of transaction inputs
-        self.__outCounter = 0  # the counter for the number of transaction outputs
+        if transactionOutputList is None:  # the counter for the number of transaction outputs
+            self.__outCounter = 0
+        else:
+            self.__outCounter = len(transactionOutputList)
 
-        self.__transactionHash = None  # the transactionHash
+        self.__transactionHash = self.__setTransactionHash()  # the transactionHash
 
         self.__transactionSignature = None  # the signed transaction hash - the signature of the transaction
 
@@ -241,10 +247,8 @@ class Transaction:
         :return: True if signing is ok, else False
         """
         # first create the transaction hash
-        self.__setTransactionHash()
-        # create the transaction signature
-        # get the transaction hash string
-        transactionString = self.__transactionHash
+        transactionString = str(self.getOrderedDict())
+        transactionHash = TLCUtilities.getDoubleHash256(transactionString)
 
         if senderPrivateKey is None:  # empty private key
             return False
@@ -254,10 +258,9 @@ class Transaction:
 
             # create the signer
             signer = PKCS1_v1_5.new(privateKey)
-            # create the hash of the transaction
-            h = SHA.new(transactionString.encode('utf8'))
+
             # sign the hash of the transaction with the private key
-            signedTransactionHash = binascii.hexlify(signer.sign(h)).decode('ascii')
+            signedTransactionHash = binascii.hexlify(signer.sign(transactionHash)).decode('ascii')
             # set the transaction property (signedTransactionHash) and return true
             self.__transactionSignature = signedTransactionHash
             return True
@@ -288,8 +291,10 @@ class Transaction:
 
     def getOrderedDict(self) -> OrderedDict:
         """
-        Method that returns the transaction object to an ordered dict, which includes the transaction inputs and
-        outputs
+        Method that returns the transaction object to an ordered dict, which includes
+        outputs, except from the change. The change tx output is excluded because it is
+        added later, during the transaction verification and it would alter the transaction hash
+        and signature (therefore would cause problem at the tx verification)
         :return: the transaction object as an ordered dictionary
         """
 
@@ -303,7 +308,8 @@ class Transaction:
         # create the string for the transaction outputs
         txOutputsString = ''
         for txOutput in self.__transactionOutputList:
-            txOutputsString += str(txOutput.getOrderedDict())
+            if txOutput.getRecipient() != self.__senderAddress:  # if it is not the change tx output
+                txOutputsString += str(txOutput.getOrderedDict())  # add it to the tx output string
 
         # finally create and return the ordered dictionary
         return OrderedDict(
@@ -323,14 +329,22 @@ class Transaction:
         return self.__senderAddress
 
 
-    def __setTransactionHash(self):
+    def getTransactionHash(self) -> str:
+        """
+        Method that returns the transaction hash
+        :return: __transactionHash string
+        """
+        return self.__transactionHash
+
+    def __setTransactionHash(self) -> str:
         """
         method that calculates and sets the transaction hash of the transaction. It is called when the transaction
         inputs and outputs are ok and the transaction is ready to be executed
-        :return:
+        :return: the transactionHash string
         """
         transactionString = str(self.getOrderedDict())
-        self.__transactionHash = TLCUtilities.getDoubleHash256(transactionString)
+        self.__transactionHash = TLCUtilities.getDoubleHash256AsString(transactionString)
+        return self.__transactionHash
 
     def getInCounter(self) -> int:
         """
@@ -423,24 +437,48 @@ class Block:
     Class for implementing the transaction Blocks
     """
 
-    def __init__(self, chain: list = None, transactions: list = None,
-                 nonce: int = None, previousHash: str = None):
+    def __init__(self, chain: list, nonce: int = None, previousHash: str = None):
         """
         Constructor method for the block. Sets the block content
         :param chain: the chain that contains the blocks
         :param nonce: the nonce
-        :param transactions: the list of the Transaction Objects
         that will be included in the block
         :param previousHash: the hash of the previous block
         """
 
         if chain is not None:  # if the constructor has data to initialize the object
-            self.blockNumber = len(chain) + 1
-            self.timeStamp = time()
-            self.transactions = transactions
-            self.nonce = nonce
-            self.previousHash = previousHash
-            self.merkleRoot = self.getMerkleRoot()  # set the merkle root of the block
+            self.__blockNumber = len(chain) + 1
+            self.__timeStamp = time()
+            # self.__transactions = transactions
+            self.__nonce = nonce
+            self.__previousHash = previousHash
+            self.__transactions = list()
+            # self.__merkleRoot = self.getMerkleRoot()  # set the merkle root of the block
+
+    def setTransactionList(self, transactionList: list):
+        """
+        Method that sets the transaction list of the block and calculates the merkle root
+        :param transactionList: list of Transaction Objects
+        :return:
+        """
+        self.__transactions = transactionList
+        self.__merkleRoot = self.getMerkleRoot()  # set the merkle root of the block
+
+    def addTransaction(self, transaction: Transaction):
+        """
+        Method that adds a transaction and recalculates the merkle root
+        :param transaction: Transaction object
+        :return:
+        """
+        self.__transactions.append(transaction)
+        self.__merkleRoot = self.getMerkleRoot()
+
+    def getBlockNumber(self) -> int:
+        """
+        Method that returns the block number
+        :return: block number (int)
+        """
+        return self.__blockNumber
 
     def getOrderedDictionary(self) -> OrderedDict:
         """
@@ -452,16 +490,16 @@ class Block:
 
         # setup the transactions dict
         transactionsString = ''
-        for transaction in self.transactions:
+        for transaction in self.__transactions:
             transactionsString += str(transaction.getOrderedDict())
 
         return OrderedDict({
-            'block_number': self.blockNumber,
-            'timestamp': self.timeStamp,
+            'block_number': self.__blockNumber,
+            'timestamp': self.__timeStamp,
             'transactions': transactionsString,  # long string-concatenation of the string of the tx ordered dicts
-            'nonce': self.nonce,
-            'previous_hash': self.previousHash,
-            'merkle_root': self.merkleRoot
+            'nonce': self.__nonce,
+            'previous_hash': self.__previousHash,
+            'merkle_root': self.__merkleRoot
         })
 
     def getBlockHash(self) -> str:
@@ -482,10 +520,10 @@ class Block:
         :return: the merkle root string if there are transactions, else None
         """
 
-        if len(self.transactions) > 0:  # if there are transactions
+        if len(self.__transactions) > 0:  # if there are transactions
             # collect all the transaction hashes
             transactionDoubleHashes = []
-            for transaction in self.transactions:
+            for transaction in self.__transactions:
                 transactionDoubleHashes.append(transaction.getDoubleHash())
 
             # if the number of items is even, add the last one, one more time
@@ -511,7 +549,7 @@ class Block:
                 for i in range(0, l, 2):
                     finalDoubleHashes[iterNo].append(
                         TLCUtilities.
-                            getDoubleHash256(finalDoubleHashes[iterNo - 1][i] + finalDoubleHashes[iterNo - 1][i + 1])
+                            getDoubleHash256AsString(finalDoubleHashes[iterNo - 1][i] + finalDoubleHashes[iterNo - 1][i + 1])
                     )
                 l = int(l / 2)  # divide to 2, to get the number of elements of the tree level above
 
@@ -531,38 +569,40 @@ class Blockchain:
         constructor method
         """
         self.__name = 'TLC Creator'  # the name of the blockchain creator
-        self.__transactionInputPool = dict()  # pool with transaction inputs. These are the unspent money
-        # the dictionary containing all the accounts (wallets) that make transactions.
+
+        # create the dictionary containing all the accounts (wallets) that make transactions (senders)
         # the keys are the addresses and the values are dictionaries
-        self.__accounts = dict()
-        self.__pendingTransactionList = list()  # the list that contains all the executed transactions
+        self.__senderAccounts = dict()
+
+        self.__transactionInputPool = dict()  # pool with available transaction inputs. These are the unspent money
+        self.__pendingTransactionList = list()  # the list that contains all the pending transactions
+        self.__confirmedTransactionList = list()  # the list of executed (confirmed) transactions
+        self.__chain = list()  # the chain of confirmed blocks
 
         # generate a crypto wallet for the genesis transaction
         self.__cryptoAccount = CryptoAccount()
 
-        self.__executeGenesisTransaction()  # the genesis transaction of the system
+        self.__executeGenesisTransaction(100)  # the genesis transaction of the system. 100 taliroshis
 
-        self.__chain = list()  # the chain of confirmed transactions
-
-    def addAccount(self, address: str, publicKey: str):
+    def __addSenderAccount(self, address: str, publicKey: str):
         """
         method that adds to the accounts dictionary a new account, if it doesn't already exist
         :param address:
         :param publicKey:
         :return:
         """
-        if self.__accounts.get(address) is None:  # if the account does not exist in the dictionary
-            self.__accounts[address] = {
+        if self.__senderAccounts.get(address) is None:  # if the account does not exist in the dictionary
+            self.__senderAccounts[address] = {
                 'publicKey': publicKey
             }
 
-    def getAccount(self, address: str) -> dict:
+    def getSenderAccount(self, address: str) -> dict:
         """
         method that returns the information about an account based on it's address
         :param address: the address of th account
         :return: the account info (dictionary)
         """
-        return self.__accounts.get(address)
+        return self.__senderAccounts.get(address)
 
     def getBlockchainAccount(self) -> CryptoAccount:
         """
@@ -592,67 +632,36 @@ class Blockchain:
         """
         return self.__pendingTransactionList
 
-    def __executeGenesisTransaction(self):
+    def __executeGenesisTransaction(self, value: int):
         """
         Method that executes the genesis transaction (the first transaction of the blockchain)
+        :param value: the value of the genesis transaction
         :return:
         """
 
-        # first add a transaction input, towards the creator
-        self.__addInitialTransactionInputs()
+        # create the genesis transaction and block and add it to the chain
+        genesisBlock = Block(self.__chain, -1, '-')  # genesis block
 
-    def __transferCoins(self, sender: str, recipient: str, value: int, transaction: Transaction=None):
-        """
-        Method for transferring coins. First it checks if the transfer can be made. If yes, it removes money from the
-        transaction input pool and adds the trasanction inputs needed to a new Transaction. It returns the transaction.
-        If there is a problem, it returns false
+        genesisTxOutput = TransactionOutput(value, self.__cryptoAccount.getAddress(),
+                                            self.__cryptoAccount.getAddress())
+        genesisTransaction = Transaction(self.__cryptoAccount.getAddress(), None,
+                                         [genesisTxOutput])
 
-        :param sender: the sender of the coins
-        :param recipient: the recipient of the coins
-        :param value: the value of the coins transfered
-        :param transaction: the existing transaction, or None if it's a new one
-        :return: Transaction object if coins can be transferred, else None
-        """
+        genesisTransaction.setBlockNumber(genesisBlock.getBlockNumber())
+        genesisTransaction.sign(self.getBlockchainAccount().getPrivateKey())
 
-        # create a new transaction, if no Transaction parameter was given
-        if transaction is None:
-            transaction = Transaction(sender)
+        genesisBlock.setTransactionList([genesisTransaction])  # set the genesis block transaction list
+        self.__chain.append(genesisBlock)
 
-        # check if the sender has enough money to make the transaction and if he exists in the pool
-        amountInPool = self.getAccountTotal(sender)
-        amountInTransactionInputs = transaction.getTransactionInputsTotalValue()
-        amountInTransactionOutputs = transaction.getTransactionOutputsTotalValue()
+        # add the transaction to the list of the confirmed transactions
+        self.__confirmedTransactionList.append(genesisTransaction)
 
-        if (amountInPool + amountInTransactionInputs) < (amountInTransactionOutputs + value) \
-                or self.__transactionInputPool.get(sender) is None:
-            return None  # the money of the sender are not enough to make the transaction
+        # add the blockchain account to the accounts dictionary
+        self.__addSenderAccount(self.getBlockchainAccount().getAddress(), self.getBlockchainAccount().getPublicKey())
 
-        # check if the the transaction inputs in the transaction are enough to make the coin transfer
-        # if the transaction inputs are not enough, then get more from the pool
-        if transaction.getTransactionInputsTotalValue() < transaction.getTransactionOutputsTotalValue() + value:
-            i = 0
-            senderTransactionInputs = self.__transactionInputPool.get(sender)  # all the transaction inputs of the sender
-            tInputsNecessary = list()  # transaction inputs necessary
-            tInputsTotal = 0  # the total of the transaction inputs necessary
-            while i < len(senderTransactionInputs) and tInputsTotal + senderTransactionInputs[i].getValue() < value:
-                tInputsNecessary.append(senderTransactionInputs[i])  # add the tr. input to the list of those necessary
-                # remove the t. input from the pool
-                self.__transactionInputPool.get(sender).remove(senderTransactionInputs[i])
-                tInputsTotal = tInputsTotal + senderTransactionInputs[i]
-                i = i + 1
-            tInputsNecessary.append(senderTransactionInputs[i])  # append the last transaction needed
-            tInputsTotal = tInputsTotal + senderTransactionInputs[i].getValue()  # add the last transaction needed to the total
-            # also remove this transaction input from the pool
-            self.__transactionInputPool.get(sender).remove(senderTransactionInputs[i])
-
-            # Add the transaction input list to the transaction
-            transaction.extendTransactionInputList(tInputsNecessary)
-
-        # add a transaction output to the transaction
-        transaction.addTransactionOutput(TransactionOutput(value, sender, recipient))
-
-        return Transaction
-        # make the transaction
+        # last but not least add a transaction input to the tx input pool, towards the creator
+        genesisTxInput = TransactionInput(value, self.__cryptoAccount.getAddress(), '-', -1)
+        self.__addTransactionInputToPool(genesisTxInput)  # add genesis tx input to the pool
 
     def getAccountTotal(self, accountAddress: str) -> int:
         """
@@ -670,12 +679,6 @@ class Blockchain:
                 total = total + tInput.getValue()
             return total
 
-    def __addInitialTransactionInputs(self):
-        """
-        method for adding initial transaction inputs to the system. Just pouring some money into the system.
-        """
-        self.__addTransactionInputToPool(TransactionInput(100, self.__cryptoAccount.getAddress(), '-', -1))
-
     def __addTransactionInputToPool(self, tInput: TransactionInput):
         """
         method that adds a transaction input to the transaction input pool. The transaction input pool is a dictionary
@@ -688,39 +691,6 @@ class Blockchain:
                 tInput.getRecipient()] = list()  # create a list with the recipient's transaction inputs
 
         self.__transactionInputPool[tInput.getRecipient()].append(tInput)
-
-    def __executeTransaction(self, transaction: Transaction, privateKey: str):
-        """
-        This method executes the transaction and gives back the change
-        :param transaction:
-        :param privateKey: the private key of the sender
-        :return:
-        """
-
-        # calculate the change and make an extra transaction output
-        change = transaction.getTransactionInputsTotalValue() - transaction.getTransactionOutputsTotalValue()
-        if change > 0:  # if there is change, then make the extra transaction output
-            changeTransactionOutput = TransactionOutput(change, transaction.getSender(), transaction.getSender())
-            transaction.addTransactionOutput(changeTransactionOutput)  # add change tx output to the list of tx output
-
-        transaction.__setTransactionHash()  # set the transaction hash of the transaction
-
-        # for each transaction output, create a transaction input that will be added to the blockchain pool
-        for txOutput in transaction.getTransactionOutputList():
-            txInput = TransactionInput(txOutput.getValue(), txOutput.getRecipient(),
-                                       transaction.getDoubleHash(), transaction.getTransactionOutputList().index(txOutput))
-            # if the recipient address is a new recipient, then add it to the blockchain tx input pool
-            txInputRecipient = self.__transactionInputPool.get(txInput.getRecipient())  # the recipient of the input
-            if txInputRecipient is None:
-                self.__transactionInputPool[txInput.getRecipient()] = list()
-            self.__transactionInputPool.get(txInput.getRecipient()).append(txInput)
-
-        # sign the transaction and add it to the blockchain, if it is not empty
-        if transaction.getInCounter()>0 and transaction.getOutCounter()>0:
-            # sign the transaction
-            self.signTransaction(transaction, privateKey)
-            # add it to the blockchain
-            self.__pendingTransactionList.append(transaction)
 
     def printAccountTotals(self):
         """
@@ -739,47 +709,34 @@ class Blockchain:
                 " is " + str(self.getAccountTotal(accountAddress))
             )
 
-    def submitTransaction(self, sender: str, coinTransfers: list, privateKey: str):
+    def submitTransaction(self, senderAccount: CryptoAccount, coinTransfers: list):
         """
         Method for creating and submitting the transaction to the pending transaction list.
         Only the outputs are added. The inputs will be added at the mining/confirmation phase.
+        It also adds the sender to the accounts list of the blockchain
 
-        :param sender: the sender address
+        :param senderAccount: the sender CryptoAccount object
         :param coinTransfers: the list of coin transfers (CoinTransfer objects)
-        :param privateKey: the private key of the sender
         :return:
         """
+        senderAddress = senderAccount.getAddress()
+        senderPrivateKey = senderAccount.getPrivateKey()
+        senderPublicKey = senderAccount.getPublicKey()
+
         # create the transaction
-        t = Transaction(sender)  # initiate a new transaction and add the outputs
+        t = Transaction(senderAddress)  # initiate a new transaction and add the outputs
         for coinTransfer in coinTransfers:
             t.addTransactionOutput(TransactionOutput(
-                coinTransfer.getValue(), sender, coinTransfer.getRecipient()))
+                coinTransfer.getValue(), senderAddress, coinTransfer.getRecipient()))
 
         # sign the transaction
-        t.sign(privateKey)
+        t.sign(senderPrivateKey)
 
         # add the transaction to the pending transaction list
         self.__pendingTransactionList.append(t)
-        pass
 
-    def transfer(self, sender: str, coinTransfers: list, privateKey: str):
-        """
-        Method for transferring value to lots of recipients. Because of the way that the method __transferCoins
-        work, coin transfers will start adding to the transaction output list until a coin transfer is found
-        that cannot be made (insufficient recipient)
-        :param sender: the sender address
-        :param coinTransfers: the list of coin transfers (CoinTransfer objects)
-        :param privateKey: the private key of the sender
-        :return:
-        """
-        t = Transaction(sender)  # initiate a transaction for the sender
-
-        for coinTransfer in coinTransfers:
-            # make the coin transfer if possible, else stop the coin transfers
-            result = self.__transferCoins(sender, coinTransfer.getRecipient(), coinTransfer.getValue(), t)
-            if result is None or result is False:
-                break
-        self.__executeTransaction(t, privateKey)
+        # add the sender to the accounts dictionary
+        self.__addSenderAccount(senderAddress, senderPublicKey)
 
     def signTransaction(self, transaction: Transaction, privateKeyString: str) -> str:
         """
@@ -809,22 +766,85 @@ class Blockchain:
             transaction.setSignature(signedTransactionHash)
             return signedTransactionHash
 
-    def verifyTransactions(self):
+    def executeTransactions(self, currentBlock: Block) -> int:
         """
         Method that verifies the transactions that are in the pending list, forges a new blocks and adds them
         to the blockchain
-        :return:
+        :param currentBlock: the current Block, to which the transactions will be added
+        :return: number of transactions added to the blockchain
         """
+        # TODO: add some incentives for miners (cryptoeconomics)
+        transactionsAdded = 0  # number of transactions added to the blockchain
+
         # for each transaction in the pending transaction list
         for pendingTransaction in self.__pendingTransactionList:
+
             # verify the signature of the transaction using the public key of the sender
-            senderPublicKey = self.getAccount(pendingTransaction.getSender()).get('publicKey')
+            senderPublicKey = self.getSenderAccount(pendingTransaction.getSender()).get('publicKey')
+            publicKey = RSA.importKey(binascii.unhexlify(senderPublicKey))
+            verifier = PKCS1_v1_5.new(publicKey)
+            txString = str(pendingTransaction.getOrderedDict())
+            h = TLCUtilities.getDoubleHash256(txString)
+            result = verifier.verify(h, binascii.unhexlify(pendingTransaction.getSignature()))
+            if not result:
+                break  # stop with the current pending transaction. Go to the next one
 
             # verify that the sender account balance is enough for the transaction to take place
+            txOutTotalValue = 0  # total value of transaction outputs
+            for txOutput in pendingTransaction.getTransactionOutputList():
+                txOutTotalValue += txOutput.getValue()
+            accountBalance = self.getAccountTotal(pendingTransaction.getSender())
+            if txOutTotalValue > accountBalance:  # if the balance is not enough, stop with this transaction
+                break
 
             # mine the transaction (add it to the block, add block number etc.)
 
-            # add a tx output for change
+            # add some tx inputs
+            senderTxInputPool = self.__transactionInputPool.get(pendingTransaction.getSender())  # sender tx inputs
+            txInputTotalValue = 0
+            txInputList = list()
+            i = 0
+            while txInputTotalValue < txOutTotalValue:
+                txInputTotalValue += senderTxInputPool[i].getValue()  # increase the tx input total value
+                txInputList.append(senderTxInputPool[i])  # create the tx input list
+                senderTxInputPool.remove(senderTxInputPool[i])  # remove the tx input from the resources available
+                i += 1
+            # txInputList.append(senderTxInputPool[i])  # add one final input
+            # senderTxInputPool.remove(senderTxInputPool[i])
+            pendingTransaction.extendTransactionInputList(txInputList)  # set the tx input list of the transaction
+
+            # if there is any change, create a new tx output
+            if txInputTotalValue > txOutTotalValue:
+                pendingTransaction.addTransactionOutput(
+                    TransactionOutput(txInputTotalValue-txOutTotalValue, pendingTransaction.getSender(),
+                                      pendingTransaction.getSender())
+                )
+
+            # add the transaction to the block
+            pendingTransaction.setBlockNumber(currentBlock.getBlockNumber())  # set the block number
+            currentBlock.addTransaction(pendingTransaction)
+
+            # add the transaction to the confirmed transactions list
+            self.__confirmedTransactionList.append(pendingTransaction)
+
+            # create some inputs for the input pool
+            for txOutput in pendingTransaction.getTransactionOutputList():
+                self.__addTransactionInputToPool(
+                    TransactionInput(txOutput.getValue(),
+                                     txOutput.getRecipient(),
+                                     pendingTransaction.getTransactionHash(),
+                                     pendingTransaction.getTransactionOutputList().index(txOutput)
+                                     )
+                )
+
+            # increase the number of transactions added
+            transactionsAdded += 1
 
             # add the tx outputs as tx inputs in the tx input pool
-            pass
+
+        self.__chain.append(currentBlock)  # add the block to the chain
+
+        # reset the pendind transaction list
+        self.__pendingTransactionList = list()
+
+        return transactionsAdded

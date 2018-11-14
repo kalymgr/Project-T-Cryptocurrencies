@@ -13,15 +13,19 @@ of transactions is added to the blockchain.
 
 
 Transaction rules:
-- Let's suppose a sender wants to send money to many recipients. Then a list of the coin
-transfers is made. The list of coin transfers will start executing until a coin transfer is
-found that surpasses the sender account total. <b>This functionality may change, depending on 
-the needs.</b>
+- Let's suppose a sender wants to send money to many recipients. None of the coin transfers
+will take place if the sender balance is not enough for the total amount of the coin
+transfers</b>
+- 
 
 <h2>Transaction Verification </h2>
 When the sender wants to make the transaction, he signs it with his private key.
-When the block containing the transaction is mined, the transaction is validated (check if the sender
-has enough money) using the public key.
+When the block containing the transaction is mined, the transaction is validated 
+using the public key. Also, the transaction will not take place if the account balance
+of the sender is not enough for the transaction.
+Transactions are verified according to the order that they are submitted to the pending
+transaction list. If a transaction in a block is verified, then one of the next transactions
+in the same block can use the funds from the verified transaction.
 
 <h2>Wallet balances</h2>
-When a transaction is verified, the wallet balances of the sender and the receivers are altered.
+To get a wallet balance, one can use the transaction input pool dictionary.
