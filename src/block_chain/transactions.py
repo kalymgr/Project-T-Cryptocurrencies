@@ -437,13 +437,13 @@ class Block:
     Class for implementing the transaction Blocks
     """
 
-    def __init__(self, chain: list, nonce: int = None, previousHash: str = None):
+    def __init__(self, chain: list, nonce: int = None, previousBlockHash: str = None):
         """
         Constructor method for the block. Sets the block content
         :param chain: the chain that contains the blocks
         :param nonce: the nonce
         that will be included in the block
-        :param previousHash: the hash of the previous block
+        :param previousBlockHash: the hash of the previous block
         """
 
         if chain is not None:  # if the constructor has data to initialize the object
@@ -451,7 +451,7 @@ class Block:
             self.__timeStamp = time()
             # self.__transactions = transactions
             self.__nonce = nonce
-            self.__previousHash = previousHash
+            self.__previousBlockHash = previousBlockHash
             self.__transactions = list()
             # self.__merkleRoot = self.getMerkleRoot()  # set the merkle root of the block
 
@@ -498,7 +498,7 @@ class Block:
             'timestamp': self.__timeStamp,
             'transactions': transactionsString,  # long string-concatenation of the string of the tx ordered dicts
             'nonce': self.__nonce,
-            'previous_hash': self.__previousHash,
+            'previous_hash': self.__previousBlockHash,
             'merkle_root': self.__merkleRoot
         })
 
@@ -511,6 +511,21 @@ class Block:
         block_string = json.dumps(self.getOrderedDictionary(), sort_keys=True).encode()
 
         return hashlib.sha256(block_string).hexdigest()
+
+    def getPreviousBlockHash(self) -> str:
+        """
+        returns the block hash of the previous block
+        :return: __previousHash property (string)
+        """
+        return self.__previousBlockHash
+
+    def setPreviousBlockHash(self, prevBlockHash: str):
+        """
+        Method that sets the previous block hash property of the block
+        :param prevBlockHash: the hash of the previous block
+        :return:
+        """
+        self.__previousBlockHash = prevBlockHash
 
     def getMerkleRoot(self) -> str:
         """
@@ -558,11 +573,23 @@ class Block:
         else:  # no transactions in the block
             return None
 
+    def getTransactionsHash(self) -> str:
+        """
+        Method that returns a hash string concatenation of all the transactions included in the hash
+        :return: transactions hash string
+        """
+        hashConcat = ''
+        for transaction in self.__transactions:
+            hashConcat += transaction.getTransactionHash()
+        return hashConcat
+
 
 class Blockchain:
     """
     class that handles the blockchain
     """
+
+    MINING_DIFFICULTY = 2  # the mining difficulty
 
     def __init__(self):
         """
@@ -842,9 +869,42 @@ class Blockchain:
 
             # add the tx outputs as tx inputs in the tx input pool
 
+        # set the __previousBlockHash property of the block
+        previousBlock = self.__chain[len(self.__chain)-1]
+        currentBlock.setPreviousBlockHash(previousBlock.getBlockHash())
         self.__chain.append(currentBlock)  # add the block to the chain
 
         # reset the pendind transaction list
         self.__pendingTransactionList = list()
 
         return transactionsAdded
+
+    def __getProofOfWork(self, block: Block) -> int:
+        """
+        Proof of work algorithm. Returns the nonce, when successfully completed
+        :param block: the block on which the proof of work process will take place
+        :return: the nonce (int)
+        """
+        blockTransactionsHash = block.getTransactionsHash()  # get the block transactions hash
+        prevBlockHash = block.getPreviousBlockHash()
+
+        nonce = 0  # nonce - starts from zero
+        # search while you find a valid proof
+        while not self.__validProof(nonce, blockTransactionsHash, prevBlockHash):
+            nonce += 1
+
+        return nonce
+
+    def __validProof(self, nonce: int, blockTransactionsHash: str,
+                     prevBlockHash: str, miningDifficulty: int = MINING_DIFFICULTY) -> bool:
+        """
+        Method that checks the proof for a specific nonce. If ok, returns True, else returns False
+        :param nonce: the nonce to be checked
+        :param blockTransactionsHash: the hash of the transactions of the block
+        :param prevBlockHash: the hash of the previous block
+        :param miningDifficulty: the mining difficulty
+        :return: True if ok, else False
+        """
+        guess = (blockTransactionsHash + prevBlockHash + str(nonce)).encode()
+        guessHash = hashlib.sha256(guess).hexdigest()
+        return guessHash[:miningDifficulty] == '0' * miningDifficulty

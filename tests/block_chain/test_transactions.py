@@ -27,18 +27,9 @@ class TestTransactions(unittest.TestCase):
         self.evdoxiaAccount = CryptoAccount()
         self.kyriakosAccount = CryptoAccount()
 
-    def test_variousTransactions(self):
-        """
-        Testing that the initial account totals are ok
-        :return:
-        """
-
-        # print the existing account balances in the blockchain
-        self.blockchain.printAccountTotals()
-
+        # create a block to aid with testing
         # test that initial account balance is ok
         blockchainAddress = self.blockchain.getBlockchainAccount().getAddress()
-        assert self.blockchain.getAccountTotal(blockchainAddress) == 100
 
         # make a coin transfer and then check the results
         coinTransferList = [
@@ -56,12 +47,18 @@ class TestTransactions(unittest.TestCase):
         self.blockchain.submitTransaction(self.blockchain.getBlockchainAccount(), coinTransferList)
         self.blockchain.submitTransaction(self.michalisAccount, coinTransferList2)
 
-        # transaction not verified, so the balance is the same
-        assert self.blockchain.getAccountTotal(blockchainAddress) == 100
-
         # verify the pending transactions and add the block of transactions to the blockchain
         currentBlock = Block(self.blockchain.getChain())
-        assert self.blockchain.executeTransactions(currentBlock) == 2  # check that one transaction has been added
+        self.blockchain.executeTransactions(currentBlock)
+
+    def test_variousTransactions(self):
+        """
+        Testing that the initial account totals are ok
+        :return:
+        """
+
+        # print the existing account balances in the blockchain
+        self.blockchain.printAccountTotals()
 
         self.blockchain.printAccountTotals()
 
@@ -93,35 +90,24 @@ class TestTransactions(unittest.TestCase):
         assert self.blockchain.getAccountTotal("kyriakos") == 0
         """
 
-    def test_transactionSignaturesAndHashes(self):
+    def test_proofOfWork(self):
         """
-        method to test that the transactions are properly signed and that
-        they are properly linked via their transaction hash.
-        First I make a simple transaction and then I check the signatures and hashes
+        Testing the proof of work related methods
         :return:
         """
+        # get the last block of the chain
+        lastBlock = self.blockchain.getChain()[len(self.blockchain.getChain())-1]
 
-        # make a transaction
-        # transfer some money to stefanos
-        coinTransferList0 = [
-            CoinTransfer(self.stefanosAccount.getAddress(), 50),
-            CoinTransfer(self.michalisAccount.getAddress(), 10),
-            CoinTransfer(self.evdoxiaAccount.getAddress(), 5)
-        ]
-        self.blockchain.transfer(self.blockchain.getBlockchainAccount().getAddress(), coinTransferList0,
-                                 self.blockchain.getBlockchainAccount().getPrivateKey())
+        # get the blockTransactionsHash
+        blockTransactionsHash = lastBlock.getTransactionsHash()
 
-        # for each of the transaction inputs in the transaction input pool, the prev transaction hash
-        # should be the hash of the first transaction of the blockchain
-        for txInputList in self.blockchain.getTransactionInputPool().values():
-            for txInput in txInputList:
-                assert txInput.getPreviousTransactionHash() == self.blockchain.getTransactionList()[0].getDoubleHash()
+        # get the hash of the previous block
+        prevBlockHash = self.blockchain.getChain()[len(self.blockchain.getChain())-2].getBlockHash()
 
-        # for each transaction in the blockchain, check that the transaction signature is properly stored
-        for transaction in self.blockchain.getTransactionList():
-            assert transaction.getSignature() == \
-                   self.blockchain.signTransaction(transaction,
-                                              self.blockchain._Blockchain__cryptoAccount._CryptoAccount__privateKey)
+        # try to find a valid nonce
+        validNonce = self.blockchain._Blockchain__getProofOfWork(lastBlock)
+        print('Valid block nonce :' + str(validNonce))
+        assert validNonce > 0
 
 
 
