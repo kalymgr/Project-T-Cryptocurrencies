@@ -4,7 +4,6 @@
     <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/block_chain/transactions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/transactions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/lastfailed" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/lastfailed" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/nodeids" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/block_chain/test_BlockChain.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/test_BlockChain.py" afterDir="false" />
     </list>
@@ -18,9 +17,9 @@
     <session id="2117071795">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="29" />
+          <entry key="project.closed" value="30" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.15" value="1" />
@@ -36,14 +35,14 @@
           <entry key="project.open.time.6" value="4" />
           <entry key="project.open.time.60" value="1" />
           <entry key="project.open.time.7" value="4" />
-          <entry key="project.opened" value="32" />
+          <entry key="project.opened" value="33" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="html" value="2" />
           <entry key="md" value="4" />
-          <entry key="py" value="120" />
+          <entry key="py" value="123" />
           <entry key="pyi" value="1" />
         </counts>
       </usages-collector>
@@ -51,26 +50,26 @@
         <counts>
           <entry key="HTML" value="2" />
           <entry key="Markdown" value="4" />
-          <entry key="Python" value="120" />
+          <entry key="Python" value="123" />
           <entry key="PythonStub" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="3548" />
+          <entry key="Python Console" value="3579" />
           <entry key="dummy" value="376" />
           <entry key="html" value="40" />
           <entry key="md" value="1891" />
-          <entry key="py" value="54304" />
-          <entry key="txt" value="1523" />
+          <entry key="py" value="57283" />
+          <entry key="txt" value="1600" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="40" />
           <entry key="Markdown" value="1891" />
-          <entry key="PLAIN_TEXT" value="1899" />
-          <entry key="Python" value="57852" />
+          <entry key="PLAIN_TEXT" value="1976" />
+          <entry key="Python" value="60862" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -139,8 +138,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="292" />
-    <option name="y" value="-9" />
+    <option name="x" value="253" />
+    <option name="y" value="194" />
     <option name="width" value="1255" />
     <option name="height" value="715" />
   </component>
@@ -149,7 +148,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -183,6 +181,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -206,7 +205,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders">
+  <component name="RunManager" selected="Python tests.pytest for test_BlockChain.TestBlockchain.test_validate">
     <configuration name="pytest for test_BlockChain.TestBlockchain" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -219,36 +218,6 @@
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_BlockChain.TestBlockchain&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeFeasibleTransactions" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="project-t" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_BlockChain.TestBlockchain.test_executeFeasibleTransactions&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeInfeasibleTransactions" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="project-t" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_BlockChain.TestBlockchain.test_executeInfeasibleTransactions&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -267,6 +236,21 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionToOneSelf" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="project-t" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_BlockChain.TestBlockchain.test_executeTransactionToOneSelf&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -282,20 +266,35 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="project-t" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_BlockChain.TestBlockchain.test_validate&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeFeasibleTransactions" />
-      <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeInfeasibleTransactions" />
       <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain" />
       <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeSomeFeasibleTransactions" />
       <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" />
+      <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeTransactionToOneSelf" />
+      <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_validate" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_validate" />
+        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeTransactionToOneSelf" />
         <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" />
         <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain" />
         <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeSomeFeasibleTransactions" />
-        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeInfeasibleTransactions" />
-        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_executeFeasibleTransactions" />
       </list>
     </recent_temporary>
   </component>
@@ -366,39 +365,46 @@
       <option name="project" value="LOCAL" />
       <updated>1542276458031</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="- Almost completed testing my blockchain. One more test to write.">
+      <created>1542286625853</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1542286625853</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeTransactionsMultipleSenders - 2018.11.15 at 14h 41m 24s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" configurationId="tests" />
+    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_validate - 2018.11.15 at 17h 34m 00s.xml">
+      <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeTransactionsMultipleSenders - 2018.11.15 at 14h 41m 52s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" configurationId="tests" />
+    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_validate - 2018.11.15 at 17h 34m 08s.xml">
+      <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeTransactionsMultipleSenders - 2018.11.15 at 14h 46m 03s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" configurationId="tests" />
+    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_validate - 2018.11.15 at 17h 36m 12s.xml">
+      <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeTransactionsMultipleSenders - 2018.11.15 at 14h 46m 32s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" configurationId="tests" />
+    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_validate - 2018.11.15 at 17h 36m 28s.xml">
+      <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeTransactionsMultipleSenders - 2018.11.15 at 14h 47m 52s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" configurationId="tests" />
+    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_validate - 2018.11.15 at 17h 37m 23s.xml">
+      <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeTransactionsMultipleSenders - 2018.11.15 at 14h 51m 27s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" configurationId="tests" />
+    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_validate - 2018.11.15 at 17h 42m 34s.xml">
+      <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeTransactionsMultipleSenders - 2018.11.15 at 14h 52m 56s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" configurationId="tests" />
+    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_validate - 2018.11.15 at 17h 42m 43s.xml">
+      <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeTransactionsMultipleSenders - 2018.11.15 at 14h 53m 56s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" configurationId="tests" />
+    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_validate - 2018.11.15 at 17h 43m 11s.xml">
+      <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeTransactionsMultipleSenders - 2018.11.15 at 14h 56m 22s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" configurationId="tests" />
+    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_validate - 2018.11.15 at 17h 48m 05s.xml">
+      <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeTransactionsMultipleSenders - 2018.11.15 at 14h 56m 32s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeTransactionsMultipleSenders" configurationId="tests" />
+    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_validate - 2018.11.15 at 17h 48m 45s.xml">
+      <configuration name="pytest for test_BlockChain.TestBlockchain.test_validate" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -411,22 +417,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.45578232" visible="true" weight="0.19072708" />
-      <window_info id="Structure" order="1" sideWeight="0.5442177" side_tool="true" visible="true" weight="0.19072708" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.45201668" visible="true" weight="0.19072708" />
+      <window_info id="Structure" order="1" sideWeight="0.5479833" side_tool="true" visible="true" weight="0.19072708" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3275488" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.45444685" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.30694142" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.36158797" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4409871" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.13774404" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.36225596" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.22854078" />
       <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.27006507" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.23427331" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.23390558" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -469,19 +475,20 @@
     <MESSAGE value="- Changed the code. Now the coin transfer happens in two steps.&#10;a) The sender submits a transaction.&#10;b) The list of transactions submitted is verified.&#10;The verification (for now) includes (a) checking that the account balance of the sender is enough (b) verifying the sender's signature. Of course mining functionality must be added (nonce etc.)&#10;Also, the existing functionality needs more testing." />
     <MESSAGE value="- Completed the proof of work algorithm and did some testing" />
     <MESSAGE value="- Started running more tests. Now I have an error with the Blockchain method that signs the transactions" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Started running more tests. Now I have an error with the Blockchain method that signs the transactions" />
+    <MESSAGE value="- Almost completed testing my blockchain. One more test to write." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Almost completed testing my blockchain. One more test to write." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/block_chain/transactions.py</url>
-          <line>322</line>
+          <line>323</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/tests/block_chain/test_transactions.py</url>
-          <line>73</line>
+          <line>74</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -514,6 +521,26 @@
           <line>325</line>
           <option name="timeStamp" value="85" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/tests/block_chain/test_BlockChain.py</url>
+          <line>374</line>
+          <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/block_chain/transactions.py</url>
+          <line>930</line>
+          <option name="timeStamp" value="88" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/block_chain/transactions.py</url>
+          <line>932</line>
+          <option name="timeStamp" value="91" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/block_chain/transactions.py</url>
+          <line>689</line>
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -529,6 +556,12 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>not self.__validProof(currentBlock.getNonce(), currentBlock.getTransactionsHash(),
+                                     currentBlock.getPreviousBlockHash())</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>accountBalance</expression-string>
         <language-id>Python</language-id>
@@ -569,11 +602,6 @@
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>h.hexdigest()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
     </expressions>
     <expressions id="watch">
       <expression>
@@ -588,6 +616,31 @@
       </expression>
     </expressions>
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>currentBlock.getPreviousBlockHash()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>currentBlock.getNonce()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>currentBlock.getTransactionsHash()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.__validProof(nonce, blockTransactionsHash, prevBlockHash)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>currentBlock.getPreviousBlockHash != previousBlock.getBlockHash()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>len(transactionDoubleHashes)</expression-string>
         <language-id>Python</language-id>
@@ -605,31 +658,6 @@
       </expression>
       <expression>
         <expression-string>blockchain.getTransactionInputPool()['evdoxia']</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>blockchain.getTransactionInputPool()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>dict(t)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>t</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>self.transactionInputPool[accountAddress]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>b2.getMerkleRoot()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -707,13 +735,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/block_chain/blockchain.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-506">
-          <caret line="139" column="30" selection-start-line="139" selection-start-column="30" selection-end-line="139" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/block_chain/test_TransactionOutput.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="348">
@@ -768,13 +789,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/Crypto/Signature/PKCS1_v1_5.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="116" column="8" selection-start-line="116" selection-start-column="8" selection-end-line="116" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/Crypto/Signature/PKCS1_v1_5.py" />
     <entry file="file://$PROJECT_DIR$/src/block_chain/crypto_account.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="29">
@@ -782,26 +797,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
+    <entry file="file://$PROJECT_DIR$/src/block_chain/blockchain.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="837" selection-start-line="837" selection-end-line="837" />
-          <folding>
-            <element signature="e#274#289#0" expanded="true" />
-            <marker date="1542284910414" expanded="true" signature="15931:16087" ph="..." />
-            <marker date="1542284910414" expanded="true" signature="18182:18587" ph="..." />
-            <marker date="1542284910414" expanded="true" signature="18441:18587" ph="..." />
-            <marker date="1542284910414" expanded="true" signature="34939:34948" ph="..." />
-          </folding>
+        <state relative-caret-position="150">
+          <caret line="177" column="26" lean-forward="true" selection-start-line="177" selection-start-column="26" selection-end-line="177" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/block_chain/test_BlockChain.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="340" column="109" selection-start-line="340" selection-start-column="109" selection-end-line="340" selection-end-column="109" />
+        <state relative-caret-position="471">
+          <caret line="407" column="9" selection-start-line="407" selection-start-column="9" selection-end-line="407" selection-end-column="9" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1968">
+          <caret line="535" column="27" selection-start-line="535" selection-start-column="27" selection-end-line="535" selection-end-column="27" />
+          <folding>
+            <element signature="e#274#289#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -528,6 +528,13 @@ class Block:
         """
         self.__nonce = nonce
 
+    def getNonce(self) -> int:
+        """
+        returns the nonce of the block
+        :return: __nonce object property
+        """
+        return self.__nonce
+
     def getMerkleRoot(self) -> str:
         """
         method that calculates and returns the merkle root of the block.
@@ -680,6 +687,9 @@ class Blockchain:
         genesisTransaction.sign(self.getBlockchainAccount().getPrivateKey())
 
         genesisBlock.setTransactionList([genesisTransaction])  # set the genesis block transaction list
+        genesisBlock.setNonce(  # set the nonce
+            self.__getProofOfWork(genesisBlock)
+        )
         self.__chain.append(genesisBlock)
 
         # add the transaction to the list of the confirmed transactions
@@ -901,3 +911,28 @@ class Blockchain:
         guess = (blockTransactionsHash + prevBlockHash + str(nonce)).encode()
         guessHash = hashlib.sha256(guess).hexdigest()
         return guessHash[:miningDifficulty] == '0' * miningDifficulty
+
+    def validate(self) -> bool:
+        """
+        Method that validates the blockchain. To do that, it checks two things: (a) that the hash of the block
+        is the same prevBlockHash of the next block  (b) that the nonce stored in the block data is valid
+        :return: True if validation is ok, else False
+        """
+        chainValid = True  # let's assumen that the chain is valid
+        chainLength = len(self.__chain)  # the length of the chain
+        i = 0
+        while i < chainLength and chainValid:  # while the chain has not ended and it is valid
+            currentBlock = self.__chain[i]
+            if i > 0:   # check the block hashes for all blocks except from the first one (i>0)
+                previousBlock = self.__chain[i-1]
+                if currentBlock.getPreviousBlockHash() != previousBlock.getBlockHash():
+                    chainValid = False
+
+            if not self.__validProof(currentBlock.getNonce(), currentBlock.getTransactionsHash(),
+                                     currentBlock.getPreviousBlockHash()):
+                chainValid = False
+
+            i += 1  # go to the next block
+
+        return chainValid  # return the result of the validation check
+

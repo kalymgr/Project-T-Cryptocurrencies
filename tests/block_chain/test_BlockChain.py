@@ -341,10 +341,6 @@ class TestBlockchain(unittest.TestCase):
                 assert self.blockchain.getChain()[i-2].getBlockHash() == block._Blockchain__previousBlockHash
             i += 1
 
-
-
-
-
     def test_executeTransactionToOneSelf(self):
         """
         Testing the case where one tries to send coins to oneself
@@ -357,10 +353,57 @@ class TestBlockchain(unittest.TestCase):
         coinTransferList1 = [
             CoinTransfer(self.testAccount1.getAddress(), 50)
         ]
+        coinTransferList2 = [
+            CoinTransfer(self.testAccount1.getAddress(), 30)
+        ]
+        # submit the two transactions
+        self.blockchain.submitTransaction(self.blockchain.getBlockchainAccount(), coinTransferList1)
+        self.blockchain.submitTransaction(self.testAccount1, coinTransferList2)
 
+        # execute the transactions
+        currentBlock = Block(self.blockchain.getChain())
+        self.blockchain.executeTransactions(currentBlock)
 
+        # check the length of the blockchain confirmed transaction list
+        assert len(self.blockchain.getConfirmedTransactionList()) == 3
+        # check the length of the blockchain
+        assert len(self.blockchain.getChain()) == 2
+        # check the account totals
+        assert self.blockchain.getAccountTotal(
+            self.blockchain.getBlockchainAccount().getAddress()
+        ) == 50
+        assert self.blockchain.getAccountTotal(self.testAccount1.getAddress()) == 50
 
+    def test_validate(self):
+        """
+        Testing the validate method.
+        In the first case, the blockchain is valid where as in the second someone tried to change the transactions
+        :return:
+        """
+        # add two blocks to the chain
+        self.blockchain.submitTransaction(self.blockchain.getBlockchainAccount(), self.testCoinTransferList1)
+        firstBlock = Block(self.blockchain.getChain())
+        self.blockchain.executeTransactions(firstBlock)  # first block added
 
+        self.blockchain.submitTransaction(self.blockchain.getBlockchainAccount(), self.testCoinTransferList2)
+        secondBlock = Block(self.blockchain.getChain())
+        self.blockchain.executeTransactions(secondBlock)
 
+        # check that two blocks have been inserted
+        assert len(self.blockchain.getChain()) == 3
 
+        # case that the blockchain is valid
 
+        assert self.blockchain.validate()
+
+        # case that the someone tried to alter the list of transactions to send money to his fake account
+        fakeAccount = CryptoAccount()
+
+        self.blockchain.getChain()[1].setTransactionList(
+            [
+                Transaction(self.blockchain.getBlockchainAccount().getAddress(), None,
+                        [TransactionOutput(10, self.blockchain.getBlockchainAccount().getAddress(),
+                                           fakeAccount.getAddress())])
+            ]
+        )
+        assert not self.blockchain.validate()  # now the blockchain must not validate
