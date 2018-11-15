@@ -767,34 +767,6 @@ class Blockchain:
         # add the sender to the accounts dictionary
         self.__addSenderAccount(senderAddress, senderPublicKey)
 
-    def signTransaction(self, transaction: Transaction, privateKeyString: str) -> str:
-        """
-        Method that signs the transaction and adds the signature to the transaction data that will be appended
-        to the blockchain
-        :param transaction: the Transaction to be signed
-        :param privateKeyString: the private key of the signer
-        :return: the transaction signature if everything ok, else None
-        """
-
-        # get the transaction hash string
-        transactionString = transaction.getDoubleHash()
-
-        if privateKeyString is None:  # empty private key
-            return None
-        else:
-            # create the private key in a form that will make signing possible
-            privateKey = RSA.importKey(binascii.unhexlify(privateKeyString))
-
-            # create the signer
-            signer = PKCS1_v1_5.new(privateKey)
-            # create the hash of the transaction
-            h = SHA.new(transactionString.encode('utf8'))
-            # sign the hash of the transaction with the private key
-            signedTransactionHash = binascii.hexlify(signer.sign(h)).decode('ascii')
-            # set the transaction property (signedTransactionHash) and return true
-            transaction.setSignature(signedTransactionHash)
-            return signedTransactionHash
-
     def executeTransactions(self, currentBlock: Block) -> int:
         """
         Method that verifies the transactions that are in the pending list, forges a new blocks and adds them
@@ -812,7 +784,7 @@ class Blockchain:
             verificationResult = self.__verifySignature(pendingTransaction)
 
             if not verificationResult:
-                break  # stop with the current pending transaction. Go to the next one
+                continue  # stop with the current pending transaction. Go to the next one
 
             # verify that the sender account balance is enough for the transaction to take place
             txOutTotalValue = 0  # total value of transaction outputs
@@ -820,7 +792,7 @@ class Blockchain:
                 txOutTotalValue += txOutput.getValue()
             accountBalance = self.getAccountTotal(pendingTransaction.getSender())
             if txOutTotalValue > accountBalance:  # if the balance is not enough, stop with this transaction
-                break
+                continue
 
             # mine the transaction (add it to the block, add block number etc.)
 
@@ -865,16 +837,17 @@ class Blockchain:
             # increase the number of transactions added
             transactionsAdded += 1
 
-        # set the __previousBlockHash property of the block
-        previousBlock = self.__chain[len(self.__chain)-1]
-        currentBlock.setPreviousBlockHash(previousBlock.getBlockHash())
+        if transactionsAdded > 0:  # if at least one transaction is valid
+            # set the __previousBlockHash property of the block
+            previousBlock = self.__chain[len(self.__chain)-1]
+            currentBlock.setPreviousBlockHash(previousBlock.getBlockHash())
 
-        # mine the block
-        nonce = self.__getProofOfWork(currentBlock)
-        currentBlock.setNonce(nonce)  # set the nonce of the block
+            # mine the block
+            nonce = self.__getProofOfWork(currentBlock)
+            currentBlock.setNonce(nonce)  # set the nonce of the block
 
-        # add the block to the chain
-        self.__chain.append(currentBlock)
+            # add the block to the chain
+            self.__chain.append(currentBlock)
 
         # reset the pending transaction list
         self.__pendingTransactionList = list()
