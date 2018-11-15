@@ -6,6 +6,7 @@ from src.block_chain.transactions import Blockchain, Transaction, TransactionInp
 
 # TODO: more testing for cases where the account balance is not enough etc.
 
+
 class TestTransactions(unittest.TestCase):
     """
     methods for testing the new classes

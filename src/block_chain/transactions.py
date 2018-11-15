@@ -48,6 +48,7 @@ class TransactionInput:
     def __init__(self, value: int, recipient: str, previousTransactionHash: str, prevTxOutIndex: int=None):
         """
         constructor method
+        :param value: the value of the tx input
         :param recipient: the address of the recipient
         :param prevTxOutIndex: the reference number of the relevant output from a previous transaction
         """
@@ -372,6 +373,7 @@ class Transaction:
         method for returning the list of transaction inputs
         :return: a list of TransactionInput objects
         """
+        return self.__transactionInputList
 
     def getTransactionInputsTotalValue(self) -> int:
         """
@@ -382,18 +384,6 @@ class Transaction:
         for tInput in self.__transactionInputList:
             totalValue = totalValue + tInput.getValue()
         return totalValue
-
-    def getTransactionInputsRecipientValue(self, recipient: str) -> int:
-        """
-        method that calculates and returns the total value of the transaction inputs
-        :param recipient: the recipient address of the transaction input
-        :return: the value of the transaction inputs for the specific recipient (int)
-        """
-        recipientValue = 0
-        for tInput in self.__transactionInputList:
-            if tInput.recipient == recipient:
-                recipientValue = recipientValue + tInput.value
-        return recipientValue
 
     def getTransactionOutputsTotalValue(self) -> int:
         """
@@ -423,19 +413,13 @@ class Transaction:
         self.__transactionOutputList.append(txOutput)  # add the output
         self.__outCounter += 1  # increase the out-counter
 
-    def printTransactionInputsRecipientValue(self, recipient: str):
-        """
-        method that prints the value of the transaction inputs for a specific recipient
-        :param recipient: the recipient address
-        """
-        print('- The total value of the transaction inputs for recipient ' + recipient + ' is ' +
-              str(self.getTransactionInputsRecipientValue(recipient)))
-
 
 class Block:
     """
     Class for implementing the transaction Blocks
     """
+
+    BLOCK_VERSION = 1  # the version of the blocks
 
     def __init__(self, chain: list, nonce: int = None, previousBlockHash: str = None):
         """
@@ -447,13 +431,14 @@ class Block:
         """
 
         if chain is not None:  # if the constructor has data to initialize the object
+            self.__version = Block.BLOCK_VERSION
             self.__blockNumber = len(chain) + 1
             self.__timeStamp = time()
             # self.__transactions = transactions
             self.__nonce = nonce
             self.__previousBlockHash = previousBlockHash
             self.__transactions = list()
-            # self.__merkleRoot = self.getMerkleRoot()  # set the merkle root of the block
+            self.__merkleRoot = None  # set the merkle root of the block
 
     def setTransactionList(self, transactionList: list):
         """
@@ -463,6 +448,13 @@ class Block:
         """
         self.__transactions = transactionList
         self.__merkleRoot = self.getMerkleRoot()  # set the merkle root of the block
+
+    def getTransactionList(self) -> list:
+        """
+        get the transaction list of the block
+        :return: list of Transaction objects
+        """
+        return self.__transactions
 
     def addTransaction(self, transaction: Transaction):
         """
@@ -499,7 +491,8 @@ class Block:
             'transactions': transactionsString,  # long string-concatenation of the string of the tx ordered dicts
             'nonce': self.__nonce,
             'previous_hash': self.__previousBlockHash,
-            'merkle_root': self.__merkleRoot
+            'merkle_root': self.__merkleRoot,
+            'version': self.__version
         })
 
     def getBlockHash(self) -> str:
@@ -510,7 +503,7 @@ class Block:
         # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
         block_string = json.dumps(self.getOrderedDictionary(), sort_keys=True).encode()
 
-        return hashlib.sha256(block_string).hexdigest()
+        return SHA256.new(block_string).hexdigest()
 
     def getPreviousBlockHash(self) -> str:
         """
@@ -526,6 +519,14 @@ class Block:
         :return:
         """
         self.__previousBlockHash = prevBlockHash
+
+    def setNonce(self, nonce: int):
+        """
+        method that sets the nonce of the block
+        :param nonce:
+        :return:
+        """
+        self.__nonce = nonce
 
     def getMerkleRoot(self) -> str:
         """
@@ -590,6 +591,7 @@ class Blockchain:
     """
 
     MINING_DIFFICULTY = 2  # the mining difficulty
+    BLOCKCHAIN_INITIAL_AMOUNT = 100
 
     def __init__(self):
         """
@@ -609,7 +611,7 @@ class Blockchain:
         # generate a crypto wallet for the genesis transaction
         self.__cryptoAccount = CryptoAccount()
 
-        self.__executeGenesisTransaction(100)  # the genesis transaction of the system. 100 taliroshis
+        self.__executeGenesisTransaction(Blockchain.BLOCKCHAIN_INITIAL_AMOUNT)  # the genesis transaction of the system. 100 taliroshis
 
     def __addSenderAccount(self, address: str, publicKey: str):
         """
@@ -652,12 +654,12 @@ class Blockchain:
         """
         return self.__transactionInputPool
 
-    def getTransactionList(self) -> list:
+    def getConfirmedTransactionList(self) -> list:
         """
         Method that returns the transaction list of the blockchain
         :return: __transactionList class property
         """
-        return self.__pendingTransactionList
+        return self.__confirmedTransactionList
 
     def __executeGenesisTransaction(self, value: int):
         """
@@ -807,13 +809,9 @@ class Blockchain:
         for pendingTransaction in self.__pendingTransactionList:
 
             # verify the signature of the transaction using the public key of the sender
-            senderPublicKey = self.getSenderAccount(pendingTransaction.getSender()).get('publicKey')
-            publicKey = RSA.importKey(binascii.unhexlify(senderPublicKey))
-            verifier = PKCS1_v1_5.new(publicKey)
-            txString = str(pendingTransaction.getOrderedDict())
-            h = TLCUtilities.getDoubleHash256(txString)
-            result = verifier.verify(h, binascii.unhexlify(pendingTransaction.getSignature()))
-            if not result:
+            verificationResult = self.__verifySignature(pendingTransaction)
+
+            if not verificationResult:
                 break  # stop with the current pending transaction. Go to the next one
 
             # verify that the sender account balance is enough for the transaction to take place
@@ -867,17 +865,39 @@ class Blockchain:
             # increase the number of transactions added
             transactionsAdded += 1
 
-            # add the tx outputs as tx inputs in the tx input pool
-
         # set the __previousBlockHash property of the block
         previousBlock = self.__chain[len(self.__chain)-1]
         currentBlock.setPreviousBlockHash(previousBlock.getBlockHash())
-        self.__chain.append(currentBlock)  # add the block to the chain
 
-        # reset the pendind transaction list
+        # mine the block
+        nonce = self.__getProofOfWork(currentBlock)
+        currentBlock.setNonce(nonce)  # set the nonce of the block
+
+        # add the block to the chain
+        self.__chain.append(currentBlock)
+
+        # reset the pending transaction list
         self.__pendingTransactionList = list()
 
         return transactionsAdded
+
+    def __verifySignature(self, transaction: Transaction) -> bool:
+        """
+        Verifies the transaction signature of a transaction
+        :param transaction: the Transaction object
+        :return: True if verified, else false
+        """
+        senderPublicKey = self.getSenderAccount(transaction.getSender()).get('publicKey')
+        publicKey = RSA.importKey(binascii.unhexlify(senderPublicKey))
+        verifier = PKCS1_v1_5.new(publicKey)
+        txString = str(transaction.getOrderedDict())
+        h = TLCUtilities.getDoubleHash256(txString)
+        result = verifier.verify(h, binascii.unhexlify(transaction.getSignature()))
+
+        if result:
+            return True
+        else:
+            return False
 
     def __getProofOfWork(self, block: Block) -> int:
         """

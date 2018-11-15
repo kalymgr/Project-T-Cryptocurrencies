@@ -1,4 +1,7 @@
 {
+  "test_BlockChain.py::TestBlockchain::test_signTransaction": true,
+  "test_Transaction.py::TestTransaction::test_sign": true,
+  "test_TransactionInput.py": true,
   "test_block.py": true,
   "test_transactions.py": true,
   "test_transactions.py::TestTransactions::test_convertTransactionToDoubleHash": true,
