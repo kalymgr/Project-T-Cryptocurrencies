@@ -1,5 +1,5 @@
-from Crypto.Hash import SHA256
 from Crypto.Hash.SHA256 import SHA256Hash
+from Crypto.Hash import RIPEMD, SHA256
 
 
 class TLCUtilities:
@@ -26,6 +26,17 @@ class TLCUtilities:
         hash = SHA256.new(text.encode('utf8'))
         doubleHash = SHA256.new(hash.hexdigest().encode('utf8'))
         return doubleHash
+
+    @staticmethod
+    def getSHA256RIPEMDHash(text: str) -> str:
+        """
+        static method that is used for creating bitcoin addresses etc.
+        First it hashes using SHA256 and then using RIPEMD
+        :param text:
+        :return:
+        """
+        textSHA256Hash = SHA256.new(text.encode('utf8')).hexdigest()
+        return RIPEMD.new(textSHA256Hash).hexdigest()
 
 
 

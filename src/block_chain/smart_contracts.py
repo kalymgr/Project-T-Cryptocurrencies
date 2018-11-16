@@ -1,6 +1,8 @@
 """
 File trying to implement some smart contracts functionality
 """
+from src.block_chain.utilities import TLCUtilities
+
 
 class SmartContractLanguage:
     """
@@ -33,19 +35,10 @@ class SmartContractLanguage:
                     self.stripOperand(element)
                 )
             else:  # case it is an operator
-                # get the number of the arguments of the operator
-                noOfArguments = smartContractOperations.operations[element].__code__.co_argcount - 1
-
-                if noOfArguments == 1:  # one argument. Pop one operand from the stack
-                    item = self.expressionStack.pop()
-                    result = smartContractOperations.operations[element](item)
-                else:  # two arguments. Pop two operands from the stack
-                    item1 = self.expressionStack.pop()
-                    item2 = self.expressionStack.pop()
-                    result = smartContractOperations.operations[element](item1, item2)
-
-                # add the result to the stack
-                self.expressionStack.append(result)
+                # execute the operation, giving the operator the expression stack
+                result = smartContractOperations.operations[element](
+                    self.expressionStack
+                )
 
         return self.expressionStack[0]  # the bottom element of the stack must be the result
 
@@ -88,54 +81,86 @@ class SmartContractOperations:
         constructor method
         """
         # Setup the operations available
-        self.operations = dict()
-        self.operations['add'] = self.add
-        self.operations['sub'] = self.sub
-        self.operations['dou'] = self.dou
-        self.operations['mul'] = self.mul
-        self.operations['div'] = self.div
+        self.operations = {
+            'drop': self.drop,
+            'dup': self.dup,
+            'hash160': self.hash160,
+            'equal': self.equal,
+            'equalVerify': self.equalVerify,
+            'checkSig': self.checkSig
+        }
 
-    def add(self, a: str, b: str):
+    def drop(self, expressionStack: list):
         """
-        method that calculates the sum of two numbers
-        :param a: number as string
-        :param b: number as string
-        :return: the sum
-        """
-        return float(a) + float(b)
-
-    def sub(self, a: str, b: str):
-        """
-        method that subtract b from a  (a - b)
-        :param a: number string
-        :param b: number string
-        :return: a - b
-        """
-        return float(b) - float(a)
-
-    def mul(self, a: str, b: str):
-        """
-        method that multiplies a and b
-        :param a:
-        :param b:
-        :return: a * b
-        """
-        return float(a) * float(b)
-
-    def div(self, a: str, b: str):
-        """
-        method that divides
-        :param a:
-        :param b:
+        method that drops the top item from the stack if it is not empty
+        :param expressionStack:
         :return:
         """
-        return float(b) / float(a)
+        if len(expressionStack) > 0:  # if the expression stack is not empty
+            expressionStack.pop()  # pop the top item
 
-    def dou(self, a: str):
+    def dup(self, expressionStack: list):
         """
-        returns the double of a number
-        :param a:
-        :return: the double (float)
+        method that duplicates the top element of the stack
+        :param expressionStack:
+        :return:
         """
-        return 2 * float(a)
+        if len(expressionStack) > 0:  # if the expression stack is not empty
+            expressionStack.append(  # append the top key to the stack
+                expressionStack[len(expressionStack)-1]
+            )
+
+    def hash160(self, expressionStack: list):
+        """
+        method for hashing the top stack item twice, the first time with SHA256 and the second
+        time with RIPEMD
+
+        :param expressionStack:
+        :return:
+        """
+        if len(expressionStack) > 0: # if the stack is not empty
+            # get the top item
+            topItem = expressionStack.pop()
+            # hash it
+            topItemHash160 = TLCUtilities.getSHA256RIPEMDHash(topItem)
+            # put the hash back on the stack
+            expressionStack.append(topItemHash160)
+
+    def equal(self, expressionStack: list):
+        """
+        checks if the top two items are equal and put the result on the top of the stack
+        :param expressionStack:
+        :return:
+        """
+        if len(expressionStack) >= 2:  # at least two items must exist in the stack
+            # get two top items
+            topItem1 = expressionStack.pop()
+            topItem2 = expressionStack.pop()
+
+            # put the result of equality check in the stack
+            expressionStack.append(topItem1 == topItem2)
+
+    def equalVerify(self, expressionStack: list):
+        """
+        checks if the inputs are equal and then marks transaction as invalid
+        if top stack value is not true. The top stack value is removed.
+        :param expressionStack:
+        :return:
+        """
+        self.equal(expressionStack)  # first run the equal operation
+        transactionValid = expressionStack.pop()  # get the top item (result of the equal operation)
+        if not transactionValid:  # if the transaction is not valid, mark it as invalid
+            pass
+
+    def checkSig(self, expressionStack: list):
+        """
+        The entire transaction's outputs, inputs, and script
+        (from the most recently-executed OP_CODESEPARATOR to the end)
+        are hashed. The signature used by OP_CHECKSIG must be a valid signature
+        for this hash and public key. If it is, 1 is returned, 0 otherwise
+        :param expressionStack:
+        :return:
+        """
+        pass
+
 

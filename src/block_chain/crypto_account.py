@@ -6,6 +6,8 @@ from Crypto.Hash import RIPEMD, SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 
+from src.block_chain.utilities import TLCUtilities
+
 
 class CryptoAccount:
     """
@@ -32,8 +34,9 @@ class CryptoAccount:
         :return: the address string
         """
         text = str(self.__version) + self.__publicKey
-        textSHA256Hash = SHA256.new(text.encode('utf8')).hexdigest()
-        return RIPEMD.new(textSHA256Hash).hexdigest()
+        # textSHA256Hash = SHA256.new(text.encode('utf8')).hexdigest()
+        # return RIPEMD.new(textSHA256Hash).hexdigest()
+        return TLCUtilities.getSHA256RIPEMDHash(text)
 
     def getAddress(self) -> str:
         """
