@@ -935,4 +935,3 @@ class Blockchain:
             i += 1  # go to the next block
 
         return chainValid  # return the result of the validation check
-
