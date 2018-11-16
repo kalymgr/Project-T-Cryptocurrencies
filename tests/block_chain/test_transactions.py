@@ -93,14 +93,15 @@ class TestTransactions(unittest.TestCase):
 
     def test_proofOfWork(self):
         """
-        Testing the proof of work related methods
+        Testing the proof of work related methods.
+        It checks that a valid nonce exists
         :return:
         """
         # get the last block of the chain
         lastBlock = self.blockchain.getChain()[len(self.blockchain.getChain())-1]
 
         # get the blockTransactionsHash
-        blockTransactionsHash = lastBlock.getTransactionsHash()
+        blockHash = lastBlock.getBlockHash()
 
         # get the hash of the previous block
         prevBlockHash = self.blockchain.getChain()[len(self.blockchain.getChain())-2].getBlockHash()

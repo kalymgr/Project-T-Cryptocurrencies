@@ -474,22 +474,13 @@ class Block:
 
     def getOrderedDictionary(self) -> OrderedDict:
         """
-        returns the block content as a dictionary.
-        The transactions are included as ordered dictionaries converted to string. Therefore, for the transactions
-        the result is a long string.
-        :return: the block content as dictionary
+        returns the block header as a dictionary. It will be used for hashing and proof of work.
+
+        :return: the block header as dictionary
         """
-
-        # setup the transactions dict
-        transactionsString = ''
-        for transaction in self.__transactions:
-            transactionsString += str(transaction.getOrderedDict())
-
         return OrderedDict({
             'block_number': self.__blockNumber,
             'timestamp': self.__timeStamp,
-            'transactions': transactionsString,  # long string-concatenation of the string of the tx ordered dicts
-            'nonce': self.__nonce,
             'previous_hash': self.__previousBlockHash,
             'merkle_root': self.__merkleRoot,
             'version': self.__version
@@ -497,8 +488,8 @@ class Block:
 
     def getBlockHash(self) -> str:
         """
-        returns the SHA-256 hash of the block content
-        :return: the hash of the block content as string
+        returns the SHA-256 hash of the block header. It will be used for the proof of work.
+        :return: the hash of the block header as string
         """
         # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
         block_string = json.dumps(self.getOrderedDictionary(), sort_keys=True).encode()
@@ -580,16 +571,6 @@ class Block:
 
         else:  # no transactions in the block
             return None
-
-    def getTransactionsHash(self) -> str:
-        """
-        Method that returns a hash string concatenation of all the transactions included in the hash
-        :return: transactions hash string
-        """
-        hashConcat = ''
-        for transaction in self.__transactions:
-            hashConcat += transaction.getTransactionHash()
-        return hashConcat
 
 
 class Blockchain:
@@ -888,27 +869,28 @@ class Blockchain:
         :param block: the block on which the proof of work process will take place
         :return: the nonce (int)
         """
-        blockTransactionsHash = block.getTransactionsHash()  # get the block transactions hash
+        # blockTransactionsHash = block.getTransactionsHash()  # get the block transactions hash
+        blockHash = block.getBlockHash()  # get the blockHash
         prevBlockHash = block.getPreviousBlockHash()
 
         nonce = 0  # nonce - starts from zero
         # search while you find a valid proof
-        while not self.__validProof(nonce, blockTransactionsHash, prevBlockHash):
+        while not self.__validProof(nonce, blockHash, prevBlockHash):
             nonce += 1
 
         return nonce
 
-    def __validProof(self, nonce: int, blockTransactionsHash: str,
+    def __validProof(self, nonce: int, blockHash: str,
                      prevBlockHash: str, miningDifficulty: int = MINING_DIFFICULTY) -> bool:
         """
         Method that checks the proof for a specific nonce. If ok, returns True, else returns False
         :param nonce: the nonce to be checked
-        :param blockTransactionsHash: the hash of the transactions of the block
+        :param blockHash: the hash of the header of the block
         :param prevBlockHash: the hash of the previous block
         :param miningDifficulty: the mining difficulty
         :return: True if ok, else False
         """
-        guess = (blockTransactionsHash + prevBlockHash + str(nonce)).encode()
+        guess = (blockHash + prevBlockHash + str(nonce)).encode()
         guessHash = hashlib.sha256(guess).hexdigest()
         return guessHash[:miningDifficulty] == '0' * miningDifficulty
 
@@ -918,7 +900,7 @@ class Blockchain:
         is the same prevBlockHash of the next block  (b) that the nonce stored in the block data is valid
         :return: True if validation is ok, else False
         """
-        chainValid = True  # let's assumen that the chain is valid
+        chainValid = True  # let's assume that the chain is valid
         chainLength = len(self.__chain)  # the length of the chain
         i = 0
         while i < chainLength and chainValid:  # while the chain has not ended and it is valid
@@ -928,7 +910,7 @@ class Blockchain:
                 if currentBlock.getPreviousBlockHash() != previousBlock.getBlockHash():
                     chainValid = False
 
-            if not self.__validProof(currentBlock.getNonce(), currentBlock.getTransactionsHash(),
+            if not self.__validProof(currentBlock.getNonce(), currentBlock.getBlockHash(),
                                      currentBlock.getPreviousBlockHash()):
                 chainValid = False
 
