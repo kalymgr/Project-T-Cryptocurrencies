@@ -8,7 +8,7 @@ class SmartContractTransactionTypes:
     """
     class for holding the different type of transactions. This will help in choosing the type of scripts to be used
     """
-    TYPE_STANDARD = 'standard'
+    TYPE_P2PKH = 'p2pkh'  # standard type. pay to public key hash
 
 
 class SmartContractLanguage:
@@ -231,17 +231,10 @@ class SmartContractScripts:
         return "<%s> <%s>" % (sig, publicKey)
 
     @staticmethod
-    def getTxOutputScript(txType: str = SmartContractTransactionTypes.TYPE_STANDARD) -> str:
+    def getTxOutputScript(txType: str = SmartContractTransactionTypes.TYPE_P2PKH) -> str:
         """
         returns the tx output script, depending on the transaction type
         :param txType:
         :return:
         """
         pass
-
-
-
-
-
-
-

@@ -612,7 +612,7 @@ class Blockchain:
     """
 
     MINING_DIFFICULTY = 2  # the mining difficulty
-    BLOCKCHAIN_INITIAL_AMOUNT = 100
+    BLOCKCHAIN_INITIAL_AMOUNT = 100  # taliroshis used for the genesis transaction
 
     def __init__(self):
         """
@@ -629,10 +629,63 @@ class Blockchain:
         self.__confirmedTransactionList = list()  # the list of executed (confirmed) transactions
         self.__chain = list()  # the chain of confirmed blocks
 
+        """
+        UTXO SET. 
+        It will have Bitcoin 0.15 format. Also, Bitcoin stores UTXO set on the hard disk using LEVELDB database. 
+        The file set is called 'chainstate'.
+        Each record will be an output (keys-values). The key will contain the transaction hash and the index of the 
+        unspent output, preceeded by the 'C' character prefix. The value will include (a) the block height, (b) whether
+        the output is coinbase or not  (b) the value (c) the type and output script.
+        """
+        self.__UTXOSet = dict()  # the list of unspent transaction outputs. It is altered by transactions
+
         # generate a crypto wallet for the genesis transaction
         self.__cryptoAccount = CryptoAccount()
 
-        self.__executeGenesisTransaction(Blockchain.BLOCKCHAIN_INITIAL_AMOUNT)  # the genesis transaction of the system. 100 taliroshis
+        # the genesis transaction of the system
+        self.__executeGenesisTransaction(Blockchain.BLOCKCHAIN_INITIAL_AMOUNT)
+
+
+    def getUTXOSetTxOutputKey(self, transactionHash: str, txOutputIndex: int) -> str:
+        """
+        creates and returns the key that will be used when storing the tx output in the utxo set dictionary
+        :param transactionHash: the transaction hash string
+        :param txOutputIndex: the tx output index
+        :return: utxo set tx output key (string)
+        """
+        return transactionHash + '_' + str(txOutputIndex)
+
+    def addTxOutputToUTXOSet(self, txOutput: TransactionOutput, transactionHash: str, txOutputIndex: int):
+        """
+        method that add an transaction output to the utxo set
+
+        :param txOutput: the transaction output to be added
+        :return:
+        """
+        self.__UTXOSet[self.getUTXOSetTxOutputKey(transactionHash, txOutputIndex)] = txOutput
+
+    def removeTxOutputFromUTXOSet(self, transactionHash: str, txOutputIndex: int) -> bool:
+        """
+        removes a tx output from the utxo set, if it exists and if the utxo set is not empty
+        :param transactionHash: the transaction hash string of the tx output
+        :param txOutputIndex: the tx output index in the transaction
+        :return: True if successfully removed, else false
+        """
+        txOutputUTXOKey = self.getUTXOSetTxOutputKey(transactionHash, txOutputIndex)  # the key in the utxo set
+
+        if (len(self.__UTXOSet) == 0) or self.__UTXOSet.get(txOutputUTXOKey) is None:
+            # if the utxo set is empty or the key does not exist in the set
+            return False
+        else:
+            self.__UTXOSet.pop(txOutputUTXOKey)  # remove the tx output
+            return True
+
+    def getUTXOSet(self) -> dict:
+        """
+        method that returns the utxo set of the blockchain
+        :return: utxo set (dict)
+        """
+        return self.__UTXOSet
 
     def __addSenderAccount(self, address: str, publicKey: str):
         """
@@ -719,6 +772,10 @@ class Blockchain:
         # add the blockchain account to the accounts dictionary
         self.__addSenderAccount(self.getBlockchainAccount().getAddress(), self.getBlockchainAccount().getPublicKey())
 
+        # add the tx output to the tx set
+        self.addTxOutputToUTXOSet(genesisTxOutput, genesisTransaction.getTransactionHash(),
+                                  genesisTransaction.getTransactionOutputList().index(genesisTxOutput))
+
         # last but not least add a transaction input to the tx input pool, towards the creator
         genesisTxInput = TransactionInput(value, self.__cryptoAccount.getAddress(), '-', -1)
         self.__addTransactionInputToPool(genesisTxInput)  # add genesis tx input to the pool
@@ -730,6 +787,7 @@ class Blockchain:
         :return: the account total (int)
         """
 
+        """
         accountAddressInputs = self.__transactionInputPool.get(accountAddress)
         if accountAddressInputs is None:  # case the address does not exist in the transaction input pool
             return 0
@@ -738,6 +796,15 @@ class Blockchain:
             for tInput in accountAddressInputs:  # for each of the accounts transaction inputs
                 total = total + tInput.getValue()
             return total
+        """
+
+        # get account total from the utxo set, for the specific recipient
+        balance = 0
+        for utxoElement in self.__UTXOSet.values():  # for each unspent tx output in the utxo set
+            # if the tx output is related to the specific recipient address
+            if utxoElement.getRecipient() == accountAddress:
+                balance += utxoElement.getValue()
+        return balance
 
     def __addTransactionInputToPool(self, tInput: TransactionInput):
         """
@@ -758,19 +825,18 @@ class Blockchain:
         :return:
         """
 
-        # get all the keys (account addresses) of the transaction input pool
-        accountAddresses = list(self.__transactionInputPool.keys())
+        # get all the addresses from the utxo set
+        addresses = set()  # using a set, so as not to have duplicate values
+        for utxoElement in self.__UTXOSet.values():
+            addresses.add(utxoElement.getRecipient())
 
+        # for each address, print the account total
         print('\n--- BLOCKCHAIN ACCOUNT TOTALS ---')
-        # for each key (account address), print the account total
-        for accountAddress in accountAddresses:
-            print(
-                'The total for the account ' + accountAddress +
-                " is " + str(self.getAccountTotal(accountAddress))
-            )
+        for address in addresses:
+            print('Acount address: ' + address + ', Total: ' + str(self.getAccountTotal(address)))
 
     def submitTransaction(self, senderAccount: CryptoAccount, coinTransfers: list,
-                          transactionType: str=SmartContractTransactionTypes.TYPE_STANDARD):
+                          transactionType: str=SmartContractTransactionTypes.TYPE_P2PKH):
         """
         Method for creating and submitting the transaction to the pending transaction list.
         Only the outputs are added. The inputs will be added at the mining/confirmation phase.
@@ -792,7 +858,7 @@ class Blockchain:
             recipientPubKeyHash = TLCUtilities.getSHA256RIPEMDHash(coinTransfer.getRecipient().getAddress())
 
             # create the script
-            if transactionType == SmartContractTransactionTypes.TYPE_STANDARD:  # standard tx output
+            if transactionType == SmartContractTransactionTypes.TYPE_P2PKH:  # standard tx output
                 script = SmartContractScripts.getPayToPubKeyHashScript(recipientPubKeyHash)
 
             # create a new transaction output and add the script to it

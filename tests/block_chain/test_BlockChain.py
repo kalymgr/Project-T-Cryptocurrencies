@@ -444,3 +444,41 @@ class TestBlockchain(unittest.TestCase):
         for confirmedTransaction in self.blockchain.getConfirmedTransactionList():
             for confirmedTxOutput in confirmedTransaction.getTransactionOutputList():
                 assert confirmedTxOutput.getScript() is not None
+
+
+    def test_utxoSet_operations(self):
+        """
+        testing some basic operations on UTXO set
+        :return:
+        """
+
+        # add a tx output to the utxo set and test that it has been successfully added
+        txOutput = TransactionOutput(3, self.blockchain.getBlockchainAccount().getAddress(),
+                                     self.testAccount1.getAddress())
+        transactionHash = 'abc'
+        txOutputIndex = 2
+        utxoSetKey = self.blockchain.getUTXOSetTxOutputKey(transactionHash, txOutputIndex)
+
+        self.blockchain.addTxOutputToUTXOSet(txOutput, transactionHash, txOutputIndex)
+        assert self.blockchain.getUTXOSet()[utxoSetKey] is not None  # the key exists in the dictionary
+        assert self.blockchain.getUTXOSet()[utxoSetKey] == txOutput  # the tx output has been successfully stored
+
+        # try to remove the tx output from the utxo set and check if it has been removed
+        self.blockchain.removeTxOutputFromUTXOSet(transactionHash, txOutputIndex)
+        assert self.blockchain.getUTXOSet().get(utxoSetKey) is None  # the element should no longer exist in the set
+
+        # check that the genesis transaction output exists in the utxo set
+
+        genesisTransaction = self.blockchain.getChain()[0].getTransactionList()[0]
+        genesisTransactionHash = genesisTransaction.getTransactionHash()
+
+        genesistxOutputKey = self.blockchain.getUTXOSetTxOutputKey(genesisTransactionHash, 0)
+
+        assert self.blockchain.getUTXOSet().get(genesistxOutputKey) is not None
+
+        # check that the account balance for the blockchain is ok
+        assert self.blockchain.getAccountTotal(
+            self.blockchain.getBlockchainAccount().getAddress()
+        ) == Blockchain.BLOCKCHAIN_INITIAL_AMOUNT
+
+        self.blockchain.printAccountTotals()
