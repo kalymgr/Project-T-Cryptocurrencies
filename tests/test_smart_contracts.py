@@ -3,7 +3,7 @@ testing functionality related to smart contracts
 """
 import unittest
 
-from src.block_chain.smart_contracts import SmartContractLanguage, SmartContractOperations
+from src.block_chain.smart_contracts import SmartContractLanguage, SmartContractOperations, SmartContractScripts
 from src.block_chain.utilities import TLCUtilities
 
 
@@ -135,3 +135,43 @@ class TestSmartContractOperations:
         stack = [1, 2, 5, 15]
         self.testSmartContractOperations.operations['equal'](stack)
         assert not stack.pop()  # check that the top item is False
+
+    def test_op_2_op_3(self):
+        """
+        test the op_2 and op_3 operation
+        :return:
+        """
+
+        self.testSmartContractOperations.operations['op_2'](  # push two onto the stack
+            self.testExpressionStack
+        )
+        assert self.testExpressionStack.pop() == 2  # check that two has been successfully pushed
+
+        self.testSmartContractOperations.operations['op_3'](  # push three onto the stack
+            self.testExpressionStack
+        )
+        assert self.testExpressionStack.pop() == 3  # check that three has been successfully pushed
+
+
+class TestSmartContractScripts:
+    """
+    Class for testing smart contract scripts
+    """
+
+    def test_getPayToPubKeyHashScript(self):
+        """
+        testing the generation of a standard PayToPubKeyHash script
+        :return:
+        """
+        pubKeyHash = 'abc'
+        desiredScript = "dup hash160 <abc> equalVerify checkSig"
+        assert SmartContractScripts.getPayToPubKeyHashScript(pubKeyHash) == desiredScript
+
+    def test_getScriptSig(self):
+        """
+        teting the generation of a script sig
+        :return:
+        """
+        sig = "abc"
+        publicKey = "def"
+        assert SmartContractScripts.getScriptSig(sig, publicKey) == "<abc> <def>"

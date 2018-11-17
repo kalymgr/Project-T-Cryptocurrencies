@@ -1,12 +1,3 @@
 [
-  "test_BlockChain.py::TestBlockchain::test___verifySignature",
-  "test_BlockChain.py::TestBlockchain::test_addTransactionInputToPool",
-  "test_BlockChain.py::TestBlockchain::test_blockchainInitialization",
-  "test_BlockChain.py::TestBlockchain::test_executeFeasibleTransactions",
-  "test_BlockChain.py::TestBlockchain::test_executeInfeasibleTransactions",
-  "test_BlockChain.py::TestBlockchain::test_executeSomeFeasibleTransactions",
-  "test_BlockChain.py::TestBlockchain::test_executeTransactionToOneSelf",
-  "test_BlockChain.py::TestBlockchain::test_executeTransactionsMultipleSenders",
-  "test_BlockChain.py::TestBlockchain::test_submitTransaction",
-  "test_BlockChain.py::TestBlockchain::test_validate"
+  "test_BlockChain.py::TestBlockchain::test_txOutputScripts"
 ]

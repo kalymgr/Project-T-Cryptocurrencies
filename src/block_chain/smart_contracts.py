@@ -4,6 +4,13 @@ File trying to implement some smart contracts functionality
 from src.block_chain.utilities import TLCUtilities
 
 
+class SmartContractTransactionTypes:
+    """
+    class for holding the different type of transactions. This will help in choosing the type of scripts to be used
+    """
+    TYPE_STANDARD = 'standard'
+
+
 class SmartContractLanguage:
     """
     Class used for evaluating expressions used in smart contracts.
@@ -87,7 +94,10 @@ class SmartContractOperations:
             'hash160': self.hash160,
             'equal': self.equal,
             'equalVerify': self.equalVerify,
-            'checkSig': self.checkSig
+            'checkSig': self.checkSig,
+            'checkMultiSig': self.checkMultiSig,
+            'op_2': self.op_2,
+            'op_3': self.op_3
         }
 
     def drop(self, expressionStack: list):
@@ -162,5 +172,76 @@ class SmartContractOperations:
         :return:
         """
         pass
+
+    def checkMultiSig(self, expressionStack: list):
+        """
+        Compares the first signature against each public key until it finds a
+        match. Starting with the subsequent public key, it compares the second signature
+        against each remaining public key until it finds
+        match. The process is repeated until all signatures have been checked or not enough public keys
+        remain to produce a successful result. All signatures need to match a public key.
+        Because public keys are not checked again if they fail any signature comparison,
+        signatures must be placed in the scriptSig using the same order as their corresponding public keys
+        were placed in the scriptPubKey or redeemScript. If all signatures are valid,
+        1 is returned, 0 otherwise. Due to a bug, one extra unused value is removed from the stack
+        :param expressionStack:
+        :return:
+        """
+        pass
+
+    def op_2(self, expressionStack: list):
+        """
+        pushes number 2 to the stack
+        :param expressionStack:
+        :return:
+        """
+        expressionStack.append(2)
+
+    def op_3(self, expressionStack: list):
+        """
+        pushes number 3 to the stack
+        :param expressionStack:
+        :return:
+        """
+        expressionStack.append(3)
+
+
+class SmartContractScripts:
+    """
+    class for handling some scripts used by transactions
+    """
+    @staticmethod
+    def getPayToPubKeyHashScript(pubKeyHash: str) -> str:
+        """
+        creates and returns the pay-to-pubKeyhash script
+        :param pubKeyHash:
+        :return: string script
+        """
+        script = "dup hash160 <%s> equalVerify checkSig" % pubKeyHash
+        return script
+
+    @staticmethod
+    def getScriptSig(sig: str, publicKey: str) -> str:
+        """
+        creates and returns the standard script that will be added to the input
+        :param sig:
+        :param publicKey:
+        :return: string script
+        """
+        return "<%s> <%s>" % (sig, publicKey)
+
+    @staticmethod
+    def getTxOutputScript(txType: str = SmartContractTransactionTypes.TYPE_STANDARD) -> str:
+        """
+        returns the tx output script, depending on the transaction type
+        :param txType:
+        :return:
+        """
+        pass
+
+
+
+
+
 
 

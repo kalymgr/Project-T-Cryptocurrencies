@@ -1,8 +1,10 @@
 import unittest
 import random
 from src.block_chain.crypto_account import CryptoAccount
+from src.block_chain.smart_contracts import SmartContractScripts
 from src.block_chain.transactions import Transaction, TransactionInput, TransactionOutput, Block, Blockchain, \
     CoinTransfer
+from src.block_chain.utilities import TLCUtilities
 
 
 class TestBlockchain(unittest.TestCase):
@@ -29,21 +31,21 @@ class TestBlockchain(unittest.TestCase):
         self.testCoinTransferList2 = list()
 
         self.testCoinTransferList1 = [
-            CoinTransfer(self.testAccount1.getAddress(), 10),
-            CoinTransfer(self.testAccount2.getAddress(), 20)
+            CoinTransfer(self.testAccount1, 10),
+            CoinTransfer(self.testAccount2, 20)
         ]
 
         self.testCoinTransferList2 = [
-            CoinTransfer(self.testAccount2.getAddress(), 30)
+            CoinTransfer(self.testAccount2, 30)
         ]
 
         self.testCoinTransferList3 = [
-            CoinTransfer(self.testAccount1.getAddress(), Blockchain.BLOCKCHAIN_INITIAL_AMOUNT*2),
-            CoinTransfer(self.testAccount2.getAddress(), Blockchain.BLOCKCHAIN_INITIAL_AMOUNT*2)
+            CoinTransfer(self.testAccount1, Blockchain.BLOCKCHAIN_INITIAL_AMOUNT*2),
+            CoinTransfer(self.testAccount2, Blockchain.BLOCKCHAIN_INITIAL_AMOUNT*2)
         ]
 
         self.testCoinTransferList4 = [
-            CoinTransfer(self.testAccount2.getAddress(), Blockchain.BLOCKCHAIN_INITIAL_AMOUNT*2)
+            CoinTransfer(self.testAccount2, Blockchain.BLOCKCHAIN_INITIAL_AMOUNT*2)
         ]
 
     def test_blockchainInitialization(self):
@@ -91,7 +93,7 @@ class TestBlockchain(unittest.TestCase):
         # submit a transaction to the blockchain. The sender is the blockchain
         self.blockchain.submitTransaction(
             self.blockchain.getBlockchainAccount(),
-            [CoinTransfer(self.testAccount1.getAddress(), 3), CoinTransfer(self.testAccount2.getAddress(),2)]
+            [CoinTransfer(self.testAccount1, 3), CoinTransfer(self.testAccount2, 2)]
         )
         pendingTransactionList = self.blockchain._Blockchain__pendingTransactionList
         # test that the submitted transaction has been  inserted in the pending transactions list
@@ -210,23 +212,23 @@ class TestBlockchain(unittest.TestCase):
         # two feasible and two infeasible coin transfers
 
         coinTransferList1 = [  # feasible coin transfer
-            CoinTransfer(self.testAccount1.getAddress(), 10),
-            CoinTransfer(self.testAccount2.getAddress(), 30),
+            CoinTransfer(self.testAccount1, 10),
+            CoinTransfer(self.testAccount2, 30),
         ]
 
         coinTransferList2 = [  # infeasible coin transfer
-            CoinTransfer(self.testAccount1.getAddress(), 10),
-            CoinTransfer(self.testAccount2.getAddress(), 3*Blockchain.BLOCKCHAIN_INITIAL_AMOUNT),
+            CoinTransfer(self.testAccount1, 10),
+            CoinTransfer(self.testAccount2, 3*Blockchain.BLOCKCHAIN_INITIAL_AMOUNT),
         ]
 
         coinTransferList3 = [  # infeasible coin transfer
-            CoinTransfer(self.testAccount1.getAddress(), 2*Blockchain.BLOCKCHAIN_INITIAL_AMOUNT),
-            CoinTransfer(self.testAccount2.getAddress(), 3*Blockchain.BLOCKCHAIN_INITIAL_AMOUNT),
+            CoinTransfer(self.testAccount1, 2*Blockchain.BLOCKCHAIN_INITIAL_AMOUNT),
+            CoinTransfer(self.testAccount2, 3*Blockchain.BLOCKCHAIN_INITIAL_AMOUNT),
         ]
 
         coinTransferList4 = [  # feasible coin transfer
-            CoinTransfer(self.testAccount1.getAddress(), 20),
-            CoinTransfer(self.testAccount2.getAddress(), 20),
+            CoinTransfer(self.testAccount1, 20),
+            CoinTransfer(self.testAccount2, 20),
         ]
 
         # submit the transactions
@@ -283,14 +285,14 @@ class TestBlockchain(unittest.TestCase):
         :return:
         """
         coinTransferList1 = [
-            CoinTransfer(self.testAccount1.getAddress(), 30),
-            CoinTransfer(self.testAccount2.getAddress(), 20)
+            CoinTransfer(self.testAccount1, 30),
+            CoinTransfer(self.testAccount2, 20)
         ]
         coinTransferList2 = [
-            CoinTransfer(self.testAccount2.getAddress(), 20)
+            CoinTransfer(self.testAccount2, 20)
         ]
         coinTransferList3 = [
-            CoinTransfer(self.testAccount2.getAddress(), 50)
+            CoinTransfer(self.testAccount2, 50)
         ]
 
         self.blockchain.submitTransaction(self.blockchain.getBlockchainAccount(), coinTransferList1)
@@ -309,10 +311,10 @@ class TestBlockchain(unittest.TestCase):
         # Second block was mined
 
         coinTransferList4 = [
-            CoinTransfer(self.testAccount1.getAddress(), 50),
+            CoinTransfer(self.testAccount1, 50),
         ]
         coinTransferList5 = [
-            CoinTransfer(testAccount3.getAddress(), 10)
+            CoinTransfer(testAccount3, 10)
         ]
         self.blockchain.submitTransaction(self.testAccount2, coinTransferList4)
         self.blockchain.submitTransaction(self.testAccount1, coinTransferList5)
@@ -351,10 +353,10 @@ class TestBlockchain(unittest.TestCase):
         """
 
         coinTransferList1 = [
-            CoinTransfer(self.testAccount1.getAddress(), 50)
+            CoinTransfer(self.testAccount1, 50)
         ]
         coinTransferList2 = [
-            CoinTransfer(self.testAccount1.getAddress(), 30)
+            CoinTransfer(self.testAccount1, 30)
         ]
         # submit the two transactions
         self.blockchain.submitTransaction(self.blockchain.getBlockchainAccount(), coinTransferList1)
@@ -407,3 +409,38 @@ class TestBlockchain(unittest.TestCase):
             ]
         )
         assert not self.blockchain.validate()  # now the blockchain must not validate
+
+    def test_txOutputScripts(self):
+        """
+        - test that the tx output of the genesis block transaction has a standard script
+        - test that all the tx outputs of the confirmed transaction list have scripts
+        :return:
+        """
+
+        # add some blocks
+
+        self.blockchain.submitTransaction(self.blockchain.getBlockchainAccount(),
+                                          self.testCoinTransferList1)
+
+        currentBlock = Block(self.blockchain.getChain())
+        self.blockchain.executeTransactions(currentBlock) # first block added
+
+        # test that the tx output of the genesis block transaction has a standard script
+
+        # get the genesis transaction and it's output
+        genesisTransaction = self.blockchain.getConfirmedTransactionList()[0]  # the first confirmed transaction
+        genesisTxOutput = genesisTransaction.getTransactionOutputList()[0]
+
+        # create the desired script
+        blockChainPubKeyHash = TLCUtilities.getSHA256RIPEMDHash(self.blockchain.getBlockchainAccount().getPublicKey())
+        desiredScript = SmartContractScripts.getPayToPubKeyHashScript(blockChainPubKeyHash)
+
+        # check that the script of the genesis tx output is the one desired
+        assert genesisTxOutput.getScript() == desiredScript
+
+        # test that all the tx outputs of the confirmed transaction list have scripts
+
+        # get all the transaction outputs
+        for confirmedTransaction in self.blockchain.getConfirmedTransactionList():
+            for confirmedTxOutput in confirmedTransaction.getTransactionOutputList():
+                assert confirmedTxOutput.getScript() is not None

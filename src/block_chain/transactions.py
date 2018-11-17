@@ -9,6 +9,7 @@ from Crypto.Signature import PKCS1_v1_5
 from time import time
 import hashlib, json
 from src.block_chain.crypto_account import CryptoAccount
+from src.block_chain.smart_contracts import SmartContractTransactionTypes, SmartContractScripts
 from src.block_chain.utilities import TLCUtilities
 
 
@@ -16,10 +17,10 @@ class CoinTransfer:
     """
     simple class that holds data related to coin transfers
     """
-    def __init__(self, recipient: str, value: int):
+    def __init__(self, recipient: CryptoAccount, value: int):
         """
         Constructor method
-        :param recipient: the recipient address string
+        :param recipient: the recipient address (CryptoAccount object)
         :param value: the value of the transfer (int)
         """
         self.__recipient = recipient
@@ -28,7 +29,7 @@ class CoinTransfer:
     def getRecipient(self):
         """
         get the coin transfer recipient
-        :return: the recipient address string
+        :return: the recipient address (CryptoAccount)
         """
         return self.__recipient
 
@@ -56,6 +57,22 @@ class TransactionInput:
         self.__recipient = recipient
         self.__prevTxOutIndex = prevTxOutIndex
         self.__previousTransactionHash = previousTransactionHash
+        self.__script = None  # the script of the transaction input
+
+    def setScript(self, script: str):
+        """
+        sets the script of the tx input (__script property)
+        :param script:
+        :return:
+        """
+        self.__script = script
+
+    def getScript(self) -> str:
+        """
+        returns the script of the tx input (__script property)
+        :return:
+        """
+        return self.__script
 
     def getOrderedDict(self) -> OrderedDict:
         """
@@ -124,6 +141,22 @@ class TransactionOutput:
         self.__value = value
         self.__sender = sender
         self.__recipient = recipient
+        self.__script = None  # the script of the tx output
+
+    def setScript(self, script: str):
+        """
+        sets the script of the tx output (__script property)
+        :param script: the script string
+        :return:
+        """
+        self.__script = script
+
+    def getScript(self) -> str:
+        """
+        returns the script of the tx output (__script property)
+        :return: script string
+        """
+        return self.__script
 
     def getOrderedDict(self) -> OrderedDict:
         """
@@ -661,6 +694,13 @@ class Blockchain:
 
         genesisTxOutput = TransactionOutput(value, self.__cryptoAccount.getAddress(),
                                             self.__cryptoAccount.getAddress())
+
+        # create and set the tx output script for the genesis tx output
+        blockChainPubKeyHash = TLCUtilities.getSHA256RIPEMDHash(
+            self.getBlockchainAccount().getPublicKey()
+        )
+        genesisTxOutputScript = SmartContractScripts.getPayToPubKeyHashScript(blockChainPubKeyHash)  # create script
+        genesisTxOutput.setScript(genesisTxOutputScript)
         genesisTransaction = Transaction(self.__cryptoAccount.getAddress(), None,
                                          [genesisTxOutput])
 
@@ -729,7 +769,8 @@ class Blockchain:
                 " is " + str(self.getAccountTotal(accountAddress))
             )
 
-    def submitTransaction(self, senderAccount: CryptoAccount, coinTransfers: list):
+    def submitTransaction(self, senderAccount: CryptoAccount, coinTransfers: list,
+                          transactionType: str=SmartContractTransactionTypes.TYPE_STANDARD):
         """
         Method for creating and submitting the transaction to the pending transaction list.
         Only the outputs are added. The inputs will be added at the mining/confirmation phase.
@@ -737,6 +778,7 @@ class Blockchain:
 
         :param senderAccount: the sender CryptoAccount object
         :param coinTransfers: the list of coin transfers (CoinTransfer objects)
+        :param transactionType: type of the transaction. Defines the script that will be attached to the tx outputs
         :return:
         """
         senderAddress = senderAccount.getAddress()
@@ -746,8 +788,19 @@ class Blockchain:
         # create the transaction
         t = Transaction(senderAddress)  # initiate a new transaction and add the outputs
         for coinTransfer in coinTransfers:
-            t.addTransactionOutput(TransactionOutput(
-                coinTransfer.getValue(), senderAddress, coinTransfer.getRecipient()))
+            # get the public key hash of the recipient to create the tx output script
+            recipientPubKeyHash = TLCUtilities.getSHA256RIPEMDHash(coinTransfer.getRecipient().getAddress())
+
+            # create the script
+            if transactionType == SmartContractTransactionTypes.TYPE_STANDARD:  # standard tx output
+                script = SmartContractScripts.getPayToPubKeyHashScript(recipientPubKeyHash)
+
+            # create a new transaction output and add the script to it
+            txOutput = TransactionOutput(coinTransfer.getValue(), senderAddress,
+                                         coinTransfer.getRecipient().getAddress())
+            txOutput.setScript(script)
+
+            t.addTransactionOutput(txOutput)  # add the output to the transaction
 
         # sign the transaction
         t.sign(senderPrivateKey)
@@ -801,12 +854,15 @@ class Blockchain:
             # senderTxInputPool.remove(senderTxInputPool[i])
             pendingTransaction.extendTransactionInputList(txInputList)  # set the tx input list of the transaction
 
-            # if there is any change, create a new tx output
+            # if there is any change, create a new tx output and set it's script (standard script)
             if txInputTotalValue > txOutTotalValue:
-                pendingTransaction.addTransactionOutput(
-                    TransactionOutput(txInputTotalValue-txOutTotalValue, pendingTransaction.getSender(),
+                changeTxOutput = TransactionOutput(txInputTotalValue-txOutTotalValue, pendingTransaction.getSender(),
                                       pendingTransaction.getSender())
-                )
+
+                recipientPubKeyHash = TLCUtilities.getSHA256RIPEMDHash(self.getBlockchainAccount().getPublicKey())
+                script = SmartContractScripts.getPayToPubKeyHashScript(recipientPubKeyHash)
+                changeTxOutput.setScript(script)
+                pendingTransaction.addTransactionOutput(changeTxOutput)
 
             # add the transaction to the block
             pendingTransaction.setBlockNumber(currentBlock.getBlockNumber())  # set the block number
