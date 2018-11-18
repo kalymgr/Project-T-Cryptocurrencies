@@ -1,25 +1,25 @@
 """
-title           : blockchain.py
+title           : blockchain_old.py
 description     : A blockchain implemenation
 author          : Adil Moujahid
 date_created    : 20180212
 date_modified   : 20180309
 version         : 0.5
-usage           : python blockchain.py
-                  python blockchain.py -p 5000
-                  python blockchain.py --port 5000
+usage           : python blockchain_old.py
+                  python blockchain_old.py -p 5000
+                  python blockchain_old.py --port 5000
 python_version  : 3.6.1
 Comments        : The blockchain implementation is mostly based on [1]. 
                   I made a few modifications to the original code in order to add RSA encryption to the transactions 
                   based on [2], changed the proof of work algorithm, and added some Flask routes to interact with the 
                   blockchain from the dashboards
-References      : [1] https://github.com/dvf/blockchain/blob/master/blockchain.py
+References      : [1] https://github.com/dvf/blockchain/blob/master/blockchain_old.py
                   [2] https://github.com/julienr/ipynb_playground/blob/master/bitcoin/dumbcoin/dumbcoin.ipynb
 """
 
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-from src.block_chain.blockchain import Blockchain, Block
+from src.block_chain.blockchain_old import Blockchain, Block
 
 # Instantiate the Node
 app = Flask(__name__)
