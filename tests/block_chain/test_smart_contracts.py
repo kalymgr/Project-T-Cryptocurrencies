@@ -3,6 +3,7 @@ testing functionality related to smart contracts
 """
 import unittest
 
+from src.block_chain.crypto_account import CryptoAccount
 from src.block_chain.smart_contracts import SmartContractLanguage, SmartContractOperations, SmartContractScripts
 from src.block_chain.utilities import TLCUtilities
 
@@ -46,13 +47,35 @@ class TestSmartContractsLanguage(unittest.TestCase):
         operand2 = '<someotheroperand>'
         assert scLanguage.stripOperand(operand2) == 'someotheroperand'
 
-    def testSomeScripts(self):
+    def test_evaluateExpression(self):
         """
-        test various scripts
+        testing the evaluation of expressions - scripts
         :return:
         """
-        script = '<1> <2> drop'
-        self.testScLanguage.evaluateExpression(script)
+
+        # case a script is successfully evaluated -  should return true
+
+        account = CryptoAccount()  # the test account used
+        # create the transaction hash and the signature
+        transactionHash = TLCUtilities.getDoubleHash256AsString('transaction content')
+        signature = TLCUtilities.getHashSignature(transactionHash, account.getPrivateKey())
+
+        # create the script, combining the txoutput and txinput parts
+        txOutputScript = SmartContractScripts.getPayToPubKeyHashScript(  # the script of the tx output
+            TLCUtilities.getSHA256RIPEMDHash(account.getPublicKey())
+        )
+        txInputScipt = SmartContractScripts.getScriptSig(signature, account.getPublicKey())
+
+        script = txInputScipt + txOutputScript  # the script that will be evaluated
+        # evaluate the script. Assert it is True
+        assert self.testScLanguage.evaluateExpression(script, transactionHash)
+
+        # case a script is unsuccessfully evaluated - change only the tx input script (put different public key)
+        # Should return false
+        fakeAccount = CryptoAccount()
+        txInputScipt = SmartContractScripts.getScriptSig(signature, fakeAccount.getPublicKey())
+        script = txInputScipt + txOutputScript
+        assert not self.testScLanguage.evaluateExpression(script, transactionHash)
 
 
 class TestSmartContractOperations:
@@ -174,4 +197,4 @@ class TestSmartContractScripts:
         """
         sig = "abc"
         publicKey = "def"
-        assert SmartContractScripts.getScriptSig(sig, publicKey) == "<abc> <def>"
+        assert SmartContractScripts.getScriptSig(sig, publicKey) == "<abc> <def> "

@@ -9,7 +9,7 @@ from Crypto.Signature import PKCS1_v1_5
 from time import time
 import hashlib, json
 from src.block_chain.crypto_account import CryptoAccount
-from src.block_chain.smart_contracts import SmartContractTransactionTypes, SmartContractScripts
+from src.block_chain.smart_contracts import SmartContractTransactionTypes, SmartContractScripts, SmartContractLanguage
 from src.block_chain.utilities import TLCUtilities
 
 
@@ -167,7 +167,8 @@ class TransactionOutput:
             {
                 'value': self.__value,
                 'sender': self.__sender,
-                'recipient': self.__recipient
+                'recipient': self.__recipient,
+                'script': self.__script
             }
         )
 
@@ -282,20 +283,14 @@ class Transaction:
         """
         # first create the transaction hash
         transactionString = str(self.getOrderedDict())
-        transactionHash = TLCUtilities.getDoubleHash256(transactionString)
+        transactionHash = TLCUtilities.getDoubleHash256AsString(transactionString)
 
         if senderPrivateKey is None:  # empty private key
             return False
         else:
-            # create the private key in a form that will make signing possible
-            privateKey = RSA.importKey(binascii.unhexlify(senderPrivateKey))
 
-            # create the signer
-            signer = PKCS1_v1_5.new(privateKey)
+            signedTransactionHash = TLCUtilities.getHashSignature(transactionHash, senderPrivateKey)
 
-            # sign the hash of the transaction with the private key
-            signedTransactionHash = binascii.hexlify(signer.sign(transactionHash)).decode('ascii')
-            # set the transaction property (signedTransactionHash) and return true
             self.__transactionSignature = signedTransactionHash
             return True
 
@@ -655,6 +650,22 @@ class Blockchain:
         """
         return transactionHash + '_' + str(txOutputIndex)
 
+    def getTransactionHashFromUTXOSetKey(self, utxoSetKey: str) -> str:
+        """
+        given a key of the utxo set, it returns only the transaction hash string
+        :param utxoSetKey:
+        :return:
+        """
+        return utxoSetKey[:utxoSetKey.find('_')]  # return the part of the string till the _
+
+    def getTxOutputIndexFromUTXOSetKey(self, utxoSetKey: str) -> str:
+        """
+        given a key of the utxo set, it returns only the transaction output index in the specific transaction
+        :param utxoSetkey: the utxo set key (string)
+        :return: the tx output index (str)
+        """
+        return utxoSetKey[utxoSetKey.find('_')+1:len(utxoSetKey)]
+
     def addTxOutputToUTXOSet(self, txOutput: TransactionOutput, transactionHash: str, txOutputIndex: int):
         """
         method that add an transaction output to the utxo set
@@ -780,31 +791,56 @@ class Blockchain:
         genesisTxInput = TransactionInput(value, self.__cryptoAccount.getAddress(), '-', -1)
         self.__addTransactionInputToPool(genesisTxInput)  # add genesis tx input to the pool
 
-    def getAccountTotal(self, accountAddress: str) -> int:
+    def getAccountAvailableTotal(self, account: CryptoAccount) -> int:
         """
-        method for getting the total for an account address. It calculates the total from the transaction inputs that exist
-        in the transaction input pool
+        Method that calculates the total amount of the money of a specific account address that exists
+        in the utxo set and can be spent, according to the smart contract that has been defined.
+        :param account: the account (CryptoAccount object)
+        :param accountPublicKey: the account public key string
         :return: the account total (int)
         """
 
-        """
-        accountAddressInputs = self.__transactionInputPool.get(accountAddress)
-        if accountAddressInputs is None:  # case the address does not exist in the transaction input pool
-            return 0
-        else:
-            total = 0
-            for tInput in accountAddressInputs:  # for each of the accounts transaction inputs
-                total = total + tInput.getValue()
-            return total
-        """
+        # the account info
+        accountAddress = account.getAddress()
+        accountPublicKey = account.getPublicKey()
+        accountPrivateKey = account.getPrivateKey()
 
         # get account total from the utxo set, for the specific recipient
         balance = 0
-        for utxoElement in self.__UTXOSet.values():  # for each unspent tx output in the utxo set
-            # if the tx output is related to the specific recipient address
-            if utxoElement.getRecipient() == accountAddress:
+        for utxSetKey, utxoElement in self.__UTXOSet.items():  # for each unspent tx output in the utxo set
+
+            # check if the tx output is spendable
+            isSpendable = self.isTxOutputSpendable(utxSetKey, utxoElement, accountPrivateKey, accountPublicKey)
+
+            # if the tx output is related to the specific recipient address and if it can be spent (script result true)
+            if utxoElement.getRecipient() == accountAddress and isSpendable:
                 balance += utxoElement.getValue()
         return balance
+
+    def isTxOutputSpendable(self, utxSetKey: str, utxoElement: TransactionOutput,
+                            accountPrivateKey: str, accountPublicKey: str) -> bool:
+        """
+        Method that decides whether an txoutput is spendable, based on the smart contract
+        :param utxSetKey: the key of the txoutput in the utxo set (string)
+        :param utxoElement: the value of the utxo record that corresponds to the utxSetKey. It is the txOutput
+        :param accountPrivateKey: the private key of the spender (string)
+        :param accountPublicKey: the public key of the spender (string)
+        :return: True if it is spendable, else False
+        """
+        # smart contract language object
+        scl = SmartContractLanguage()
+
+        # get the transaction hash, sign it and get the signature
+        transactionHash = self.getTransactionHashFromUTXOSetKey(utxSetKey)
+        signedTransactionHash = TLCUtilities.getHashSignature(transactionHash, accountPrivateKey)
+
+        # create the script for checking the specific tx output
+        script = \
+            SmartContractScripts.getScriptSig(signedTransactionHash, accountPublicKey) + utxoElement.getScript()
+
+        # evaluate the script and return the result
+        isSpendable = scl.evaluateExpression(script, transactionHash)
+        return isSpendable
 
     def __addTransactionInputToPool(self, tInput: TransactionInput):
         """
@@ -833,7 +869,7 @@ class Blockchain:
         # for each address, print the account total
         print('\n--- BLOCKCHAIN ACCOUNT TOTALS ---')
         for address in addresses:
-            print('Acount address: ' + address + ', Total: ' + str(self.getAccountTotal(address)))
+            print('Acount address: ' + address + ', Total: ' + str(self.getAccountAvailableTotal(address)))
 
     def submitTransaction(self, senderAccount: CryptoAccount, coinTransfers: list,
                           transactionType: str=SmartContractTransactionTypes.TYPE_P2PKH):
@@ -850,32 +886,87 @@ class Blockchain:
         senderAddress = senderAccount.getAddress()
         senderPrivateKey = senderAccount.getPrivateKey()
         senderPublicKey = senderAccount.getPublicKey()
+        senderPublicKeySignature = senderAccount.getPublicKeySignature()
 
-        # create the transaction
-        t = Transaction(senderAddress)  # initiate a new transaction and add the outputs
-        for coinTransfer in coinTransfers:
-            # get the public key hash of the recipient to create the tx output script
-            recipientPubKeyHash = TLCUtilities.getSHA256RIPEMDHash(coinTransfer.getRecipient().getAddress())
+        # check that the available account balance of the sender is enough to make the transaction.
+        # First calculate the total value of coin tranfers. Then get the amount available from the utxo set,
+        # for the sender. Compare them.
 
-            # create the script
-            if transactionType == SmartContractTransactionTypes.TYPE_P2PKH:  # standard tx output
-                script = SmartContractScripts.getPayToPubKeyHashScript(recipientPubKeyHash)
+        coinTransferTotalValue = 0  # the total value of the coin tranfers
+        for cTransfer in coinTransfers:
+            coinTransferTotalValue += cTransfer.getValue()
 
-            # create a new transaction output and add the script to it
-            txOutput = TransactionOutput(coinTransfer.getValue(), senderAddress,
-                                         coinTransfer.getRecipient().getAddress())
-            txOutput.setScript(script)
+        # the available acc. balance of the senderin the utxo set
+        availableAmount = self.getAccountAvailableTotal(senderAccount)
 
-            t.addTransactionOutput(txOutput)  # add the output to the transaction
+        if availableAmount > coinTransferTotalValue:  # if the acc. balance is greater than the amount needed
+            # do all the necessary actions to submit the transaction
 
-        # sign the transaction
-        t.sign(senderPrivateKey)
+            # first add some transaction inputs, from the utxo set. Go through the records of the utxo set
+            # and get the unspent outputs you need to to make the transaction. Create the corresponding
+            # tx inputs
 
-        # add the transaction to the pending transaction list
-        self.__pendingTransactionList.append(t)
+            txInputList = list()  # the transaction input list
+            totalInputValue = 0  # the total value of the tx inputs
+            for utxSetKey, utxoElement in self.__UTXOSet.items():  # for each unspent tx output in the utxo set
 
-        # add the sender to the accounts dictionary
-        self.__addSenderAccount(senderAddress, senderPublicKey)
+                # check if the tx output is spendable
+                isSpendable = self.isTxOutputSpendable(utxSetKey, utxoElement, senderPrivateKey, senderPublicKey)
+
+                # if the tx output is related to the specific recipient address
+                # and if it can be spent (script result true)
+                if utxoElement.getRecipient() == senderAddress and isSpendable:
+                    # add the value to the total input value
+                    totalInputValue += utxoElement.getValue()
+                    # create a tx input from the specific output and add it to the tx input list
+                    txInput = TransactionInput(utxoElement.getValue(), utxoElement.getRecipient(),
+                                               self.getTransactionHashFromUTXOSetKey(utxSetKey),
+                                               self.getTxOutputIndexFromUTXOSetKey(utxSetKey))
+                    # set the script for the tx input
+                    txInput.setScript(SmartContractScripts.getScriptSig(
+                        TLCUtilities.getHashSignature(
+                            txInput.getPreviousTransactionHash(), senderPrivateKey
+                        ), senderPublicKey
+                    ))
+                    txInputList.append(txInput)
+
+                # when the total input value is enough, stop collecting more tx inputs from the utxo set
+                if totalInputValue > coinTransferTotalValue:
+                    break
+
+            # create the transaction
+            t = Transaction(senderAddress)  # initiate a new transaction
+
+            # add the transaction inputs to the transaction
+            t.extendTransactionInputList(txInputList)
+
+            # add the transaction outputs to the transaction
+            for coinTransfer in coinTransfers:
+                # get the public key hash of the recipient to create the tx output script
+                recipientPubKeyHash = TLCUtilities.getSHA256RIPEMDHash(coinTransfer.getRecipient().getAddress())
+
+                # create the script
+                script = ''  # empty script, before the type is decided
+                if transactionType == SmartContractTransactionTypes.TYPE_P2PKH:  # standard tx output
+                    # select script for P2PKH transactions
+                    script = SmartContractScripts.getPayToPubKeyHashScript(recipientPubKeyHash)
+
+                # create a new transaction output and add the script to it
+                txOutput = TransactionOutput(coinTransfer.getValue(), senderAddress,
+                                             coinTransfer.getRecipient().getAddress())
+                txOutput.setScript(script)
+
+                # add the output to the transaction
+                t.addTransactionOutput(txOutput)
+
+            # sign the transaction
+            t.sign(senderPrivateKey)
+
+            # add the transaction to the pending transaction list
+            self.__pendingTransactionList.append(t)
+
+            # add the sender to the accounts dictionary
+            self.__addSenderAccount(senderAddress, senderPublicKey)
 
     def executeTransactions(self, currentBlock: Block) -> int:
         """
@@ -900,7 +991,8 @@ class Blockchain:
             txOutTotalValue = 0  # total value of transaction outputs
             for txOutput in pendingTransaction.getTransactionOutputList():
                 txOutTotalValue += txOutput.getValue()
-            accountBalance = self.getAccountTotal(pendingTransaction.getSender())
+
+            accountBalance = self.getAccountAvailableTotal(pendingTransaction.getSender())
             if txOutTotalValue > accountBalance:  # if the balance is not enough, stop with this transaction
                 continue
 

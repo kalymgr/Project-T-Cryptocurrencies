@@ -101,7 +101,7 @@ class Blockchain:
 
         # Manages transactions from wallet to another wallet
         else:
-            transaction_verification = t.verifySignature(signature)
+            transaction_verification = t.verifyHashSignature(signature)
             if transaction_verification:
                 self.transactions.append(t.to_dict())
                 return len(self.chain) + 1

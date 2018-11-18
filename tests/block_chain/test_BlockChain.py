@@ -48,6 +48,27 @@ class TestBlockchain(unittest.TestCase):
             CoinTransfer(self.testAccount2, Blockchain.BLOCKCHAIN_INITIAL_AMOUNT*2)
         ]
 
+    def test_getAccountAvailableTotal(self):
+        # test that the total balance of the blockchain is ok
+
+        blockchainAvailableBalance = self.blockchain.getAccountAvailableTotal(self.blockchain.getBlockchainAccount())
+        assert blockchainAvailableBalance == Blockchain.BLOCKCHAIN_INITIAL_AMOUNT
+
+        # add an transaction output (value=50)to the utxo set, having the blockchain as a recipient and test that the
+        # amount available for the blockchain has increased by 50
+
+        txOutput = TransactionOutput(50, self.blockchain.getBlockchainAccount().getAddress(),
+                                     self.blockchain.getBlockchainAccount().getAddress())
+        txOutput.setScript(
+            SmartContractScripts.getPayToPubKeyHashScript(
+                TLCUtilities.getSHA256RIPEMDHash(self.blockchain.getBlockchainAccount().getPublicKey())
+            )
+        )
+        transactionHash = TLCUtilities.getSHA256RIPEMDHash('transaction hash')
+        self.blockchain.addTxOutputToUTXOSet(txOutput, transactionHash, 0)
+        blockchainAvailableBalance = self.blockchain.getAccountAvailableTotal(self.blockchain.getBlockchainAccount())
+        assert blockchainAvailableBalance == Blockchain.BLOCKCHAIN_INITIAL_AMOUNT + 50
+
     def test_blockchainInitialization(self):
         """
         testing the initialization of the blockchain
@@ -64,7 +85,7 @@ class TestBlockchain(unittest.TestCase):
 
         # check that the total balance in the transaction input pool is the initial blockchain balance
         assert \
-            self.blockchain.getAccountTotal(self.blockchain.getBlockchainAccount().getAddress()) == \
+            self.blockchain.getAccountAvailableTotal(self.blockchain.getBlockchainAccount()) == \
             Blockchain.BLOCKCHAIN_INITIAL_AMOUNT
 
         # check that there is one confirmed transaction in the transaction list
@@ -87,9 +108,13 @@ class TestBlockchain(unittest.TestCase):
 
     def test_submitTransaction(self):
         """
-        testing the submitTransaction method
+        testing the submitTransaction method.
+        First scenario. The blockchain submits a transaction. It has enough available balance to do it.
+        Second scenario. The blockchain submits a transaction with more value that it can afford.
+        Third scenario. An account with no money tries to submit a transaction
         :return:
         """
+        # FIRST SCENARIO
         # submit a transaction to the blockchain. The sender is the blockchain
         self.blockchain.submitTransaction(
             self.blockchain.getBlockchainAccount(),
@@ -102,11 +127,38 @@ class TestBlockchain(unittest.TestCase):
         # test that the number of output of this transaction is 2
         assert len(pendingTransactionList[0].getTransactionOutputList()) == 2
 
+        # test that the number of the transaction inputs of this transaction is 1
+        assert len(pendingTransactionList[0].getTransactionInputList()) == 1
+
         # assert that the transaction has been signed
-        assert pendingTransactionList[0].getSignature is not None
+        assert pendingTransactionList[0].getSignature() is not None
 
         # test that the sender account has been added to the accounts dictionary
         assert self.blockchain.getSenderAccount(pendingTransactionList[0].getSender()) is not None
+
+        # SECOND SCENARIO
+        # submit a transaction to the blockchain, with more value than the blockchain can afford
+        self.blockchain.submitTransaction(
+            self.blockchain.getBlockchainAccount(),
+            [CoinTransfer(self.testAccount1, Blockchain.BLOCKCHAIN_INITIAL_AMOUNT + 1)]
+        )
+        oldPendingTransactionList = pendingTransactionList  # keep the list in a second variable
+        pendingTransactionList = self.blockchain._Blockchain__pendingTransactionList
+        # test that the pending transaction list is the same. The new pending transaction was not added
+        assert len(pendingTransactionList) == 1
+        assert oldPendingTransactionList == pendingTransactionList  # the list is the same
+
+        # THIRD SCENARIO
+        # account with no money tries to submit a transaction
+        fakeAccount = CryptoAccount()
+        self.blockchain.submitTransaction(
+            fakeAccount,
+            [CoinTransfer(self.testAccount1, 1)]
+        )
+
+        # test that the pending transaction list hasn't changed
+        assert len(pendingTransactionList) == 1
+        assert pendingTransactionList == self.blockchain._Blockchain__pendingTransactionList  # the list is the same
 
     def test___verifySignature(self):
         """
@@ -258,13 +310,13 @@ class TestBlockchain(unittest.TestCase):
         assert len(self.blockchain._Blockchain__confirmedTransactionList) == 3
 
         # check the account totals/balances
-        assert self.blockchain.getAccountTotal(
+        assert self.blockchain.getAccountAvailableTotal(
             self.blockchain.getBlockchainAccount().getAddress()
         ) == 20
-        assert self.blockchain.getAccountTotal(
+        assert self.blockchain.getAccountAvailableTotal(
             self.testAccount1.getAddress()
         ) == 30
-        assert self.blockchain.getAccountTotal(
+        assert self.blockchain.getAccountAvailableTotal(
             self.testAccount2.getAddress()
         ) == 50
 
@@ -301,12 +353,12 @@ class TestBlockchain(unittest.TestCase):
         self.blockchain.submitTransaction(self.testAccount2, coinTransferList3)
         currentBlock = Block(self.blockchain.getChain())
         self.blockchain.executeTransactions(currentBlock)
-        assert self.blockchain.getAccountTotal(
+        assert self.blockchain.getAccountAvailableTotal(
             self.blockchain.getBlockchainAccount().getAddress()
         ) == 50
-        assert self.blockchain.getAccountTotal(self.testAccount1.getAddress()) == 10
-        assert self.blockchain.getAccountTotal(self.testAccount2.getAddress()) == 40
-        assert self.blockchain.getAccountTotal(testAccount3.getAddress()) == 0
+        assert self.blockchain.getAccountAvailableTotal(self.testAccount1.getAddress()) == 10
+        assert self.blockchain.getAccountAvailableTotal(self.testAccount2.getAddress()) == 40
+        assert self.blockchain.getAccountAvailableTotal(testAccount3.getAddress()) == 0
 
         # Second block was mined
 
@@ -322,12 +374,12 @@ class TestBlockchain(unittest.TestCase):
         newCurrentBlock = Block(self.blockchain.getChain())
         self.blockchain.executeTransactions(newCurrentBlock)
 
-        assert self.blockchain.getAccountTotal(
+        assert self.blockchain.getAccountAvailableTotal(
             self.blockchain.getBlockchainAccount().getAddress()
         ) == 50
-        assert self.blockchain.getAccountTotal(self.testAccount1.getAddress()) == 0
-        assert self.blockchain.getAccountTotal(self.testAccount2.getAddress()) == 40
-        assert self.blockchain.getAccountTotal(testAccount3.getAddress()) == 10
+        assert self.blockchain.getAccountAvailableTotal(self.testAccount1.getAddress()) == 0
+        assert self.blockchain.getAccountAvailableTotal(self.testAccount2.getAddress()) == 40
+        assert self.blockchain.getAccountAvailableTotal(testAccount3.getAddress()) == 10
 
         # check that total blocks are 3
         assert len(self.blockchain.getChain()) == 3
@@ -371,10 +423,10 @@ class TestBlockchain(unittest.TestCase):
         # check the length of the blockchain
         assert len(self.blockchain.getChain()) == 2
         # check the account totals
-        assert self.blockchain.getAccountTotal(
+        assert self.blockchain.getAccountAvailableTotal(
             self.blockchain.getBlockchainAccount().getAddress()
         ) == 50
-        assert self.blockchain.getAccountTotal(self.testAccount1.getAddress()) == 50
+        assert self.blockchain.getAccountAvailableTotal(self.testAccount1.getAddress()) == 50
 
     def test_validate(self):
         """
@@ -477,8 +529,19 @@ class TestBlockchain(unittest.TestCase):
         assert self.blockchain.getUTXOSet().get(genesistxOutputKey) is not None
 
         # check that the account balance for the blockchain is ok
-        assert self.blockchain.getAccountTotal(
-            self.blockchain.getBlockchainAccount().getAddress()
+        assert self.blockchain.getAccountAvailableTotal(
+            self.blockchain.getBlockchainAccount()
         ) == Blockchain.BLOCKCHAIN_INITIAL_AMOUNT
 
         self.blockchain.printAccountTotals()
+
+    def test_getTxOutputIndexFromUTXOSetKey(self):
+        """
+        test the specific blockchain method
+        :return:
+        """
+
+        key = 'abcdefg_2'
+        txOutputIndex = '2'
+        assert self.blockchain.getTxOutputIndexFromUTXOSetKey(key) == txOutputIndex
+

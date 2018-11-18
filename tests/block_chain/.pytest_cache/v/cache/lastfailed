@@ -1,7 +1,16 @@
 {
+  "test_BlockChain.py::TestBlockchain::test_executeFeasibleTransactions": true,
+  "test_BlockChain.py::TestBlockchain::test_executeInfeasibleTransactions": true,
+  "test_BlockChain.py::TestBlockchain::test_executeSomeFeasibleTransactions": true,
+  "test_BlockChain.py::TestBlockchain::test_executeTransactionToOneSelf": true,
+  "test_BlockChain.py::TestBlockchain::test_executeTransactionsMultipleSenders": true,
+  "test_BlockChain.py::TestBlockchain::test_txOutputScripts": true,
+  "test_BlockChain.py::TestBlockchain::test_utxoSet_operations": true,
+  "test_BlockChain.py::TestBlockchain::test_validate": true,
   "test_Transaction.py::TestTransaction::test_sign": true,
   "test_TransactionInput.py": true,
   "test_block.py": true,
+  "test_smart_contracts.py::TestSmartContractsLanguage::testSomeScripts": true,
   "test_transactions.py": true,
   "test_transactions.py::TestTransactions::test_convertTransactionToDoubleHash": true,
   "test_transactions.py::TestTransactions::test_initialAccountTotals": true

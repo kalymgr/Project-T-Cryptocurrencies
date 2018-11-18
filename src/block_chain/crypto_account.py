@@ -59,6 +59,13 @@ class CryptoAccount:
         """
         return self.__publicKey
 
+    def getPublicKeySignature(self) -> str:
+        """
+        Method that creates and returns the signature of the public key
+        :return: public key signature (string)
+        """
+        return TLCUtilities.getSHA256RIPEMDHash(self.__publicKey)
+
     def __getNewPrivateKey(self)->Crypto.PublicKey.RSA:
         """
         static method for creating an new private key

@@ -20,20 +20,25 @@ class SmartContractLanguage:
 
     def __init__(self):
         self.expressionStack = list()  # stack holding elements
+        self.transactionHash = None
 
-    def evaluateExpression(self, expressionString: str):
+    def evaluateExpression(self, expressionString: str, transactionHash: str):
         """
         method that evaluates a given expression
         :param expressionString: the expression string
+        :param transactionHash: needed for evaluation
         :return: the result of the expression
         """
+
+        self.transactionHash = transactionHash  # set the transaction hash
+
         self.expressionStack = list()  # reset the stack before evaluating
 
         # create a list with all the elements of the expression
         elementsList = expressionString.split()
 
         # initialize the operations class
-        smartContractOperations = SmartContractOperations()
+        smartContractOperations = SmartContractOperations(self.transactionHash)
 
         # for each element in the list
         for element in elementsList:
@@ -83,10 +88,14 @@ class SmartContractOperations:
     Class for the operations used in the smart contract language
     """
 
-    def __init__(self):
+    def __init__(self, transactionHash: str):
         """
         constructor method
+        :param transactionHash: the transaction hash string
         """
+        # set the transaction hash
+        self.transactionHash = transactionHash
+
         # Setup the operations available
         self.operations = {
             'drop': self.drop,
@@ -171,7 +180,20 @@ class SmartContractOperations:
         :param expressionStack:
         :return:
         """
-        pass
+        # get the public key
+        publicKey = expressionStack.pop()
+        # get the transaction signature
+        signature = expressionStack.pop()
+
+        # verify the signature for the specific public key
+        verificationResult = TLCUtilities.verifyHashSignature(self.transactionHash, signature, publicKey)
+
+        # put the result on the stack
+        expressionStack.append(verificationResult)
+
+
+
+
 
     def checkMultiSig(self, expressionStack: list):
         """
@@ -228,7 +250,7 @@ class SmartContractScripts:
         :param publicKey:
         :return: string script
         """
-        return "<%s> <%s>" % (sig, publicKey)
+        return "<%s> <%s> " % (sig, publicKey)
 
     @staticmethod
     def getTxOutputScript(txType: str = SmartContractTransactionTypes.TYPE_P2PKH) -> str:
