@@ -357,9 +357,9 @@
       <list>
         <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_submitTransaction" />
         <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_blockchainInitialization" />
-        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_getAccountAvailableTotal" />
         <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_getTxOutputIndexFromUTXOSetKey" />
         <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_utxoSet_operations" />
+        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_getAccountAvailableTotal" />
       </list>
     </recent_temporary>
   </component>
