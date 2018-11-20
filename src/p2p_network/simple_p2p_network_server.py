@@ -1,5 +1,6 @@
 """
 simple app to understand how to create the p2p network
+one can connect to the tcp server via the cmd prompt, using the command 'telnet 127.0.0.1 8007'
 https://benediktkr.github.io/dev/2016/02/04/p2p-with-twisted.html
 """
 from twisted.internet.endpoints import TCP4ServerEndpoint
