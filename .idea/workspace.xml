@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/block_chain/test_utilities.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/p2p_network/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/p2p_network/simple_p2p_network.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_server.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_simple_p2p_network.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/blockchain.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/blockchain.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/crypto_account.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/crypto_account.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/smart_contracts.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/smart_contracts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/transactions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/transactions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/lastfailed" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/lastfailed" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/.pytest_cache/v/cache/nodeids" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/block_chain/test_BlockChain.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/test_BlockChain.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_smart_contracts.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/test_smart_contracts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/tests/.pytest_cache/v/cache/nodeids" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,18 +20,20 @@
     <session id="2117071795">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="36" />
-          <entry key="project.open.time.0" value="1" />
+          <entry key="project.closed" value="40" />
+          <entry key="project.open.time.0" value="2" />
           <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.13" value="1" />
+          <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.17" value="1" />
+          <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.21" value="1" />
-          <entry key="project.open.time.22" value="1" />
+          <entry key="project.open.time.22" value="2" />
           <entry key="project.open.time.23" value="1" />
           <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.32" value="1" />
@@ -44,17 +42,17 @@
           <entry key="project.open.time.48" value="1" />
           <entry key="project.open.time.5" value="8" />
           <entry key="project.open.time.51" value="1" />
-          <entry key="project.open.time.6" value="4" />
+          <entry key="project.open.time.6" value="5" />
           <entry key="project.open.time.60" value="1" />
           <entry key="project.open.time.7" value="4" />
-          <entry key="project.opened" value="39" />
+          <entry key="project.opened" value="44" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="html" value="2" />
           <entry key="md" value="4" />
-          <entry key="py" value="146" />
+          <entry key="py" value="169" />
           <entry key="pyi" value="2" />
         </counts>
       </usages-collector>
@@ -62,17 +60,17 @@
         <counts>
           <entry key="HTML" value="2" />
           <entry key="Markdown" value="4" />
-          <entry key="Python" value="146" />
+          <entry key="Python" value="169" />
           <entry key="PythonStub" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="5027" />
-          <entry key="dummy" value="438" />
+          <entry key="Python Console" value="6691" />
+          <entry key="dummy" value="452" />
           <entry key="html" value="40" />
           <entry key="md" value="1891" />
-          <entry key="py" value="83402" />
+          <entry key="py" value="86624" />
           <entry key="txt" value="2625" />
         </counts>
       </usages-collector>
@@ -80,61 +78,46 @@
         <counts>
           <entry key="HTML" value="40" />
           <entry key="Markdown" value="1891" />
-          <entry key="PLAIN_TEXT" value="3063" />
-          <entry key="Python" value="88429" />
+          <entry key="PLAIN_TEXT" value="3077" />
+          <entry key="Python" value="93315" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
         <counts>
-          <entry key="git.branch.create.new" value="2" />
-          <entry key="git.branch.delete.local" value="2" />
+          <entry key="git.branch.create.new" value="3" />
+          <entry key="git.branch.delete.local" value="3" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/p2p_network/simple_p2p_network_server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="232">
+              <caret line="12" column="13" lean-forward="true" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tests/block_chain/test_BlockChain.py">
+        <entry file="file://$PROJECT_DIR$/src/p2p_network/simple_p2p_network_client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="141" column="18" lean-forward="true" selection-start-line="141" selection-start-column="18" selection-end-line="141" selection-end-column="18" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="87">
+              <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
+        <entry file="file://$PROJECT_DIR$/src/p2p_network/simple_p2p_network.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="924" column="53" selection-start-line="924" selection-start-column="53" selection-end-line="924" selection-end-column="53" />
+            <state relative-caret-position="261">
+              <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
               <folding>
-                <element signature="e#274#289#0" expanded="true" />
+                <element signature="e#0#61#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/block_chain/utilities.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="51" column="11" lean-forward="true" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="11" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/block_chain/smart_contracts.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="183" selection-start-line="183" selection-end-line="183" />
             </state>
           </provider>
         </entry>
@@ -159,6 +142,7 @@
       <find>verified</find>
       <find>getAccountAvailableTotal</find>
       <find>submitTra</find>
+      <find>&quot;&quot;&quot;</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -198,12 +182,16 @@
         <option value="$PROJECT_DIR$/tests/block_chain/test_smart_contracts.py" />
         <option value="$PROJECT_DIR$/tests/block_chain/test_BlockChain.py" />
         <option value="$PROJECT_DIR$/src/block_chain/transactions.py" />
+        <option value="$PROJECT_DIR$/tests/test_simple_p2p_network.py" />
+        <option value="$PROJECT_DIR$/src/simple_p2p_network_server.py" />
+        <option value="$PROJECT_DIR$/src/simple_p2p_network_client.py" />
+        <option value="$PROJECT_DIR$/src/simple_p2p_network.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="404" />
-    <option name="y" value="-8" />
+    <option name="x" value="781" />
+    <option name="y" value="116" />
     <option name="width" value="1255" />
     <option name="height" value="715" />
   </component>
@@ -212,7 +200,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -229,23 +216,18 @@
               <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
               <item name="project-t" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="block_chain" type="462c0819:PsiDirectoryNode" />
+              <item name="p2p_network" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
               <item name="project-t" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project-t" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="block_chain" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -270,96 +252,126 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_BlockChain.TestBlockchain.test_submitTransaction">
-    <configuration name="pytest for test_BlockChain.TestBlockchain.test_blockchainInitialization" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.simple_p2p_network_client (1)">
+    <configuration name="simple_p2p_network (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_BlockChain.TestBlockchain.test_blockchainInitialization&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="SCRIPT_NAME" value="G:\python_foundation\project-t\src\p2p_network\simple_p2p_network.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_BlockChain.TestBlockchain.test_getAccountAvailableTotal" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="simple_p2p_network_client (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/p2p_network" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_BlockChain.TestBlockchain.test_getAccountAvailableTotal&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_client.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_BlockChain.TestBlockchain.test_getTxOutputIndexFromUTXOSetKey" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="simple_p2p_network_client" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_BlockChain.TestBlockchain.test_getTxOutputIndexFromUTXOSetKey&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="SCRIPT_NAME" value="G:\python_foundation\project-t\src\p2p_network\simple_p2p_network_client.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_BlockChain.TestBlockchain.test_submitTransaction" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="simple_p2p_network_server (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/p2p_network" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_BlockChain.TestBlockchain.test_submitTransaction&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_BlockChain.TestBlockchain.test_utxoSet_operations" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="simple_p2p_network_server" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/block_chain" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_BlockChain.TestBlockchain.test_utxoSet_operations&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="SCRIPT_NAME" value="G:\python_foundation\project-t\src\p2p_network\simple_p2p_network_server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_getAccountAvailableTotal" />
-      <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_utxoSet_operations" />
-      <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_getTxOutputIndexFromUTXOSetKey" />
-      <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_blockchainInitialization" />
-      <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_submitTransaction" />
+      <item itemvalue="Python.simple_p2p_network_client" />
+      <item itemvalue="Python.simple_p2p_network_server" />
+      <item itemvalue="Python.simple_p2p_network (1)" />
+      <item itemvalue="Python.simple_p2p_network_server (1)" />
+      <item itemvalue="Python.simple_p2p_network_client (1)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_submitTransaction" />
-        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_blockchainInitialization" />
-        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_getTxOutputIndexFromUTXOSetKey" />
-        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_utxoSet_operations" />
-        <item itemvalue="Python tests.pytest for test_BlockChain.TestBlockchain.test_getAccountAvailableTotal" />
+        <item itemvalue="Python.simple_p2p_network_client (1)" />
+        <item itemvalue="Python.simple_p2p_network_server (1)" />
+        <item itemvalue="Python.simple_p2p_network_client" />
+        <item itemvalue="Python.simple_p2p_network_server" />
+        <item itemvalue="Python.simple_p2p_network (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -483,35 +495,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_executeFeasibleTransactions - 2018.11.18 at 17h 11m 54s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_executeFeasibleTransactions" configurationId="tests" />
+    <history-entry file="pytest_for_test_simple_p2p_network_TestSimpleP2PNetwork_test_TLCFactory - 2018.11.20 at 07h 56m 53s.xml">
+      <configuration name="pytest for test_simple_p2p_network.TestSimpleP2PNetwork.test_TLCFactory" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_utxoSet_operations - 2018.11.18 at 17h 43m 36s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_utxoSet_operations" configurationId="tests" />
+    <history-entry file="pytest_for_test_simple_p2p_network_TestSimpleP2PNetwork_test_TLCFactory - 2018.11.20 at 07h 57m 53s.xml">
+      <configuration name="pytest for test_simple_p2p_network.TestSimpleP2PNetwork.test_TLCFactory" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_utxoSet_operations - 2018.11.18 at 17h 44m 00s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_utxoSet_operations" configurationId="tests" />
+    <history-entry file="pytest_for_test_simple_p2p_network_TestSimpleP2PNetwork_test_TLCFactory - 2018.11.20 at 07h 58m 04s.xml">
+      <configuration name="pytest for test_simple_p2p_network.TestSimpleP2PNetwork.test_TLCFactory" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_getTxOutputIndexFromUTXOSetKey - 2018.11.18 at 17h 46m 42s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_getTxOutputIndexFromUTXOSetKey" configurationId="tests" />
+    <history-entry file="pytest_for_test_simple_p2p_network_TestSimpleP2PNetwork_test_TLCFactory - 2018.11.20 at 08h 00m 36s.xml">
+      <configuration name="pytest for test_simple_p2p_network.TestSimpleP2PNetwork.test_TLCFactory" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_getTxOutputIndexFromUTXOSetKey - 2018.11.18 at 17h 47m 03s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_getTxOutputIndexFromUTXOSetKey" configurationId="tests" />
+    <history-entry file="pytest_for_test_simple_p2p_network_TestSimpleP2PNetwork_test_TLCFactory - 2018.11.20 at 08h 01m 55s.xml">
+      <configuration name="pytest for test_simple_p2p_network.TestSimpleP2PNetwork.test_TLCFactory" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_getAccountAvailableTotal - 2018.11.18 at 17h 49m 12s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_getAccountAvailableTotal" configurationId="tests" />
+    <history-entry file="pytest_for_test_simple_p2p_network_TestSimpleP2PNetwork_test_TLCFactory - 2018.11.20 at 08h 03m 09s.xml">
+      <configuration name="pytest for test_simple_p2p_network.TestSimpleP2PNetwork.test_TLCFactory" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_blockchainInitialization - 2018.11.18 at 17h 49m 22s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_blockchainInitialization" configurationId="tests" />
+    <history-entry file="pytest_for_test_simple_p2p_network_TestSimpleP2PNetwork_test_TLCFactory - 2018.11.20 at 08h 03m 53s.xml">
+      <configuration name="pytest for test_simple_p2p_network.TestSimpleP2PNetwork.test_TLCFactory" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_submitTransaction - 2018.11.18 at 17h 50m 18s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_submitTransaction" configurationId="tests" />
+    <history-entry file="pytest_for_test_simple_p2p_network_TestSimpleP2PNetwork_test_TLCFactory - 2018.11.20 at 08h 11m 18s.xml">
+      <configuration name="pytest for test_simple_p2p_network.TestSimpleP2PNetwork.test_TLCFactory" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_submitTransaction - 2018.11.18 at 17h 53m 51s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_submitTransaction" configurationId="tests" />
+    <history-entry file="pytest_for_test_simple_p2p_network_TestSimpleP2PNetwork_test_Server - 2018.11.20 at 08h 18m 17s.xml">
+      <configuration name="pytest for test_simple_p2p_network.TestSimpleP2PNetwork.test_Server" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_BlockChain_TestBlockchain_test_submitTransaction - 2018.11.18 at 17h 54m 49s.xml">
-      <configuration name="pytest for test_BlockChain.TestBlockchain.test_submitTransaction" configurationId="tests" />
+    <history-entry file="pytest_for_test_simple_p2p_network_TestSimpleP2PNetwork_test_Server - 2018.11.20 at 08h 19m 36s.xml">
+      <configuration name="pytest for test_simple_p2p_network.TestSimpleP2PNetwork.test_Server" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -524,23 +536,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5255814" visible="true" weight="0.19072708" />
-      <window_info id="Structure" order="1" sideWeight="0.4744186" side_tool="true" visible="true" weight="0.19072708" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.52089554" visible="true" weight="0.25500527" />
+      <window_info id="Structure" order="1" sideWeight="0.4791045" side_tool="true" weight="0.07007376" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32725322" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32403433" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.30793992" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.37310195" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.2624729" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.13774404" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.23927039" />
-      <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.27896994" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.5151844" />
+      <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.2733189" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.4409871" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.37744033" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -594,45 +605,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="python-line">
-          <condition expression="i==0" language="Python" />
-          <url>file://$PROJECT_DIR$/src/block_chain/transactions.py</url>
-          <line>1126</line>
-          <option name="timeStamp" value="105" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/block_chain/test_smart_contracts.py</url>
-          <line>167</line>
-          <option name="timeStamp" value="107" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <condition expression="confirmedTxOutput.getSender() == confirmedTxOutput.getRecipient()" language="Python" />
-          <url>file://$PROJECT_DIR$/tests/block_chain/test_BlockChain.py</url>
-          <line>497</line>
-          <option name="timeStamp" value="110" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/block_chain/test_BlockChain.py</url>
-          <line>528</line>
-          <option name="timeStamp" value="112" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/block_chain/test_BlockChain.py</url>
-          <line>170</line>
-          <option name="timeStamp" value="114" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/block_chain/test_BlockChain.py</url>
-          <line>68</line>
-          <option name="timeStamp" value="120" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/block_chain/test_BlockChain.py</url>
-          <line>130</line>
-          <option name="timeStamp" value="122" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-defaults>
         <breakpoint type="python-line" />
       </breakpoints-defaults>
@@ -651,48 +623,47 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
-        <expression-string>operandString[1:len(operandString)-1]</expression-string>
+        <expression-string>myFactory.buildProtocol('localhost')</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>operandString[0:len(operandString)-2]</expression-string>
+        <expression-string>myFactory.buildProtocol()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>operandString[1:len(operandString)-2]</expression-string>
+        <expression-string>kw</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>not self.__validProof(currentBlock.getNonce(), currentBlock.getTransactionsHash(),
-                                     currentBlock.getPreviousBlockHash())</expression-string>
+        <expression-string>args</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>accountBalance</expression-string>
+        <expression-string>callbackArgs</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.getAccountTotal(pendingTransaction.getSender())</expression-string>
+        <expression-string>callback</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.blockchain.getAccountTotal(self.blockchain.getBlockchainAccount().getAddress())</expression-string>
+        <expression-string>d.callback(MyProtocol(MyFactory()))</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.blockchain</expression-string>
+        <expression-string>point.connect()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>transaction.getSignature()</expression-string>
+        <expression-string>point</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -915,9 +886,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="734">
           <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -925,9 +893,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="334">
           <caret line="18" column="11" lean-forward="true" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
-          <folding>
-            <element signature="e#64#79#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -935,46 +900,122 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-750">
           <caret line="69" column="28" lean-forward="true" selection-start-line="69" selection-start-column="28" selection-end-line="69" selection-end-column="28" />
-          <folding>
-            <element signature="e#57#72#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/block_chain/smart_contracts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="183" selection-start-line="183" selection-end-line="183" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/block_chain/utilities.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="51" column="11" lean-forward="true" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1150">
+          <caret line="51" column="11" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain/smart_contracts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4575">
+          <caret line="183" selection-start-line="183" selection-end-line="183" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="924" column="53" selection-start-line="924" selection-start-column="53" selection-end-line="924" selection-end-column="53" />
-          <folding>
-            <element signature="e#274#289#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="240">
+          <caret line="304" column="13" lean-forward="true" selection-start-line="304" selection-start-column="13" selection-end-line="304" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/pyp2p/net.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="286" column="22" selection-start-line="286" selection-start-column="22" selection-end-line="286" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="309" selection-start-line="309" selection-end-line="309" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/tcp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="1380" selection-start-line="1380" selection-end-line="1380" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/posixbase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="494" selection-start-line="494" selection-end-line="494" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="487" selection-start-line="487" selection-end-line="487" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/defer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="439" column="42" selection-start-line="439" selection-start-column="42" selection-end-line="439" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/block_chain/test_BlockChain.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="141" column="18" lean-forward="true" selection-start-line="141" selection-start-column="18" selection-end-line="141" selection-end-column="18" />
+        <state relative-caret-position="87">
+          <caret line="9" column="5" selection-start-line="9" selection-end-line="12" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/error.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-435" />
+      </provider>
+    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/protocol.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="528" column="34" lean-forward="true" selection-start-line="528" selection-start-column="34" selection-end-line="528" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_simple_p2p_network.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="24" column="37" lean-forward="true" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/simple_p2p_network.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/simple_p2p_network_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="12" column="13" lean-forward="true" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/simple_p2p_network_client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
