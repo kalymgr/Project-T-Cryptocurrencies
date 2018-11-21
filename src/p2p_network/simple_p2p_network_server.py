@@ -7,8 +7,8 @@ from twisted.internet.endpoints import TCP4ServerEndpoint
 from twisted.internet import reactor
 
 # 8007 is the port you want to run under. Choose something >1024
-from src.p2p_network.simple_p2p_network import TLCClientFactory
+from src.p2p_network.simple_p2p_network import TLCFactory
 
 endpoint = TCP4ServerEndpoint(reactor, 8007)
-endpoint.listen(TLCClientFactory())
+endpoint.listen(TLCFactory())
 reactor.run()
