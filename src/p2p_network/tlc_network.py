@@ -54,7 +54,7 @@ class TLCProtocol(Protocol):
 
     def sendPing(self):
         ping = '{"msgType": "ping"}'
-        print('Pinging ' + self.remoteNodeId)
+        print(f'Ping sent \t\t {self.nodeId} --> {self.remoteNodeId}')
         self.transport.write(ping.encode('utf8'))
 
     def sendPong(self):
@@ -65,7 +65,7 @@ class TLCProtocol(Protocol):
         self.sendPong()
 
     def handlePong(self):
-        print("Got pong from " + self.remoteNodeId)
+        print(f'Pong received \t {self.nodeId} <-- {self.remoteNodeId}')
         self.lastPing = time()  # keep the timestamp
 
     def printPeerStatus(self):

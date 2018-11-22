@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/p2p_network/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p2p_network/simple_p2p_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_server.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_simple_p2p_network.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p2p_network/tlc_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_node.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -88,8 +83,8 @@
         <option value="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_server.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/simple_p2p_network.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_client.py" />
-        <option value="$PROJECT_DIR$/src/p2p_network/tlc_network.py" />
         <option value="$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py" />
+        <option value="$PROJECT_DIR$/src/p2p_network/tlc_network.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/tlc_node.py" />
       </list>
     </option>
@@ -105,7 +100,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -124,21 +118,11 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="p2p_network" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project-t" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project-t" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="p2p_network" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -425,7 +409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542792748598</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="- Ping pong communication working">
+      <created>1542870940858</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1542870940858</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -477,8 +468,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32725322" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.35861322" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.5032189" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.6088841" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.42470205" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.13774404" />
@@ -549,31 +540,21 @@
     <MESSAGE value="- Finally got a simple client-server network running with twisted. Now I'll start working on the tlc p2p network functionality" />
     <MESSAGE value="- Finally established a communication between the two peers, using a simple hello protocol" />
     <MESSAGE value="- Succeeded in creating two peers that can connect to each other.&#10;- Started writing the TLCNode class with it's methods, that handles each node" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Succeeded in creating two peers that can connect to each other.&#10;- Started writing the TLCNode class with it's methods, that handles each node" />
+    <MESSAGE value="- Ping pong communication working" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Ping pong communication working" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
-          <line>99</line>
-          <option name="timeStamp" value="223" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <condition expression="self.state == 'HELLO'" language="Python" />
-          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
-          <line>37</line>
-          <option name="timeStamp" value="225" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_node.py</url>
-          <line>96</line>
-          <option name="timeStamp" value="227" />
+          <line>91</line>
+          <option name="timeStamp" value="236" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
-          <line>11</line>
-          <option name="timeStamp" value="228" />
+          <line>34</line>
+          <option name="timeStamp" value="237" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>
@@ -582,14 +563,20 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
+        <watch expression="self.nodeId" />
         <watch expression="self.state" />
-        <watch expression="self.factory.nodeId" />
-        <watch expression="self.transport" />
+        <watch expression="self.remoteNodeId" />
+        <watch expression="data" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>TLCFactory()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>self.getPeers()</expression-string>
         <language-id>Python</language-id>
@@ -627,11 +614,6 @@
       </expression>
       <expression>
         <expression-string>tlcFactory</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>tclFactory</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -910,7 +892,6 @@
     <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/defer.py" />
     <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/base.py" />
     <entry file="file://C:/ProgramData/Anaconda3/Lib/codecs.py" />
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py" />
     <entry file="file://$PROJECT_DIR$/src/p2p_network/simple_p2p_network_server.py" />
     <entry file="file://E:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/tcp.py" />
     <entry file="file://$PROJECT_DIR$/tests/test_simple_p2p_network.py" />
@@ -921,33 +902,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
+    <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py" />
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="88" lean-forward="true" selection-start-line="88" selection-end-line="88" />
-          <folding>
-            <element signature="e#94#116#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="395">
+          <caret line="2089" selection-start-line="2089" selection-end-line="2089" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1044">
+          <caret line="56" column="30" selection-start-line="56" selection-start-column="30" selection-end-line="56" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-140">
+          <caret line="102" column="26" selection-start-line="102" selection-start-column="26" selection-end-line="102" selection-end-column="26" />
         </state>
       </provider>
     </entry>

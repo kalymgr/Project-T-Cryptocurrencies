@@ -96,7 +96,11 @@ myNode.startNode()
 secondNode = TLCNode('localhost', reactor, 8011)
 secondNode.startNode()
 
+thirdNode = TLCNode('localhost', reactor, 8012)
+thirdNode.startNode()
+
 myNode.connectTo(secondNode)
+myNode.connectTo(thirdNode)
 
 """
 # setup the list of node data (ip addresses and ports)
