@@ -49,21 +49,22 @@ class TLCProtocol(Protocol):
         :return:
         """
         hello = ('{"nodeId": "' + self.nodeId + '", "msgType": "hello"}').encode('utf8')
+        self.state = 'READY'  # after I send the HELLO, I declare I'm ready to talk
         self.transport.write(hello)
 
     def sendPing(self):
         ping = '{"msgType": "ping"}'
         print('Pinging ' + self.remoteNodeId)
-        self.transport.write((ping).encode('utf8'))
+        self.transport.write(ping.encode('utf8'))
 
     def sendPong(self):
         pong = '{"msgType": "pong"}'
-        self.transport.write((pong).encode('utf8'))
+        self.transport.write(pong.encode('utf8'))
 
     def handlePing(self):
         self.sendPong()
 
-    def handlePong(self, pong):
+    def handlePong(self):
         print("Got pong from " + self.remoteNodeId)
         self.lastPing = time()  # keep the timestamp
 

@@ -32,7 +32,8 @@ class TLCNode:
         self.__address = address
         self.__port = port
         self.__serverEndPoint = self.__createServerEndPoint()  # create the server endpoint
-        self.__clientEndPoint = self.__createClientEndPoint()  # create the client endpoint
+        # self.__clientEndPoint = self.__createClientEndPoint()  # create the client endpoint
+        # self.__clientEndPoint = None
         self.__tlcFactory = TLCFactory()  # the TLC Factory for the node
 
     def getTLCFactory(self):
@@ -83,7 +84,9 @@ class TLCNode:
         :param node: an other TLC Node
         :return:
         """
-        d = connectProtocol(self.__clientEndPoint, TLCProtocol(node.getTLCFactory()))
+        # create a client endpoint to connect to the target address:port
+        point = TCP4ClientEndpoint(reactor, node.__address, node.__port)
+        d = connectProtocol(point, TLCProtocol(self.getTLCFactory()))
         d.addCallback(gotProtocol)
 
 
@@ -93,8 +96,7 @@ myNode.startNode()
 secondNode = TLCNode('localhost', reactor, 8011)
 secondNode.startNode()
 
-
-# myNode.connectTo(secondNode)
+myNode.connectTo(secondNode)
 
 """
 # setup the list of node data (ip addresses and ports)
