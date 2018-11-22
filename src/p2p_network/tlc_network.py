@@ -1,10 +1,11 @@
 import json
+from time import time
 from uuid import uuid4
 
 from twisted.internet.protocol import Protocol, Factory
+from twisted.internet.task import LoopingCall
 
-
-generateNodeId = lambda: str(uuid4())
+generateNodeId = lambda: str(uuid4())  # function that generates the node id
 
 
 class TLCProtocol(Protocol):
@@ -14,26 +15,33 @@ class TLCProtocol(Protocol):
         self.nodeId = self.factory.nodeId  # keep the node id
         self.remoteNodeId = None
 
+        self.lcPing = LoopingCall(self.sendPing)  # Calls the sendPing method repeatedly to ping nodes
+        self.lastPing = None
+
     def connectionMade(self):
         print("Connection from" + str(self.transport.getPeer()) + self.nodeId)
 
     def connectionLost(self, reason):
-        # remove the node that disconnected from the peer dictionary
+        # remove the node that disconnected from the peer dictionary, if it exists in the peer list
         if self.remoteNodeId in self.factory.peers:
             self.factory.peers.pop(self.remoteNodeId)
+            self.lcPing.stop()
         print(self.nodeId + " disconnected")
 
     def dataReceived(self, data):
-        # stdout.write(data)
-        # print('receiving some data' + str(data))
-        # self.transport.write(data)
-
         # for each line of data
         for line in data.splitlines():
             line = line.strip()
-            if self.state == 'HELLO':  # if the node is in hello mode
+            msgType = json.loads(line)['msgType']  # get the msg type
+
+            # depending on the message received, do something
+            if self.state == 'HELLO' or msgType == 'hello':  # if the node is in hello mode
                 self.handleHello(line)
                 self.state = 'READY'
+            elif msgType == 'ping':  # if the node has received a ping message
+                self.handlePing()
+            elif msgType == 'pong':  # if the node has received a pong message
+                self.handlePong()
 
     def sendHello(self):
         """
@@ -43,13 +51,40 @@ class TLCProtocol(Protocol):
         hello = ('{"nodeId": "' + self.nodeId + '", "msgType": "hello"}').encode('utf8')
         self.transport.write(hello)
 
+    def sendPing(self):
+        ping = '{"msgType": "ping"}'
+        print('Pinging ' + self.remoteNodeId)
+        self.transport.write((ping).encode('utf8'))
+
+    def sendPong(self):
+        pong = '{"msgType": "pong"}'
+        self.transport.write((pong).encode('utf8'))
+
+    def handlePing(self):
+        self.sendPong()
+
+    def handlePong(self, pong):
+        print("Got pong from " + self.remoteNodeId)
+        self.lastPing = time()  # keep the timestamp
+
+    def printPeerStatus(self):
+        """
+        Method that prints the peer status for a node
+        :return:
+        """
+        # print('*** Current number of peers for node ' + self.nodeId + ' is ' + str(len(self.factory.peers)))
+        print("----------------------------------------------------------")
+        print("List of peers for node %s : " % self.nodeId)
+        i = 0
+        for peer in self.factory.peers:
+            print(' - ' + peer)
+
     def handleHello(self, hello):
         """
         method that handles the line that is sent to the node (json string)
         :param hello: json string
         :return:
         """
-
         try:
             hello = json.loads(hello)  # load the json from the string
             self.remoteNodeId = hello.get('nodeId')  # get the remote node id
@@ -58,8 +93,9 @@ class TLCProtocol(Protocol):
                 self.transport.loseConnection()  # close the connection
             else:  # add the remote node id to the dictionary of peers
                 self.factory.peers[self.remoteNodeId] = self
-
-            # print('I am ' + self.nodeId + ' and my peers are ' + str(self.factory.peers))
+                self.lcPing.start(10)
+                # print('-> Peer node ' + self.remoteNodeId + ' added to node ' + self.nodeId)
+                self.printPeerStatus()
         except:
             print('Communication problem')
 

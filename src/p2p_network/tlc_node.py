@@ -1,8 +1,12 @@
-from uuid import uuid4
+"""
+Check the tutorial
+https://benediktkr.github.io/dev/2016/02/04/p2p-with-twisted.html
+"""
 
+from uuid import uuid4
 from twisted.internet import reactor
 from twisted.internet.endpoints import TCP4ClientEndpoint, connectProtocol, TCP4ServerEndpoint
-from src.p2p_network.simple_p2p_network import TLCFactory, TLCProtocol
+from src.p2p_network.tlc_network import TLCFactory, TLCProtocol
 
 
 def gotProtocol(p):
@@ -15,7 +19,9 @@ class TLCNode:
     """
     class for managing the node data and operations
     """
-    def __init__(self, address: str, port: int, reactor: reactor):
+    DEFAULT_PORT = 8010  # the default port for running tlc nodes on a computer
+
+    def __init__(self, address: str, reactor: reactor, port: int = DEFAULT_PORT):
         """
 
         :param address: the ip address of the node
@@ -50,15 +56,6 @@ class TLCNode:
         """
         return self.__tlcFactory.nodeId
 
-    def printPeers(self):
-        """
-        method that prints the peers of the node on the screen
-        :return:
-        """
-        print('Node id: ' + self.getNodeId() + '\n')
-        for peer in self.getPeers():
-            print(peer + '\n')
-
     def __createServerEndPoint(self):
         """
         method that creates and returns the server endpoint for the node
@@ -90,60 +87,39 @@ class TLCNode:
         d.addCallback(gotProtocol)
 
 
-firstNode = TLCNode('localhost', 8010, reactor)
-secondNode = TLCNode('localhost', 8011, reactor)
-thirdNode = TLCNode('localhost', 8012, reactor)
+myNode = TLCNode('localhost', reactor)
+myNode.startNode()
 
-firstNode.startNode()
+secondNode = TLCNode('localhost', reactor, 8011)
 secondNode.startNode()
-thirdNode.startNode()
 
-firstNode.connectTo(secondNode)
-secondNode.connectTo(thirdNode)
-thirdNode.connectTo(secondNode)
 
-# TODO: fix printPeers method. Doesn't work
-firstNode.printPeers()
-secondNode.printPeers()
-thirdNode.printPeers()
+# myNode.connectTo(secondNode)
 
 """
-# this is the end point installed on my pc
-myEndpoint = TCP4ServerEndpoint(reactor, 8007)
-tlcFactory = TLCFactory()
-myEndpoint.listen(tlcFactory)
-
-# let's create one more endpoint which would belong to another instance of the p2p application
-secondEndpoint = TCP4ServerEndpoint(reactor, 8008)
-tlcFactory2 = TLCFactory()
-secondEndpoint.listen(tlcFactory2)
-
-
-
-
-
-bootstrapNodes = [
-    'localhost:8007', 'localhost:8008'
+# setup the list of node data (ip addresses and ports)
+# Let's assume the first is our node
+nodeAddresses = [
+    {'nodeAddress': 'localhost', 'port': 8010},
+    {'nodeAddress': 'localhost', 'port': 8011},
+    # {'nodeAddress': 'localhost', 'port': 8012},
+    # {'nodeAddress': 'localhost', 'port': 8013}
 ]
-# let's make a connection between both of the endpoints
-for node in bootstrapNodes:
 
-    # get the ip address and port
-    host, port = node.split(":")
 
-    # create the client endpoint
-    point = TCP4ClientEndpoint(reactor, host, int(port))
+# initialize & start the nodes & put them in a list
+nodeList = list()
+for nodeAddress in nodeAddresses:
+    node = TLCNode(nodeAddress['nodeAddress'], nodeAddress['port'], reactor)
+    node.startNode()
+    nodeList.append(node)
 
-    # connect to the first endpoint
-    d = connectProtocol(point, TLCProtocol(tlcFactory))
-    d.addCallback(gotProtocol)
-
-    # connect to the second endpoint
-    d = connectProtocol(point, TLCProtocol(tlcFactory2))
-    d.addCallback(gotProtocol)
-
+# connect the first node to all the other nodes
+for i in range(1, len(nodeList)):
+    nodeList[0].connectTo(nodeList[i])
+    
 """
+
 
 # run the reactor
 reactor.run()
-
