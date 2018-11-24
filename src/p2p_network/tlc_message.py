@@ -106,7 +106,7 @@ class TLCMessage:
         :return:
         """
         return {
-            'msgType': self.msgHeader.commandName,
+            'msgHeader': self.msgHeader.getMessageHeaderAsDict(),
             'msgData': self.msgData
         }
 
@@ -115,7 +115,7 @@ class TLCMessage:
         returns the messaqe in a form that is sendable by the tcp protocol
         :return: for now, a json string
         """
-        return json.dumps(self.getMessageAsDict()).encode('utf8')
+        return (json.dumps(self.getMessageAsDict()) + '\n').encode('utf8')
 
 
 class TLCVersionMessage(TLCMessage):
@@ -148,6 +148,43 @@ class TLCVersionMessage(TLCMessage):
                 'ipAddress': ipAddress,  # ip of the transmitting node
                 'port': port  # port of the transmitting node
             }
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())
+
+
+
+class TLCVerAckMessage(TLCMessage):
+    """
+    Class for the verack message
+    """
+
+    def __init__(self):
+        """
+        constructor method
+        """
+        # call the constructor of the parent class, stating the verack type of this message
+        super().__init__(TLCMessage.CTRLMSGTYPE_VERACK)
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())
+
+
+class TLCGetAddrMessage(TLCMessage):
+    """
+    implementing the getAddr message, that asks a peer to send his ip address list
+    """
+    def __init__(self):
+        """
+        constructor method
+        """
+        # call the constructor of the parent class, stating the verack type of this message
+        super().__init__(TLCMessage.CTRLMSGTYPE_GETADDR)
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())
+
+
 
 
 

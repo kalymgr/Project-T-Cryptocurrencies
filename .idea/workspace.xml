@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/p2p_network/parameters.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/p2p_network/tlc_message.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p2p_network/tlc_message.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_message.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p2p_network/tlc_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,19 +17,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/p2p_network/parameters.py">
+        <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="20" column="9" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
+            <state relative-caret-position="775">
+              <caret line="37" selection-start-line="37" selection-end-line="37" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="141">
+              <caret line="184" selection-start-line="184" selection-end-line="184" />
               <folding>
                 <element signature="e#61#72#0" expanded="true" />
               </folding>
@@ -38,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="864">
-              <caret line="148" column="11" lean-forward="true" selection-start-line="148" selection-start-column="11" selection-end-line="148" selection-end-column="11" />
+            <state relative-caret-position="273">
+              <caret line="282" column="11" lean-forward="true" selection-start-line="282" selection-start-column="11" selection-end-line="282" selection-end-column="11" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -51,22 +50,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
+        <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
-              <folding>
-                <element signature="e#94#130#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="29" selection-start-line="29" selection-end-line="29" />
+            <state relative-caret-position="24">
+              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -103,6 +90,7 @@
       <find>communica</find>
       <find>version</find>
       <find>time</find>
+      <find>get the add</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -149,18 +137,18 @@
         <option value="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_server.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/simple_p2p_network.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_client.py" />
+        <option value="$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py" />
+        <option value="$PROJECT_DIR$/src/p2p_network/parameters.py" />
         <option value="$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/tlc_node.py" />
-        <option value="$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py" />
-        <option value="$PROJECT_DIR$/src/p2p_network/tlc_network.py" />
-        <option value="$PROJECT_DIR$/src/p2p_network/parameters.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/tlc_message.py" />
+        <option value="$PROJECT_DIR$/src/p2p_network/tlc_network.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="692" />
-    <option name="y" value="97" />
+    <option name="x" value="362" />
+    <option name="y" value="61" />
     <option name="width" value="1255" />
     <option name="height" value="715" />
   </component>
@@ -169,7 +157,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -193,16 +180,11 @@
               <item name="project-t" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project-t" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="p2p_network" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -230,27 +212,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.tlc_node">
-    <configuration name="simple_p2p_network_client (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="project-t" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/p2p_network" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="G:\python_foundation\project-t\src\p2p_network\tlc_node.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="tlc_node" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -272,21 +233,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_tlc_network_message.TestTLCNetworkMessage.test_init_messageHeader" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="project-t" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/p2p_network" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_tlc_network_message.TestTLCNetworkMessage.test_init_messageHeader&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="pytest for test_tlc_network_message.TestTLCNetworkMessage.test_version_control_message" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -302,7 +248,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest in test_tlc_network_message.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_tlc_node.TestTLCNode.test_deferred_functionality" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -313,24 +259,54 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <option name="_new_target" value="&quot;test_tlc_node.TestTLCNode.test_deferred_functionality&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_tlc_node.TestTLCNode.test_reactor_functionality" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="project-t" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/p2p_network" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_tlc_node.TestTLCNode.test_reactor_functionality&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="project-t" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/p2p_network" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_tlc_node.TestTLCNode.test_twisted_functionality&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.simple_p2p_network_client (1)" />
       <item itemvalue="Python.tlc_node" />
-      <item itemvalue="Python tests.pytest for test_tlc_network_message.TestTLCNetworkMessage.test_init_messageHeader" />
-      <item itemvalue="Python tests.pytest in test_tlc_network_message.py" />
       <item itemvalue="Python tests.pytest for test_tlc_network_message.TestTLCNetworkMessage.test_version_control_message" />
+      <item itemvalue="Python tests.pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" />
+      <item itemvalue="Python tests.pytest for test_tlc_node.TestTLCNode.test_deferred_functionality" />
+      <item itemvalue="Python tests.pytest for test_tlc_node.TestTLCNode.test_reactor_functionality" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.tlc_node" />
+        <item itemvalue="Python tests.pytest for test_tlc_node.TestTLCNode.test_reactor_functionality" />
+        <item itemvalue="Python tests.pytest for test_tlc_node.TestTLCNode.test_deferred_functionality" />
+        <item itemvalue="Python tests.pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" />
         <item itemvalue="Python tests.pytest for test_tlc_network_message.TestTLCNetworkMessage.test_version_control_message" />
-        <item itemvalue="Python tests.pytest in test_tlc_network_message.py" />
-        <item itemvalue="Python tests.pytest for test_tlc_network_message.TestTLCNetworkMessage.test_init_messageHeader" />
-        <item itemvalue="Python.simple_p2p_network_client (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -485,39 +461,46 @@
       <option name="project" value="LOCAL" />
       <updated>1542871551858</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="- Started working on the protocol messages, according to the bitcoin developer documentation">
+      <created>1542965556057</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1542965556057</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_in_test_tlc_network_message_py - 2018.11.23 at 09h 36m 33s.xml">
-      <configuration name="pytest in test_tlc_network_message.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_tlc_node_TestTLCNode_test_twisted_functionality - 2018.11.24 at 19h 38m 28s.xml">
+      <configuration name="pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_tlc_network_message_py - 2018.11.23 at 09h 39m 55s.xml">
-      <configuration name="pytest in test_tlc_network_message.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_tlc_node_TestTLCNode_test_twisted_functionality - 2018.11.24 at 19h 38m 45s.xml">
+      <configuration name="pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_tlc_network_message_py - 2018.11.23 at 09h 40m 32s.xml">
-      <configuration name="pytest in test_tlc_network_message.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_tlc_node_TestTLCNode_test_twisted_functionality - 2018.11.24 at 19h 39m 34s.xml">
+      <configuration name="pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_in_test_tlc_network_message_py - 2018.11.23 at 09h 40m 43s.xml">
-      <configuration name="pytest in test_tlc_network_message.py" configurationId="tests" />
+    <history-entry file="pytest_for_test_tlc_node_TestTLCNode_test_twisted_functionality - 2018.11.24 at 19h 39m 57s.xml">
+      <configuration name="pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_tlc_network_message_TestTLCNetworkMessage_test_version_control_message - 2018.11.23 at 10h 18m 28s.xml">
-      <configuration name="pytest for test_tlc_network_message.TestTLCNetworkMessage.test_version_control_message" configurationId="tests" />
+    <history-entry file="pytest_for_test_tlc_node_TestTLCNode_test_twisted_functionality - 2018.11.24 at 19h 40m 23s.xml">
+      <configuration name="pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_tlc_network_message_TestTLCNetworkMessage_test_version_control_message - 2018.11.23 at 10h 18m 48s.xml">
-      <configuration name="pytest for test_tlc_network_message.TestTLCNetworkMessage.test_version_control_message" configurationId="tests" />
+    <history-entry file="pytest_for_test_tlc_node_TestTLCNode_test_twisted_functionality - 2018.11.24 at 19h 40m 33s.xml">
+      <configuration name="pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_tlc_network_message_TestTLCNetworkMessage_test_version_control_message - 2018.11.23 at 10h 19m 48s.xml">
-      <configuration name="pytest for test_tlc_network_message.TestTLCNetworkMessage.test_version_control_message" configurationId="tests" />
+    <history-entry file="pytest_for_test_tlc_node_TestTLCNode_test_twisted_functionality - 2018.11.24 at 19h 40m 51s.xml">
+      <configuration name="pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_tlc_network_message_TestTLCNetworkMessage_test_version_control_message - 2018.11.23 at 10h 20m 19s.xml">
-      <configuration name="pytest for test_tlc_network_message.TestTLCNetworkMessage.test_version_control_message" configurationId="tests" />
+    <history-entry file="pytest_for_test_tlc_node_TestTLCNode_test_twisted_functionality - 2018.11.24 at 19h 41m 01s.xml">
+      <configuration name="pytest for test_tlc_node.TestTLCNode.test_twisted_functionality" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_tlc_network_message_TestTLCNetworkMessage_test_version_control_message - 2018.11.23 at 10h 23m 06s.xml">
-      <configuration name="pytest for test_tlc_network_message.TestTLCNetworkMessage.test_version_control_message" configurationId="tests" />
+    <history-entry file="pytest_for_test_tlc_node_TestTLCNode_test_deferred_functionality - 2018.11.24 at 19h 41m 40s.xml">
+      <configuration name="pytest for test_tlc_node.TestTLCNode.test_deferred_functionality" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_tlc_network_message_TestTLCNetworkMessage_test_version_control_message - 2018.11.23 at 10h 24m 18s.xml">
-      <configuration name="pytest for test_tlc_network_message.TestTLCNetworkMessage.test_version_control_message" configurationId="tests" />
+    <history-entry file="pytest_for_test_tlc_node_TestTLCNode_test_reactor_functionality - 2018.11.24 at 19h 43m 38s.xml">
+      <configuration name="pytest for test_tlc_node.TestTLCNode.test_reactor_functionality" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -530,22 +513,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5031056" visible="true" weight="0.20179136" />
-      <window_info id="Structure" order="1" sideWeight="0.49689442" side_tool="true" visible="true" weight="0.20179136" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.28947368" visible="true" weight="0.20179136" />
+      <window_info id="Structure" order="1" sideWeight="0.7105263" side_tool="true" visible="true" weight="0.20179136" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32719395" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.30769232" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.40411702" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32690248" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.357985" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.49410504" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.23726977" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.8255688" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.5927117" />
       <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.25785482" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32827735" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.29581994" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -630,35 +613,16 @@
     <MESSAGE value="- Succeeded in creating two peers that can connect to each other.&#10;- Started writing the TLCNode class with it's methods, that handles each node" />
     <MESSAGE value="- Ping pong communication working" />
     <MESSAGE value="- Formatted ping and pong messages using f strings" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Formatted ping and pong messages using f strings" />
+    <MESSAGE value="- Started working on the protocol messages, according to the bitcoin developer documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Started working on the protocol messages, according to the bitcoin developer documentation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
-          <line>207</line>
-          <option name="timeStamp" value="258" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
-          <line>212</line>
-          <option name="timeStamp" value="259" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
-          <line>208</line>
-          <option name="timeStamp" value="260" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py</url>
           <line>21</line>
           <option name="timeStamp" value="271" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
-          <line>239</line>
-          <option name="timeStamp" value="278" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/src/p2p_network/tlc_message.py</url>
@@ -670,69 +634,81 @@
           <line>29</line>
           <option name="timeStamp" value="280" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
+          <line>221</line>
+          <option name="timeStamp" value="317" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
+          <line>218</line>
+          <option name="timeStamp" value="318" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_message.py</url>
+          <line>184</line>
+          <option name="timeStamp" value="323" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>
         <breakpoint type="python-line" />
       </breakpoints-defaults>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="self.nodeId" />
-        <watch expression="self.state" />
-        <watch expression="self.remoteNodeId" />
-        <watch expression="data" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
-        <expression-string>TLCVersionMessage().getMessageAsSendable()</expression-string>
+        <expression-string>len(self.getMessageAsSendable())</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>TLCVersionMessage.getMessageAsSendable()</expression-string>
+        <expression-string>len(self.msgData)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>msgType == TLCNetworkMessage.CTRLMSGTYPE_VERSION</expression-string>
+        <expression-string>f&quot;{remoteNodeIp}_{str(remoteNodePort)}&quot;</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.transport.write(versionMsg)</expression-string>
+        <expression-string>self.hostIp.host == remoteNodeIp and self.hostIp.port == remoteNodePort</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>TLCNetworkMessage(TLCNetworkMessage.CTRLMSGTYPE_VERSION).getMessageAsSendable()</expression-string>
+        <expression-string>a + 2</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>TLCNetworkMessage(msgType=TLCNetworkMessage.CTRLMSGTYPE_VERSION)</expression-string>
+        <expression-string>b</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>TLCNetworkMessage()</expression-string>
+        <expression-string>json.loads(versionMsg)['msgData']['port']</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>TLCNetworkMessage(TLCNetworkMessage.CTRLMSGTYPE_VERSION)</expression-string>
+        <expression-string>json.loads(versionMsg)['msgData']['ipAddress']</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>json.loads(addrData)</expression-string>
+        <expression-string>remoteNodeIp = json.loads(versionMsg)['msgData']['ipAddress']</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
     </expressions>
     <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>msgType == TLCMessage.CTRLMSGTYPE_VERACK</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>self.state == 'HELLO'</expression-string>
         <language-id>Python</language-id>
@@ -761,6 +737,21 @@
     </expressions>
     <expressions id="watch">
       <expression>
+        <expression-string>self.factory.serverPort</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.factory.port</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.nodeId</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>self.remoteNodeId == self.nodeId</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -788,47 +779,47 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>self.state == 'HELLO' or msgType == 'hello'</expression-string>
+        <expression-string>json.loads(line)['msgHeader']['commandName']</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>json.loads(line)['msgType']</expression-string>
+        <expression-string>self.transport.write(getAddrMessage)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>msgType = json.loads(line)['msgType']</expression-string>
+        <expression-string>data.splitlines()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.transport.write((ping + '\n').encode('utf8'))</expression-string>
+        <expression-string>data</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.transport.write(ping + '\n')</expression-string>
+        <expression-string>line</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>pendingTransactionList[0].getTransactionInputList()</expression-string>
+        <expression-string>line[236:240]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>utxoElement.getScript()</expression-string>
+        <expression-string>line[236:238]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>signedTransactionHash</expression-string>
+        <expression-string>line[238:238]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>SmartContractScripts.getScriptSig(signedTransactionHash, accountPublicKey) + utxoElement.getScript()</expression-string>
+        <expression-string>json.loads(line)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -1009,13 +1000,7 @@
     <entry file="file://$PROJECT_DIR$/src/p2p_network/simple_p2p_network_server.py" />
     <entry file="file://E:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/tcp.py" />
     <entry file="file://$PROJECT_DIR$/tests/test_simple_p2p_network.py" />
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="124" selection-start-line="124" selection-end-line="124" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py" />
     <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7966">
@@ -1023,17 +1008,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py">
+    <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="1" lean-forward="true" selection-end-line="6" selection-end-column="37" />
+        <state relative-caret-position="600">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py">
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        <state relative-caret-position="500">
+          <caret line="20" column="9" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -1042,37 +1037,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+        <state relative-caret-position="775">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="895" selection-start-line="895" selection-end-line="895" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="184" selection-start-line="184" selection-end-line="184" />
           <folding>
-            <element signature="e#94#130#0" expanded="true" />
+            <element signature="e#61#72#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="864">
-          <caret line="148" column="11" lean-forward="true" selection-start-line="148" selection-start-column="11" selection-end-line="148" selection-end-column="11" />
+        <state relative-caret-position="273">
+          <caret line="282" column="11" lean-forward="true" selection-start-line="282" selection-start-column="11" selection-end-line="282" selection-end-column="11" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/p2p_network/parameters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="20" column="9" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#61#72#0" expanded="true" />
           </folding>
         </state>
       </provider>
