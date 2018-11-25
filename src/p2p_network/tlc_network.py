@@ -1,7 +1,7 @@
 import json
 from time import time
 from uuid import uuid4
-
+import socket
 from twisted.internet import reactor
 from twisted.internet.endpoints import TCP4ClientEndpoint, TCP4ServerEndpoint, connectProtocol
 from twisted.internet.protocol import Protocol, Factory
@@ -35,11 +35,11 @@ class TLCNode:
     """
     DEFAULT_PORT = MAINNET_DEFAULT_PORT  # the default port for running tlc nodes on a computer
 
-    def __init__(self, address: str, reactor: reactor, port: int = DEFAULT_PORT):
+    def __init__(self, reactor: reactor, address: str = 'localhost', port: int = DEFAULT_PORT):
         """
 
-        :param address: the ip address of the node
-        :param port: the tcp port of the node
+        :param address: the ip address of the node - default is localhost
+        :param port: the tcp port of the node - default is the default port defined in the application parameters
         :param reactor: the reactor object
         """
         self.__reactor = reactor
@@ -65,6 +65,23 @@ class TLCNode:
         :return: list of peers
         """
         return self.__tlcFactory.peers
+
+    def isPortAvailable(self, host: str, port: int) -> bool:
+        """
+        Checks if a port is available on our pc
+        :param host: the host (string
+        :param port: the port (int)
+        :return: True if available, else False
+        """
+        # create a socket to the specific host and port and get the result
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        res = sock.connect_ex((host, port))
+        # close the socket
+        sock.close()
+        if res != 0:  # if the res is not equal to zero (socket available)
+            return True
+        else:
+            return False
 
     def printPeers(self):
         """
@@ -99,7 +116,10 @@ class TLCNode:
         starts the node
         :return:
         """
-        self.__serverEndPoint.listen(self.__tlcFactory)
+        if self.isPortAvailable(self.__address, self.__port):
+            self.__serverEndPoint.listen(self.__tlcFactory)
+        else:
+            raise Exception
 
     def initConnection(self, p):
         """
