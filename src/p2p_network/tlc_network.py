@@ -9,6 +9,7 @@ from twisted.internet.task import LoopingCall
 
 from src.p2p_network.parameters import Parameters
 from src.p2p_network.tlc_message import TLCMessage, TLCVersionMessage, TLCVerAckMessage, TLCGetAddrMessage
+from src.utilities.tlc_exceptions import TLCNetworkException
 
 generateNodeId = lambda: str(uuid4())  # function that generates the node id
 
@@ -49,8 +50,7 @@ class TLCNode:
         # self.__clientEndPoint = self.__createClientEndPoint()  # create the client endpoint
         # self.__clientEndPoint = None
         self.__tlcFactory = TLCFactory(port)  # the TLC Factory for the node
-
-        self.d = None  # the deferred object
+        # self.d = None  # the deferred object
 
     def getTLCFactory(self):
         """
@@ -69,7 +69,8 @@ class TLCNode:
     def isPortAvailable(self, host: str, port: int) -> bool:
         """
         Checks if a port is available on our pc
-        :param host: the host (string
+
+        :param host: the host (string)
         :param port: the port (int)
         :return: True if available, else False
         """
@@ -78,7 +79,7 @@ class TLCNode:
         res = sock.connect_ex((host, port))
         # close the socket
         sock.close()
-        if res != 0:  # if the res is not equal to zero (socket available)
+        if res != 0:  # if the res is not equal to zero (socket available - no one listening there)
             return True
         else:
             return False
@@ -113,13 +114,13 @@ class TLCNode:
 
     def startNode(self):
         """
-        starts the node
+        starts the node. If there is a problem with the port (not available), then it raises a TLCNetworkException.
         :return:
         """
         if self.isPortAvailable(self.__address, self.__port):
             self.__serverEndPoint.listen(self.__tlcFactory)
         else:
-            raise Exception
+            raise TLCNetworkException(f"Port {self.__port} not available")
 
     def initConnection(self, p):
         """
@@ -128,6 +129,9 @@ class TLCNode:
         """
         p.sendVersion()
         return p
+
+    def getConnectionState(self, p):
+        return p.state
 
     def askPeerForAddresses(self, p):
         """
@@ -145,22 +149,33 @@ class TLCNode:
         """
         # create a client endpoint to connect to the target address:port
         point = TCP4ClientEndpoint(reactor, node.__address, node.__port)
-        self.d = connectProtocol(point, TLCProtocol(self.getTLCFactory(), 1))
-        # d.addCallback(initConnection)
-        self.d.addCallback(self.initConnection)
 
-    def getAddressesFromNode(self, node):
+        d = connectProtocol(point, TLCProtocol(self.getTLCFactory(), 1))
+        d.addCallback(self.initConnection)
+
+    def getNodePeers(self, node):
         """
-        Method that asks a network node about the ip addresses that he has in his peer list
-        :param node:
+        Asks a node to give him his peers (nodes on his network)
+        :param node: the node(TLCNode objects), whose peers we want
         :return:
         """
-        # first connect to the node
-        self.connectTo(node)
-        print('Connection completed. Now time to get the addresses.')
-        self.d.addCallback(self.askPeerForAddresses)
+        # create a client endpoint to connect to the target address:port
+        point = TCP4ClientEndpoint(reactor, node.__address, node.__port)
+        # make the connection
+        d = connectProtocol(point, TLCProtocol(self.getTLCFactory(), 1))
+        # the parameter of the following callback defines the type of request
+        d.addCallback(self.initSendRequest, TLCMessage.CTRLMSGTYPE_GETADDR)
 
-        # get the addresses
+    def initSendRequest(self, p: Protocol, typeOfRequest: int):
+        """
+        method for starting a request from another node, depending on the type of the request.
+        This method will be used from other methods in this class
+        :param p: the Protocol object. Automatically added by the callback
+        :param typeOfRequest: the type of message as defined in the TLCMessage class
+        :return: the Protocol object, in case it is needed for another callback
+        """
+        p.sendRequest(typeOfRequest)
+        return p
 
 
 class TLCProtocol(Protocol):
@@ -182,6 +197,8 @@ class TLCProtocol(Protocol):
         self.lcPing = LoopingCall(self.sendPing)  # Calls the sendPing method repeatedly to ping nodes
         self.lastPing = None
 
+        self.typeOfRequest = None  # the type of request.
+
     def connectionMade(self):
         self.remoteIp = self.transport.getPeer()
         self.hostIp = self.transport.getHost()
@@ -200,13 +217,20 @@ class TLCProtocol(Protocol):
             line = line.strip()
             msgType = json.loads(line)['msgHeader']['commandName']  # get the msg type
 
-            # depending on the message received, do something
-            if msgType == TLCMessage.CTRLMSGTYPE_VERSION:  # if the nodes are exchanging versions
-                self.handleVersion(line)
-            elif msgType == TLCMessage.CTRLMSGTYPE_VERACK:
-                self.handleVerAck()
-            elif msgType == TLCMessage.CTRLMSGTYPE_GETADDR:
-                self.handleGetAddr()
+            if self.state != TLCProtocol.NODE_STATUS_CONNECTED:  # if the connection has not been made
+                # depending on the message received, do something
+                if msgType == TLCMessage.CTRLMSGTYPE_VERSION:  # if the nodes are exchanging versions
+                    self.handleVersion(line)
+                elif msgType == TLCMessage.CTRLMSGTYPE_VERACK:
+                    self.handleVerAck()
+                elif msgType == TLCMessage.CTRLMSGTYPE_GETADDR:
+                    self.handleGetAddr()
+            else:  # ready to handle requests - put the request handling here
+                if msgType == TLCMessage.CTRLMSGTYPE_VERACK:
+                    print(f"Node {self.nodeId}. Got the VERACK from the node I connected to. Ready to handle requests")
+                # self.handleVerAck()  # get the last verack
+                print('Ready to make some requests...')
+
 
     def sendVersion(self):
         """
@@ -218,6 +242,22 @@ class TLCProtocol(Protocol):
         self.state = TLCProtocol.NODE_STATUS_WAITING_VERACK
         print(f'--> Node {self.nodeId}. Sent my VERSION')
         self.transport.write(versionMsg)
+
+    def sendRequest(self, typeOfRequest):
+        """
+        method that initiates a request, depending on the type of request
+        :param typeOfRequest:
+        :return:
+        """
+        self.typeOfRequest = typeOfRequest  # store the type of request
+
+        # Initialize the conversation
+        # create the version message, in a sendable form
+        versionMsg = TLCVersionMessage(self.hostIp.host, self.factory.serverPort).getMessageAsSendable()
+        self.state = TLCProtocol.NODE_STATUS_WAITING_VERACK
+        print(f'--> Node {self.nodeId}. Sent my VERSION')
+        self.transport.write(versionMsg)
+
 
 
     def sendVerAck(self):
@@ -335,6 +375,8 @@ class TLCFactory(Factory):
         :param serverPort: the port of the server when receiving connections (int)
         """
         self.serverPort = serverPort  # keep the port of the application, to sent it to peers
+        # self.protocols = list()  # list of the protocols-connections
+
     def startFactory(self):
         self.nodeId = generateNodeId()  # generate a node id
         # self.peers = dict()  # initialize the dictionary containing the peers
@@ -343,6 +385,8 @@ class TLCFactory(Factory):
         print(f' Node <<{self.nodeId}>> online.')
 
     def buildProtocol(self, addr):
-        print('Connected.')
         # return TLCProtocol(self)
+        # protocol = TLCProtocol(self, 1)
+        # self.protocols.append(protocol)
+        # return protocol
         return TLCProtocol(self, 1)

@@ -7,16 +7,18 @@ from twisted.internet import reactor
 from src.p2p_network.tlc_network import TLCNode
 
 # create and start my node
-myNode = TLCNode('localhost', reactor)
+myNode = TLCNode(reactor, 'localhost')
 myNode.startNode()
 
 # create and start three more nodes
-secondNode = TLCNode('localhost', reactor, 8011)
+secondNode = TLCNode(reactor, 'localhost', 8011)
 secondNode.startNode()
-thirdNode = TLCNode('localhost', reactor, 8012)
-thirdNode.startNode()
+# thirdNode = TLCNode(reactor, 'localhost', 8012)
+# thirdNode.startNode()
 # fourthNode = TLCNode('localhost', reactor, 8013)
 # fourthNode.startNode()
+
+myNode.getNodePeers(secondNode)
 
 # connect my node to the other two nodes
 # myNode.connectTo(secondNode)
@@ -27,7 +29,7 @@ thirdNode.startNode()
 delay = 3
 
 # get the addresses of the peer node
-reactor.callLater(delay, myNode.getAddressesFromNode, secondNode)
+# reactor.callLater(delay, myNode.getAddressesFromNode, secondNode)
 
 # print the peers
 
