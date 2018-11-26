@@ -88,6 +88,7 @@ class TLCMessage:
     CTRLMSGTYPE_VERACK = 53
     CTRLMSGTYPE_PING = 54
     CTRLMSGTYPE_PONG = 55
+    CTRLMSGTYPE_REJECT = 56
 
     def __init__(self, msgType: int, msgData = None):
         """
@@ -185,8 +186,32 @@ class TLCGetAddrMessage(TLCMessage):
         self.msgHeader.payloadSize = len(self.getMessageAsSendable())
 
 
+class TLCRejectMessage(TLCMessage):
+    """
+    Implementing the reject message
+    """
 
+    REJECT_CODE_DIF_VERSION = 1  # reject code for a different version
 
+    def __init__(self, msgRejectedType: str, rejectCode: str, reason: str = None):
+        """
+        Constructor that initializes a reject message
+        :param msgRejectedType: the type of the message rejected (eg 'version')
+        :param rejectCode: the code of the reject
+        :param reason: the reason (description) of the rejection
+        """
 
+        # call the constructor of the parent class, stating the verack type of this message
+        super().__init__(TLCMessage.CTRLMSGTYPE_REJECT)
+
+        # set the data of the message
+        self.msgData = {
+            'msgRejectedType': msgRejectedType,
+            'rejectCode': rejectCode,
+            'reason': reason
+        }
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())
 
 

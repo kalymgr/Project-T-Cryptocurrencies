@@ -7,11 +7,11 @@ from twisted.internet import reactor
 from src.p2p_network.tlc_network import TLCNode
 
 # create and start my node
-myNode = TLCNode(reactor, 'localhost')
+myNode = TLCNode(reactor, 'localhost', 8010, 1)
 myNode.startNode()
 
 # create and start three more nodes
-secondNode = TLCNode(reactor, 'localhost', 8011)
+secondNode = TLCNode(reactor, 'localhost', 8011, 2)
 secondNode.startNode()
 # thirdNode = TLCNode(reactor, 'localhost', 8012)
 # thirdNode.startNode()
