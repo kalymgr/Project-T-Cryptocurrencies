@@ -123,11 +123,12 @@ class TLCVersionMessage(TLCMessage):
     """
     class specifically for the version messages. Extends the TLC Message class
     """
-    def __init__(self, ipAddress: str = None, port: int = None):
+    def __init__(self, ipAddress: str = None, port: int = None, protocolVersion = Parameters.PROTOCOL_VERSION):
         """
         Constructor method for the version message
         :param ipAddress: the ip address of the transmitting node. The default used, if None
         :param port: the port of the transmitting node. The default used, if None
+        :param protocolVersion: the version of the protocol. If ommitted, it uses the default from the Params
         """
 
         # use the default values of ip address and port, if omitted when calling the constructor
@@ -142,7 +143,7 @@ class TLCVersionMessage(TLCMessage):
         # set the data for the version control message
         self.msgData = \
             {
-                'version': Parameters.PROTOCOL_VERSION,
+                'version': protocolVersion,
                 'services': Parameters.NODE_TYPE,
                 'timestamp': time(),
                 'addrReceivServices': Parameters.NODE_TYPE,  # this is about the receiving node. Suppose it's a full n

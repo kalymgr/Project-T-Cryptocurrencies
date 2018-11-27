@@ -9,6 +9,21 @@ from src.utilities.tlc_exceptions import TLCNetworkException
 
 
 class TestConnectingToPeers(unittest.TestCase):
+
+    def setUp(self):
+        self.reactorDelay = 1  # the delay used for the reactor
+
+        self.nodeV1Port8010 = TLCNode(reactor, port=8010, protocolVersion=1)
+        self.nodeV2Port8012 = TLCNode(reactor, port=8012, protocolVersion=2)
+        self.nodeV1Port8013 = TLCNode(reactor, port=8013, protocolVersion=1)
+        self.nodeV2Port8011 = TLCNode(reactor, port=8011, protocolVersion=2)
+
+        self.nodeV1Port8010.startNode()
+        self.nodeV2Port8012.startNode()
+        self.nodeV1Port8013.startNode()
+        self.nodeV2Port8011.startNode()
+
+
     def test_start_node(self):
         """
         Testing the creation of a new node. Scenarios:
@@ -36,28 +51,52 @@ class TestConnectingToPeers(unittest.TestCase):
         reactor.callLater(2, reactor.stop)  # after two seconds, stop the reactor
         reactor.run()  # run the reactor
 
-    def test_connectTo(self):
+    def test_version(self):
         """
-        testing the connection between two nodes. Scenarios:
-        a) The connection can be made
-        b) The connection cannot be made because the second node hasn't started
-        c) The connection cannot be completed because of a problem with the version of the two nodes
+        testing the version communication
         :return:
         """
+        # First case
+        # try to connect to a node with higher version. Reject message should be sent and the nodes should be
+        # disconnected. Check that the node hasn't been added to the peers.
+        self.nodeV1Port8010.connectTo(self.nodeV2Port8011)
 
-        # a) The connection can be made
-        node1 = TLCNode(reactor)
-        node1.startNode()
-        node2 = TLCNode(reactor, port=8011)
-        node2.startNode()
-        node1.connectTo(node2)  # make the connection
+        # assert that neither node has added the other one as a peer
+        def firstCaseAssertNotIn():
+            assert f'{self.nodeV1Port8010._TLCNode__address}_{self.nodeV1Port8010._TLCNode__port}' \
+                   not in self.nodeV2Port8011.getPeers()
+            assert f'{self.nodeV2Port8011._TLCNode__address}_{self.nodeV2Port8011._TLCNode__port}' \
+                   not in self.nodeV1Port8010.getPeers()
 
-        node3 = TLCNode(reactor, port=8012)
-        node3.startNode()
-        node1.connectTo(node3)
+        reactor.callLater(self.reactorDelay * 2, firstCaseAssertNotIn)  # call the assertions when possible
 
-        reactor.callLater(2, reactor.stop)  # after two seconds, stop the reactor
+        # Second case
+        # Try to connect a higher version to a lower version
+        self.nodeV2Port8011.connectTo(self.nodeV1Port8010)
+        # assert that neither node has added the other one as a peer
+
+        def secondCaseAssertNotIn():
+            firstCaseAssertNotIn()
+        reactor.callLater(self.reactorDelay * 2, secondCaseAssertNotIn)  # call the assertions when possible
+
+        # Third case
+        # Connect two nodes with same protocol versions. Each one should add the other as a peer.
+        self.nodeV1Port8010.connectTo(self.nodeV1Port8013)
+
+        # assert that each one exists in the other's peer nodes
+        def thirdCaseAssertNotIn():
+            assert f'{self.nodeV1Port8010._TLCNode__address}_{self.nodeV1Port8010._TLCNode__port}' \
+                   in self.nodeV1Port8013.getPeers()
+            assert f'{self.nodeV1Port8013._TLCNode__address}_{self.nodeV1Port8013._TLCNode__port}' \
+                   in self.nodeV1Port8010.getPeers()
+
+        reactor.callLater(self.reactorDelay * 2, thirdCaseAssertNotIn)  # call the assertions when possible
+
+
+        reactor.callLater(self.reactorDelay * 3, reactor.stop)  # after some time, stop the reactor
         reactor.run()  # run the reactor
 
-        print(1)
+
+
+
 

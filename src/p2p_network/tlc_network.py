@@ -37,7 +37,7 @@ class TLCNode:
     """
     DEFAULT_PORT = MAINNET_DEFAULT_PORT  # the default port for running tlc nodes on a computer
 
-    def __init__(self, reactor: reactor, address: str = 'localhost', port: int = DEFAULT_PORT,
+    def __init__(self, reactor: reactor, address: str = '127.0.0.1', port: int = DEFAULT_PORT,
                  protocolVersion = Parameters.PROTOCOL_VERSION):
         """
 
@@ -137,14 +137,6 @@ class TLCNode:
     def getConnectionState(self, p):
         return p.state
 
-    def askPeerForAddresses(self, p):
-        """
-        ask for the addresses
-        :return:
-        """
-        p.sendGetAddr()
-        return p
-
     def connectTo(self, node):
         """
         used to connect to another peer node
@@ -154,7 +146,7 @@ class TLCNode:
         # create a client endpoint to connect to the target address:port
         point = TCP4ClientEndpoint(reactor, node.__address, node.__port)
 
-        d = connectProtocol(point, TLCProtocol(self.getTLCFactory(), self.protocolVersion))
+        d = connectProtocol(point, TLCProtocol(self.getTLCFactory()))
         d.addCallback(self.initConnection)
 
     def getNodePeers(self, node):
@@ -166,7 +158,7 @@ class TLCNode:
         # create a client endpoint to connect to the target address:port
         point = TCP4ClientEndpoint(reactor, node.__address, node.__port)
         # make the connection
-        d = connectProtocol(point, TLCProtocol(self.getTLCFactory(), self.protocolVersion))
+        d = connectProtocol(point, TLCProtocol(self.getTLCFactory()))
         # the parameter of the following callback defines the type of request
         d.addCallback(self.initSendRequest, TLCMessage.CTRLMSGTYPE_GETADDR)
 
@@ -189,16 +181,13 @@ class TLCProtocol(Protocol):
     NODE_STATUS_WAITING_VERACK = 2
     NODE_STATUS_CONNECTED = 3  # after receiving the verack message
 
-    def __init__(self, factory, protocolVersion):
+    def __init__(self, factory):
         """
         constructor method.
         :param factory: the factory that will be creating protocols
-        :param protocolVersion: the protocol version
         """
-        # set the version of the protocol the same as the version of the message
-        self.version = protocolVersion
 
-        # set some other variables
+        # set some variables
         self.factory = factory
         self.state = TLCProtocol.NODE_STATUS_READY_TO_CONNECT
         self.nodeId = self.factory.nodeId  # keep the node id
@@ -250,7 +239,8 @@ class TLCProtocol(Protocol):
         :return:
         """
         # create the version message, in a sendable form
-        versionMsg = TLCVersionMessage(self.hostIp.host, self.factory.serverPort).getMessageAsSendable()
+        versionMsg = TLCVersionMessage(self.hostIp.host, self.factory.serverPort, self.factory.protocolVersion)\
+            .getMessageAsSendable()
         self.state = TLCProtocol.NODE_STATUS_WAITING_VERACK
         print(f'--> Node {self.nodeId}. Sent my VERSION')
         self.transport.write(versionMsg)
@@ -265,7 +255,8 @@ class TLCProtocol(Protocol):
 
         # Initialize the conversation
         # create the version message, in a sendable form
-        versionMsg = TLCVersionMessage(self.hostIp.host, self.factory.serverPort).getMessageAsSendable()
+        versionMsg = TLCVersionMessage(self.hostIp.host, self.factory.serverPort, self.factory.protocolVersion)\
+            .getMessageAsSendable()
         self.state = TLCProtocol.NODE_STATUS_WAITING_VERACK
         print(f'--> Node {self.nodeId}. Sent my VERSION')
         self.transport.write(versionMsg)
@@ -326,35 +317,31 @@ class TLCProtocol(Protocol):
         """
         print(f'--> Node {self.nodeId}. Got the VERSION.')
 
-        # create the list of peers for the node
+        versionMessage = json.loads(versionMsg)  # load the json version message from the string
+        # If the protocol versions of the two nodes are compatible, decide how to answer
+        # Else (incompatible), reset the state of the node and send a reject message
 
-        versionMessage = json.loads(versionMsg)  # load the json from the string
-        # get the ip and port of the remote node
-        remoteNodeIp = versionMessage['msgData']['ipAddress']
-        remoteNodePort = versionMessage['msgData']['port']
-        # self.remoteNodeId = versionMessage.get('nodeId')  # get the remote node id
-        if self.hostIp.host == remoteNodeIp and self.hostIp.port == remoteNodePort:
-            print('Connected to myself')
-            self.transport.loseConnection()  # close the connection
-        else:
-            # add the remote node id to the dictionary of peers, if not already there
-            self.addPeer(remoteNodeIp, remoteNodePort)
+        if self.factory.protocolVersion == versionMessage['msgData']['version']:  # compatible protocol versions
+            # get the ip and port of the remote node
+            remoteNodeIp = versionMessage['msgData']['ipAddress']
+            remoteNodePort = versionMessage['msgData']['port']
 
-        # if the protocol versions of the two nodes are incompatible, then reset the state of the node
-        # and send a reject message. Else, decide how to answer
+            # if the node is trying to connect to itself, then drop the connection
+            if self.hostIp.host == remoteNodeIp and self.hostIp.port == remoteNodePort:
+                print('Connected to myself')
+                self.transport.loseConnection()  # close the connection
+            else:  # case another node trying to connect to this node
+                # add the remote node id to the dictionary of peers, if not already there
+                self.addPeer(remoteNodeIp, remoteNodePort)
+                # decide how to answer
+                if self.state == TLCProtocol.NODE_STATUS_READY_TO_CONNECT:  # hasn't processed the version
+                    self.state = TLCProtocol.NODE_STATUS_WAITING_VERACK  # set the state
+                    self.sendVersion()  # send back the version
+                    # self.lcPing.start(10)
+                    # self.printPeerStatus()
 
-        if self.version == versionMessage['msgData']['version']:
-            # decide how to answer
-            if self.state == TLCProtocol.NODE_STATUS_READY_TO_CONNECT:
-                # send back a verack control message
-                # self.state = TLCProtocol.NODE_STATUS_WAITING_VERACK
-                self.state = TLCProtocol.NODE_STATUS_WAITING_VERACK
-                self.sendVersion()
-                # self.lcPing.start(10)
-                # self.printPeerStatus()
-
-            else:  # has already processed the version. Now verack
-                self.sendVerAck()
+                else:  # has already processed the version. Now verack
+                    self.sendVerAck()
         else:  # incompatible protocol versions
             self.state = TLCProtocol.NODE_STATUS_READY_TO_CONNECT  # reset the protocol status
             self.sendReject()  # send the reject message
@@ -390,7 +377,8 @@ class TLCProtocol(Protocol):
         if msgJsonData['msgData']['rejectCode'] == TLCRejectMessage.REJECT_CODE_DIF_VERSION:
             # if the two nodes have two different protocol versions
             print(f'Node {self.nodeId}. Incompatible protocol versions of the two nodes')
-            self.state = TLCProtocol.NODE_STATUS_READY_TO_CONNECT
+            self.state = TLCProtocol.NODE_STATUS_READY_TO_CONNECT  # reset the status of the node
+            self.transport.loseConnection()  # close the connection
 
         # if the reason is different version then print message and set status as ready to connect
 
@@ -430,4 +418,4 @@ class TLCFactory(Factory):
         # protocol = TLCProtocol(self, 1)
         # self.protocols.append(protocol)
         # return protocol
-        return TLCProtocol(self, self.protocolVersion)
+        return TLCProtocol(self)
