@@ -180,8 +180,31 @@ class TLCGetAddrMessage(TLCMessage):
         """
         constructor method
         """
-        # call the constructor of the parent class, stating the verack type of this message
+        # call the constructor of the parent class, stating the type of this message
         super().__init__(TLCMessage.CTRLMSGTYPE_GETADDR)
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())
+
+
+class TLCAddrMessage(TLCMessage):
+    """
+    Class for the addr messages, that return a list of addresses of nodes
+    """
+
+    def __init__(self, addressesList: list):
+        """
+        constructor method
+        :param addressesList: the list of addresses sent
+        """
+        # call the constructor of the parent class, stating the type of this message
+        super().__init__(TLCMessage.CTRLMSGTYPE_ADDR)
+
+        # add data to the message
+        self.msgData = {
+            'ipAddresses': addressesList,  # the list of addresses
+            'ipAddressCount': len(addressesList)  # the number of addresses
+        }
 
         # set the payload size
         self.msgHeader.payloadSize = len(self.getMessageAsSendable())

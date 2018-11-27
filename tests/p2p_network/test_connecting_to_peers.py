@@ -13,9 +13,14 @@ class TestConnectingToPeers(unittest.TestCase):
     def setUp(self):
         self.reactorDelay = 1  # the delay used for the reactor
 
+        # initialize and start the nodes
         self.nodeV1Port8010 = TLCNode(reactor, port=8010, protocolVersion=1)
-        self.nodeV2Port8012 = TLCNode(reactor, port=8012, protocolVersion=2)
         self.nodeV1Port8013 = TLCNode(reactor, port=8013, protocolVersion=1)
+        self.nodeV1Port8014 = TLCNode(reactor, port=8014, protocolVersion=1)
+        self.nodeV1Port8015 = TLCNode(reactor, port=8015, protocolVersion=1)
+        self.nodeV1Port8016 = TLCNode(reactor, port=8016, protocolVersion=1)
+
+        self.nodeV2Port8012 = TLCNode(reactor, port=8012, protocolVersion=2)
         self.nodeV2Port8011 = TLCNode(reactor, port=8011, protocolVersion=2)
 
         self.nodeV1Port8010.startNode()
@@ -23,6 +28,9 @@ class TestConnectingToPeers(unittest.TestCase):
         self.nodeV1Port8013.startNode()
         self.nodeV2Port8011.startNode()
 
+        self.nodeV1Port8014.startNode()
+        self.nodeV1Port8015.startNode()
+        self.nodeV1Port8016.startNode()
 
     def test_start_node(self):
         """
@@ -53,7 +61,10 @@ class TestConnectingToPeers(unittest.TestCase):
 
     def test_version(self):
         """
-        testing the version communication
+        Testing the version communication. Scenarios:
+        a) low version node tries to connect to high version. Peer lists not updated.
+        b) high version node tries to connect to low version. Peer lists not updated.
+        c) same versions try to connect. Peer lists updated.
         :return:
         """
         # First case
@@ -92,10 +103,46 @@ class TestConnectingToPeers(unittest.TestCase):
 
         reactor.callLater(self.reactorDelay * 2, thirdCaseAssertNotIn)  # call the assertions when possible
 
-
         reactor.callLater(self.reactorDelay * 3, reactor.stop)  # after some time, stop the reactor
         reactor.run()  # run the reactor
 
+    def test_getNodePeers(self):
+        """
+        test that the node gets the peers of the node it connects to.
+        No duplicate entry should exist in the peer list
+        :return:
+        """
+        # the node on 8013 connects to the nodes on 8014 and 8015
+        self.nodeV1Port8013.connectTo(self.nodeV1Port8014)
+        self.nodeV1Port8013.connectTo(self.nodeV1Port8015)
+
+        # the node on 8010 connects to the node on 8013 and 8016
+        self.nodeV1Port8010.connectTo(self.nodeV1Port8013)
+        self.nodeV1Port8010.connectTo(self.nodeV1Port8016)
+
+        # the node on 8010 asks for the peers of 8013 (8014)
+        self.nodeV1Port8010.getNodePeers(self.nodeV1Port8013)
+
+        # assert that the list of peers of nodeV1 now has 8013, 8014, 8015, 8016
+        # also assert that the node itself is not included in the peer list
+        def peerAssertion():
+            assert f'{self.nodeV1Port8013._TLCNode__address}_{self.nodeV1Port8013._TLCNode__port}' \
+                   in self.nodeV1Port8010.getPeers()
+            assert f'{self.nodeV1Port8014._TLCNode__address}_{self.nodeV1Port8014._TLCNode__port}' \
+                   in self.nodeV1Port8010.getPeers()
+            assert f'{self.nodeV1Port8015._TLCNode__address}_{self.nodeV1Port8015._TLCNode__port}' \
+                   in self.nodeV1Port8010.getPeers()
+            assert f'{self.nodeV1Port8016._TLCNode__address}_{self.nodeV1Port8016._TLCNode__port}' \
+                   in self.nodeV1Port8010.getPeers()
+            assert f'{self.nodeV1Port8010._TLCNode__address}_{self.nodeV1Port8010._TLCNode__port}' \
+                   not in self.nodeV1Port8010.getPeers()
+
+        reactor.callLater(self.reactorDelay * 2, peerAssertion)  # call the assertions when possible
+
+        reactor.callLater(self.reactorDelay * 2, self.nodeV1Port8010.printPeers)
+
+        reactor.callLater(self.reactorDelay * 3, reactor.stop)  # after some time, stop the reactor
+        reactor.run()
 
 
 

@@ -1,3 +1,4 @@
 {
+  "test_connecting_to_peers.py": true,
   "test_tlc_network_message.py::TestTLCNetworkMessage::test_init_messageHeader": true
 }

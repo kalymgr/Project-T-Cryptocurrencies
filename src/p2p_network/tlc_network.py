@@ -9,7 +9,7 @@ from twisted.internet.task import LoopingCall
 
 from src.p2p_network.parameters import Parameters
 from src.p2p_network.tlc_message import TLCMessage, TLCVersionMessage, TLCVerAckMessage, TLCGetAddrMessage, \
-    TLCRejectMessage
+    TLCRejectMessage, TLCAddrMessage
 from src.utilities.tlc_exceptions import TLCNetworkException
 
 generateNodeId = lambda: str(uuid4())  # function that generates the node id
@@ -217,21 +217,40 @@ class TLCProtocol(Protocol):
             msgType = json.loads(line)['msgHeader']['commandName']  # get the msg type
 
             if self.state != TLCProtocol.NODE_STATUS_CONNECTED:  # if the connection has not been made
+                """
+                In this if statement, the first negotiations are made between the nodes (version & verack).
+                If everything is ok after the negotiations, then the node will change it's status to
+                STATUS_CONNECTED
+                """
                 # depending on the message received, do something
                 if msgType == TLCMessage.CTRLMSGTYPE_VERSION:  # if the nodes are exchanging versions
                     self.handleVersion(line)
                 elif msgType == TLCMessage.CTRLMSGTYPE_VERACK:  # verack message
                     self.handleVerAck()
-                elif msgType == TLCMessage.CTRLMSGTYPE_GETADDR:  # getaddr message
-                    self.handleGetAddr()
+                # elif msgType == TLCMessage.CTRLMSGTYPE_GETADDR:  # getaddr message
+                #    self.handleGetAddr()
                 elif msgType == TLCMessage.CTRLMSGTYPE_REJECT:  # reject message
                     self.handleReject(line)
-            else:  # ready to handle requests - put the request handling here
-                if msgType == TLCMessage.CTRLMSGTYPE_VERACK:
-                    print(f"Node {self.nodeId}. Got the VERACK from the node I connected to. Ready to handle requests")
-                # self.handleVerAck()  # get the last verack
-                print('Ready to make some requests...')
 
+            else:
+                """
+                STATUS_CONNECTED. Ready to handle requests - put the request handling here
+                """
+                if msgType == TLCMessage.CTRLMSGTYPE_VERACK:
+                    """
+                    This the first contact after the version and verack negotiations. What will happen depends
+                    on the typeOfRequest, which was given as parameter from a TLCNode method.
+                    Here we put the first message sent after the end of the negotiations.
+                    """
+                    if self.typeOfRequest == TLCMessage.CTRLMSGTYPE_GETADDR:  # getaddr request
+                        self.sendGetAddr()
+                    """
+                    After this point, we put all the message handlers, depending on the operation desired.
+                    """
+                elif msgType == TLCMessage.CTRLMSGTYPE_GETADDR:
+                    self.handleGetAddr()
+                elif msgType == TLCMessage.CTRLMSGTYPE_ADDR:
+                    self.handleAddr(line)
 
     def sendVersion(self):
         """
@@ -292,6 +311,14 @@ class TLCProtocol(Protocol):
         # self.state = TLCProtocol.NODE_STATUS_CONNECTED
         self.transport.write(getAddrMessage)
 
+    def sendAddr(self):
+        """
+        Creates a new addr message and sends it
+        :return:
+        """
+        addrMsg = TLCAddrMessage(self.factory.peers).getMessageAsSendable()
+        self.transport.write(addrMsg)
+
     def sendPing(self):
         ping = json.dumps({'msgType': 'ping'}) + '\n'
         print(f'Ping sent \t\t {self.nodeId} --> {self.remoteNodeId}')
@@ -348,9 +375,24 @@ class TLCProtocol(Protocol):
 
     def handleGetAddr(self):
         """
-        method for handling the get addr message
+        method for handling the get addr message.
         :return:
         """
+        # call the sendAddr method
+        self.sendAddr()
+
+    def handleAddr(self, addrMsg):
+        """
+        gets the addr message and adds the peers to the list
+        :return:
+        """
+        jsonAddrMsg = json.loads(addrMsg)
+        addresses = jsonAddrMsg['msgData']['ipAddresses']
+        # add the addresses to the peer list of the node
+        for address in addresses:
+            if (address not in self.factory.peers) and (address != f'{self.hostIp.host}_{self.factory.serverPort}'):
+                # if the address does not already exist and isn't the node's ip address
+                self.factory.peers.append(address)
 
     def handleVerAck(self):
         print(f'--> Node {self.nodeId}. Got the VERACK')

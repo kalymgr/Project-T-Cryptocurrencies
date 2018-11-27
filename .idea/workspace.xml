@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project Management.mpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project Management.mpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p2p_network/tlc_message.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_message.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/p2p_network/.pytest_cache/v/cache/lastfailed" beforeDir="false" afterPath="$PROJECT_DIR$/tests/p2p_network/.pytest_cache/v/cache/lastfailed" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/p2p_network/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/tests/p2p_network/.pytest_cache/v/cache/nodeids" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py" afterDir="false" />
     </list>
@@ -19,17 +21,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utilities/tlc_exceptions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+            <state relative-caret-position="116">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="258" column="12" selection-start-line="258" selection-start-column="12" selection-end-line="258" selection-end-column="12" />
+            <state relative-caret-position="430">
+              <caret line="240" column="20" selection-start-line="240" selection-start-column="20" selection-end-line="240" selection-end-column="20" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -37,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="89" column="81" selection-start-line="89" selection-start-column="81" selection-end-line="89" selection-end-column="81" />
+            <state relative-caret-position="301">
+              <caret line="137" column="23" selection-start-line="137" selection-start-column="23" selection-end-line="137" selection-end-column="23" />
               <folding>
                 <element signature="e#76#91#0" expanded="true" />
               </folding>
@@ -52,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="125" column="8" selection-start-line="125" selection-start-column="8" selection-end-line="125" selection-end-column="8" />
+            <state relative-caret-position="164">
+              <caret line="204" column="63" selection-start-line="204" selection-start-column="63" selection-end-line="204" selection-end-column="63" />
               <folding>
                 <element signature="e#61#72#0" expanded="true" />
               </folding>
@@ -64,8 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="35" column="7" selection-start-line="35" selection-end-line="36" selection-end-column="51" />
+            <state relative-caret-position="261">
+              <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
               <folding>
                 <element signature="e#94#130#0" expanded="true" />
               </folding>
@@ -158,8 +160,8 @@
         <option value="$PROJECT_DIR$/src/utilities/tlc_exceptions.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/tlc_node.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/tlc_message.py" />
-        <option value="$PROJECT_DIR$/src/p2p_network/tlc_network.py" />
         <option value="$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py" />
+        <option value="$PROJECT_DIR$/src/p2p_network/tlc_network.py" />
       </list>
     </option>
   </component>
@@ -240,7 +242,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_version">
+  <component name="RunManager" selected="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers">
     <configuration name="tlc_node" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -262,21 +264,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.testExceptions" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="project-t" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/p2p_network" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_connecting_to_peers.TestConnectingToPeers.testExceptions&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_connectTo" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -289,6 +276,21 @@
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_connecting_to_peers.TestConnectingToPeers.test_connectTo&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="project-t" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/p2p_network" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -325,17 +327,17 @@
     <list>
       <item itemvalue="Python.tlc_node" />
       <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_start_node" />
-      <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.testExceptions" />
       <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_connectTo" />
       <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" />
+      <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" />
         <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" />
         <item itemvalue="Python.tlc_node" />
         <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_connectTo" />
         <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_start_node" />
-        <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.testExceptions" />
       </list>
     </recent_temporary>
   </component>
@@ -532,39 +534,46 @@
       <option name="project" value="LOCAL" />
       <updated>1543234119178</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="- Tested &amp; fixed the connectTo method. if the versions of the nodes are different, then the connection is closed and none of them is added to the other one's peers list.">
+      <created>1543301397529</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1543301397530</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_version - 2018.11.27 at 08h 37m 59s.xml">
-      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" configurationId="tests" />
+    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_getNodePeers - 2018.11.27 at 10h 01m 22s.xml">
+      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_version - 2018.11.27 at 08h 38m 22s.xml">
-      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" configurationId="tests" />
+    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_getNodePeers - 2018.11.27 at 10h 01m 37s.xml">
+      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_version - 2018.11.27 at 08h 38m 39s.xml">
-      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" configurationId="tests" />
+    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_getNodePeers - 2018.11.27 at 10h 02m 18s.xml">
+      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_version - 2018.11.27 at 08h 39m 42s.xml">
-      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" configurationId="tests" />
+    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_getNodePeers - 2018.11.27 at 10h 02m 31s.xml">
+      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_version - 2018.11.27 at 08h 42m 21s.xml">
-      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" configurationId="tests" />
+    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_getNodePeers - 2018.11.27 at 10h 03m 39s.xml">
+      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_version - 2018.11.27 at 08h 45m 45s.xml">
-      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" configurationId="tests" />
+    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_getNodePeers - 2018.11.27 at 10h 04m 11s.xml">
+      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_version - 2018.11.27 at 08h 46m 30s.xml">
-      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" configurationId="tests" />
+    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_getNodePeers - 2018.11.27 at 10h 05m 23s.xml">
+      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_version - 2018.11.27 at 08h 47m 21s.xml">
-      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" configurationId="tests" />
+    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_getNodePeers - 2018.11.27 at 10h 08m 32s.xml">
+      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_version - 2018.11.27 at 08h 47m 53s.xml">
-      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" configurationId="tests" />
+    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_getNodePeers - 2018.11.27 at 10h 08m 37s.xml">
+      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_version - 2018.11.27 at 08h 48m 31s.xml">
-      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" configurationId="tests" />
+    <history-entry file="pytest_for_test_connecting_to_peers_TestConnectingToPeers_test_getNodePeers - 2018.11.27 at 10h 08m 59s.xml">
+      <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_getNodePeers" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -578,18 +587,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.3025048" visible="true" weight="0.20179136" />
-      <window_info id="Structure" order="1" sideWeight="0.69749516" side_tool="true" visible="true" weight="0.20179136" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4739726" visible="true" weight="0.1227608" />
+      <window_info id="Structure" order="1" sideWeight="0.5260274" side_tool="true" visible="true" weight="0.1227608" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.16398714" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.52437705" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.17226435" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20910075" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4312026" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.23726977" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.43770313" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.20043337" />
       <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.25723472" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.20260021" />
@@ -658,7 +668,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Renamed some methods&#10;- Removed the private method that finds the Double Hash, in the Transaction Class. Instead, started using the static method included in the TLCUtilities class &#10;- Made changes to methods like getMerkleRoot to work properly" />
     <MESSAGE value="- Renamed some methods&#10;- Removed the private method that finds the Double Hash, in the Transaction Class. Instead, started using the static method included in the TLCUtilities class &#10;- Made changes to methods like getMerkleRoot to work properly&#10;- Create the TLCUtilities class&#10;- Completed (for now) testing of Block class methods&#10;- Made changes to the README.md file" />
     <MESSAGE value="- Made some changes to the CryptoWallet (renamed to CryptoAccount, added the wallet address functionality)&#10;- created a test class for CryptoAccount (TestCryptoAccount)&#10;- created a simple class for coin transfers (CoinTransfer)&#10;- changed the test methods according to the new code&#10;- added some comments to the readme.md about the blockchain initialization" />
     <MESSAGE value="- Started working on the v2 verification." />
@@ -683,15 +692,21 @@
     <MESSAGE value="- Started testing the connecting to peers feature." />
     <MESSAGE value="- Changed the rationale for making requests. Now, each time a node makes a request, a new connection should start (version, verack etc.).&#10;- Will start implementing the getAddr request." />
     <MESSAGE value="- Added version control to the protocols of the two nodes. If the versions of the protocols are different, then a reject message is sent.&#10;- To support the previous feature, changes had to be made to the methods of TLCNode and other classes." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Added version control to the protocols of the two nodes. If the versions of the protocols are different, then a reject message is sent.&#10;- To support the previous feature, changes had to be made to the methods of TLCNode and other classes." />
+    <MESSAGE value="- Tested &amp; fixed the connectTo method. if the versions of the nodes are different, then the connection is closed and none of them is added to the other one's peers list." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Tested &amp; fixed the connectTo method. if the versions of the nodes are different, then the connection is closed and none of them is added to the other one's peers list." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
-          <line>334</line>
-          <option name="timeStamp" value="362" />
+          <line>247</line>
+          <option name="timeStamp" value="375" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
+          <line>390</line>
+          <option name="timeStamp" value="376" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>
@@ -699,6 +714,10 @@
       </breakpoints-defaults>
     </breakpoint-manager>
     <watches-manager>
+      <configuration name="tests">
+        <watch expression="self.factory.serverPort" />
+        <watch expression="self.typeOfRequest" />
+      </configuration>
       <configuration name="PythonConfigurationType">
         <watch expression="self.version" />
         <watch expression="versionMessage['msgData']['version']" />
@@ -707,6 +726,36 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>self.typeOfRequest == TLCMessage.CTRLMSGTYPE_GETADDR</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>msgType == TLCMessage.CTRLMSGTYPE_VERACK</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>jsonAddrMsg['msgData']['ipAddresses']</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>json.loads(addrMsg)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(addressesList)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.state</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>self.version</expression-string>
         <language-id>Python</language-id>
@@ -719,38 +768,6 @@
       </expression>
       <expression>
         <expression-string>self.nodeV1Port8010.getPeers()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>f'{self.nodeV2Port8011._TLCNode__address}_{self.nodeV2Port8011._TLCNode__port}' \
-                   not in self.nodeV1Port8010.getPeers()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>f'{self.nodeV1Port8010._TLCNode__address}_{self.nodeV1Port8010._TLCNode__port}' \
-                   not in self.nodeV2Port8011.getPeers()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>node2.getPeers()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>f'{node1._TLCNode__address}_{node1._TLCNode__port}'</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>f'{node1._TLCNode__address}_{node1._TLCNode__port}' not in node2.getPeers()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>TCP4ServerEndpoint(self._TLCNode__reactor, self._TLCNode__port)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -1071,49 +1088,49 @@
     <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py" />
     <entry file="file://E:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py" />
     <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py" />
-    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="35" column="7" selection-start-line="35" selection-end-line="36" selection-end-column="51" />
-          <folding>
-            <element signature="e#94#130#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utilities/tlc_exceptions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="125" column="8" selection-start-line="125" selection-start-column="8" selection-end-line="125" selection-end-column="8" />
+        <state relative-caret-position="164">
+          <caret line="204" column="63" selection-start-line="204" selection-start-column="63" selection-end-line="204" selection-end-column="63" />
           <folding>
             <element signature="e#61#72#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
+    <entry file="file://$PROJECT_DIR$/src/utilities/tlc_exceptions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="258" column="12" selection-start-line="258" selection-start-column="12" selection-end-line="258" selection-end-column="12" />
+        <state relative-caret-position="116">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#94#130#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="89" column="81" selection-start-line="89" selection-start-column="81" selection-end-line="89" selection-end-column="81" />
+        <state relative-caret-position="301">
+          <caret line="137" column="23" selection-start-line="137" selection-start-column="23" selection-end-line="137" selection-end-column="23" />
           <folding>
             <element signature="e#76#91#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="240" column="20" selection-start-line="240" selection-start-column="20" selection-end-line="240" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
