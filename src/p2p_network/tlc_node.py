@@ -10,31 +10,14 @@ from src.p2p_network.tlc_network import TLCNode
 myNode = TLCNode(reactor, 'localhost', 8010, 1)
 myNode.startNode()
 
-# create and start three more nodes
-secondNode = TLCNode(reactor, 'localhost', 8011, 2)
+# one more node
+secondNode = TLCNode(reactor, 'localhost', 8011, 1)
 secondNode.startNode()
-# thirdNode = TLCNode(reactor, 'localhost', 8012)
-# thirdNode.startNode()
-# fourthNode = TLCNode('localhost', reactor, 8013)
-# fourthNode.startNode()
 
-myNode.getNodePeers(secondNode)
+# connect to the node
+myNode.connectTo(secondNode)
 
-# connect my node to the other two nodes
-# myNode.connectTo(secondNode)
-# secondNode.connectTo(thirdNode)
-# secondNode.connectTo(fourthNode)
-
-# call some other functions, with a little delay
 delay = 3
-
-# get the addresses of the peer node
-# reactor.callLater(delay, myNode.getAddressesFromNode, secondNode)
-
-# print the peers
-
-reactor.callLater(delay * 2, myNode.printPeers)
-reactor.callLater(delay * 2, secondNode.printPeers)
 
 
 # run the reactor

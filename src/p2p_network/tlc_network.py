@@ -9,7 +9,7 @@ from twisted.internet.task import LoopingCall
 
 from src.p2p_network.parameters import Parameters
 from src.p2p_network.tlc_message import TLCMessage, TLCVersionMessage, TLCVerAckMessage, TLCGetAddrMessage, \
-    TLCRejectMessage, TLCAddrMessage
+    TLCRejectMessage, TLCAddrMessage, TLCPingMessage, TLCPongMessage
 from src.utilities.tlc_exceptions import TLCNetworkException
 
 generateNodeId = lambda: str(uuid4())  # function that generates the node id
@@ -17,18 +17,6 @@ generateNodeId = lambda: str(uuid4())  # function that generates the node id
 # DEFAULT PARAMETERS
 MAINNET_DEFAULT_PORT = 8010
 MAINNET_MAX_NBITS = 0x1d00ffff  # big endian order. Sent in little endian order
-
-"""
-def initConnection(p: Protocol):
-    
-    # Function that initializes the connection for a specific protocol.
-    # The first thing sent is the version of the node
-
-    :param p:  Protocol instance
-    :return:
-    
-    p.sendVersion()  # send the version of the node
-"""
 
 
 class TLCNode:
@@ -202,6 +190,7 @@ class TLCProtocol(Protocol):
         self.remoteIp = self.transport.getPeer()
         self.hostIp = self.transport.getHost()
         print(f"Connection from ip: {str(self.remoteIp)} to {self.hostIp}")
+        self.lcPing.start(5)
 
     def connectionLost(self, reason):
         # remove the node that disconnected from the peer dictionary, if it exists in the peer list
@@ -215,6 +204,12 @@ class TLCProtocol(Protocol):
         for line in data.splitlines():
             line = line.strip()
             msgType = json.loads(line)['msgHeader']['commandName']  # get the msg type
+
+            # Handle ping and pong messages. Separate if from other handlers, becauses it runs periodically
+            if msgType == TLCMessage.CTRLMSGTYPE_PING:
+                self.handlePing(line)
+            elif msgType == TLCMessage.CTRLMSGTYPE_PONG:
+                self.handlePong()
 
             if self.state != TLCProtocol.NODE_STATUS_CONNECTED:  # if the connection has not been made
                 """
@@ -320,16 +315,27 @@ class TLCProtocol(Protocol):
         self.transport.write(addrMsg)
 
     def sendPing(self):
-        ping = json.dumps({'msgType': 'ping'}) + '\n'
+        pingMsg = TLCPingMessage().getMessageAsSendable()
         print(f'Ping sent \t\t {self.nodeId} --> {self.remoteNodeId}')
-        self.transport.write(ping.encode('utf8'))
+        self.transport.write(pingMsg)
 
-    def sendPong(self):
-        pong = json.dumps({'msgType': 'pong'}) + '\n'
-        self.transport.write(pong.encode('utf8'))
+    def sendPong(self, nonce: int):
+        """
+        :param nonce: the nonce received from the ping message
+        :return:
+        """
+        pongMsg = TLCPongMessage(nonce).getMessageAsSendable()
+        self.transport.write(pongMsg)
 
-    def handlePing(self):
-        self.sendPong()
+    def handlePing(self, pingData: str):
+        """
+        handle ping.
+        :param pingData: the ping data. Contains the nonce
+        :return:
+        """
+        pingMsg = json.loads(pingData)
+        nonce = pingMsg['msgData']['nonce']
+        self.sendPong(nonce)
 
     def handlePong(self):
         print(f'Pong received \t {self.nodeId} <-- {self.remoteNodeId}')

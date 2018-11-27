@@ -2,6 +2,7 @@
 This file includes class related to network messages
 """
 import json
+from random import randint
 from time import time
 from src.p2p_network.parameters import Parameters
 
@@ -155,7 +156,6 @@ class TLCVersionMessage(TLCMessage):
         self.msgHeader.payloadSize = len(self.getMessageAsSendable())
 
 
-
 class TLCVerAckMessage(TLCMessage):
     """
     Class for the verack message
@@ -239,3 +239,42 @@ class TLCRejectMessage(TLCMessage):
         self.msgHeader.payloadSize = len(self.getMessageAsSendable())
 
 
+class TLCPingMessage(TLCMessage):
+    """
+    Implementing the ping message
+    """
+    def __init__(self):
+        """
+        constructor method
+        """
+        # call the constructor of the parent class, stating the type of this message
+        super().__init__(TLCMessage.CTRLMSGTYPE_PING)
+
+        # set the data
+        self.msgData = {
+            'nonce': randint(1, 1000)  # a random number between 1 and 1000
+        }
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())
+
+
+class TLCPongMessage(TLCMessage):
+    """
+    Implementing the pong message
+    """
+    def __init__(self, nonce: int):
+        """
+        constructor method
+        :param nonce: the nonce received from the ping message
+        """
+        # call the constructor of the parent class, stating the type of this message
+        super().__init__(TLCMessage.CTRLMSGTYPE_PONG)
+
+        # set the data
+        self.msgData = {
+            'nonce': nonce  # the nonce received from the ping message
+        }
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())

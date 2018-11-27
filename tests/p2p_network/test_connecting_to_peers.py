@@ -107,6 +107,7 @@ class TestConnectingToPeers(unittest.TestCase):
         reactor.run()  # run the reactor
 
     def test_getNodePeers(self):
+
         """
         test that the node gets the peers of the node it connects to.
         No duplicate entry should exist in the peer list
@@ -143,6 +144,17 @@ class TestConnectingToPeers(unittest.TestCase):
 
         reactor.callLater(self.reactorDelay * 3, reactor.stop)  # after some time, stop the reactor
         reactor.run()
+
+    def test_pingNode(self):
+        """
+        Testing the functionality that checks if a peer node is still connected.
+        A node should ping to show it's active before x minutes (or seconds) of inactivity.
+
+        Scenarios:
+        a) test ping to a node that is connected
+        b) test ping to a node that is not connected
+        :return:
+        """
 
 
 
