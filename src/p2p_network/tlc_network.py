@@ -216,12 +216,9 @@ class TLCProtocol(Protocol):
         # call the method that checks the time of connection inactivity
         self.checkConInactivity = LoopingCall(self.checkInactivityTime)
 
-        self.pingpongInterval = 60  # the interval for ping-pong communication
-        self.considerDeadPeriod = 20  # the period since the last successful ping-pong communication, after which the
-
         # peer is considered dead
-        self.lastPingPong = None  # keeps the time of the last successful pinging (ping-pong)
-        self.lcPing = LoopingCall(self.sendPing)  # Calls the sendPing method repeatedly to ping nodes
+        # self.lastPingPong = None  # keeps the time of the last successful pinging (ping-pong)
+        # self.lcPing = LoopingCall(self.sendPing)  # Calls the sendPing method repeatedly to ping nodes
 
         self.typeOfRequest = None  # the type of request.
 
@@ -236,7 +233,7 @@ class TLCProtocol(Protocol):
         self.checkConInactivity.start(self.checkConInactivityInterval)
 
         # start pinging and checking if a peer is alive
-        self.lcPing.start(self.pingpongInterval)
+        # self.lcPing.start(self.pingpongInterval)
 
     def connectionLost(self, reason):
         # remove the node that disconnected from the peer dictionary, if it exists in the peer list
@@ -415,7 +412,7 @@ class TLCProtocol(Protocol):
 
     def handlePong(self):
         print(f'Pong received \t {self.nodeId} <-- {self.remoteNodeId}')
-        self.lastPingPong = time()  # keep the timestamp of the last successful ping-pong communication
+        # self.lastPingPong = time()  # keep the timestamp of the last successful ping-pong communication
 
     def handleVersion(self, versionMsg):
         """
