@@ -7,7 +7,7 @@ from twisted.internet.endpoints import TCP4ClientEndpoint, TCP4ServerEndpoint, c
 from twisted.internet.protocol import Protocol, Factory
 from twisted.internet.task import LoopingCall
 
-from src.p2p_network.parameters import Parameters
+from src.p2p_network.parameters import Parameters, NodeTypes
 from src.p2p_network.tlc_message import TLCMessage, TLCVersionMessage, TLCVerAckMessage, TLCGetAddrMessage, \
     TLCRejectMessage, TLCAddrMessage, TLCPingMessage, TLCPongMessage
 from src.utilities.tlc_exceptions import TLCNetworkException
@@ -15,7 +15,6 @@ from src.utilities.tlc_exceptions import TLCNetworkException
 generateNodeId = lambda: str(uuid4())  # function that generates the node id
 
 # DEFAULT PARAMETERS
-MAINNET_DEFAULT_PORT = 8010
 MAINNET_MAX_NBITS = 0x1d00ffff  # big endian order. Sent in little endian order
 
 
@@ -23,28 +22,38 @@ class TLCNode:
     """
     class for managing the node data and operations
     """
-    DEFAULT_PORT = MAINNET_DEFAULT_PORT  # the default port for running tlc nodes on a computer
 
-    def __init__(self, reactor: reactor, address: str = '127.0.0.1', port: int = DEFAULT_PORT,
-                 protocolVersion = Parameters.PROTOCOL_VERSION):
+    def __init__(self, reactor: reactor, address: str = '127.0.0.1', port: int = Parameters.NODE_DEFAULT_PORT_MAINNET,
+                 protocolVersion = Parameters.PROTOCOL_VERSION, nodeType:int = NodeTypes.FULL_NODE):
         """
-
         :param address: the ip address of the node - default is localhost
-        :param port: the tcp port of the node - default is the default port defined in the application parameters
+        :param port: the tcp port of the node - default is the mainnet default port set in the application parameters
         :param reactor: the reactor object
         :param protocolVersion: the version of the protocol for this node
+        :param nodeType: the type of the node (eg full node, seed node etc.)
         """
         self.__reactor = reactor
         self.__address = address
         self.__port = port
         self.protocolVersion = protocolVersion
         self.__serverEndPoint = self.__createServerEndPoint()  # create the server endpoint
-        # self.__clientEndPoint = self.__createClientEndPoint()  # create the client endpoint
-        # self.__clientEndPoint = None
-        self.__tlcFactory = TLCFactory(port, self.protocolVersion)  # the TLC Factory for the node
-        # self.d = None  # the deferred object
-
+        self.__tlcFactory = TLCFactory(port, self.protocolVersion, nodeType)  # the TLC Factory for the node
         self.lastUsedProtocol = None  # variable that holds the last used protocol
+
+    def addNodePeersList(self, nodePeersList: list):
+        """
+        Method for adding to a node a list of node peers. If a node already exists, it is not added. To avoid duplicate
+        records, we will use sets.
+        :param nodePeersList:
+        :return:
+        """
+        # create sets from the lists
+        initialListSet = set(self.__tlcFactory.peers)
+        addedListSet = set(nodePeersList)
+        # get only the new elements
+        elementsInAddedButNotInitial = addedListSet - initialListSet
+        # create the final list and set it as the peer list
+        self.__tlcFactory.peers = self.__tlcFactory.peers + list(elementsInAddedButNotInitial)
 
     def getTLCFactory(self):
         """
@@ -199,6 +208,7 @@ class TLCProtocol(Protocol):
         self.state = TLCProtocol.NODE_STATUS_READY_TO_CONNECT
         self.nodeId = self.factory.nodeId  # keep the node id
         self.remoteNodeId = None
+        self.nodeType = self.factory.nodeType
 
         # some code for handling connection inactivity
         self.timeOfConInactivity = 0  # time of connection inactivity
@@ -225,7 +235,7 @@ class TLCProtocol(Protocol):
     def connectionMade(self):
         self.remoteIp = self.transport.getPeer()
         self.hostIp = self.transport.getHost()
-        print(f"Connection from ip: {str(self.remoteIp)} to {self.hostIp}")
+        print(f"Connection to {str(self.transport.getPeer().host)}/{str(self.transport.getPeer().port)} made")
 
         # run the method that updates the variable that measures the time of connection inactivity periodically
         self.measureConInactivity.start(self.timeOfConInactivityInterval)
@@ -299,7 +309,7 @@ class TLCProtocol(Protocol):
         :return:
         """
         self.timeOfConInactivity += self.timeOfConInactivityInterval
-        print(f'Time of connection inactivity: {self.timeOfConInactivity}')
+        # print(f'Time of connection inactivity: {self.timeOfConInactivity}')
 
     def checkInactivityTime(self):
         """
@@ -319,17 +329,16 @@ class TLCProtocol(Protocol):
             self.measureConInactivity.stop()  # stop the method that measures connection inactivity for this connection
             self.checkConInactivity.stop()  # stop the method that checks connection inactivity for this connection
 
-
     def sendVersion(self):
         """
         Method for sending the version control message
         :return:
         """
         # create the version message, in a sendable form
-        versionMsg = TLCVersionMessage(self.hostIp.host, self.factory.serverPort, self.factory.protocolVersion)\
-            .getMessageAsSendable()
+        versionMsg = TLCVersionMessage(self.nodeType, self.hostIp.host, self.factory.serverPort,
+                                       self.factory.protocolVersion).getMessageAsSendable()
         self.state = TLCProtocol.NODE_STATUS_WAITING_VERACK
-        print(f'--> Node {self.nodeId}. Sent my VERSION')
+        # print(f'--> Node {self.nodeId}. Sent my VERSION')
         self.transport.write(versionMsg)
 
     def sendRequest(self, typeOfRequest):
@@ -342,10 +351,10 @@ class TLCProtocol(Protocol):
 
         # Initialize the conversation
         # create the version message, in a sendable form
-        versionMsg = TLCVersionMessage(self.hostIp.host, self.factory.serverPort, self.factory.protocolVersion)\
-            .getMessageAsSendable()
+        versionMsg = TLCVersionMessage(self.nodeType, self.hostIp.host, self.factory.serverPort,
+                                       self.factory.protocolVersion).getMessageAsSendable()
         self.state = TLCProtocol.NODE_STATUS_WAITING_VERACK
-        print(f'--> Node {self.nodeId}. Sent my VERSION')
+        # print(f'--> Node {self.nodeId}. Sent my VERSION')
         self.transport.write(versionMsg)
 
     def sendVerAck(self):
@@ -354,7 +363,7 @@ class TLCProtocol(Protocol):
         :return:
         """
         verAckMsg = TLCVerAckMessage().getMessageAsSendable()
-        print(f'--> Node {self.nodeId}. Sent my VERACK')
+        # print(f'--> Node {self.nodeId}. Sent my VERACK')
         self.state = TLCProtocol.NODE_STATUS_CONNECTED
         self.transport.write(verAckMsg)
 
@@ -373,9 +382,9 @@ class TLCProtocol(Protocol):
         Sending a getAddr message to get the list of network peers of the node
         :return:
         """
-        print('sendGetAddr called.')
+        # print('sendGetAddr called.')
         getAddrMessage = TLCGetAddrMessage().getMessageAsSendable()
-        print(f'--> Node {self.nodeId}. Sent my GETADDR')
+        # print(f'--> Node {self.nodeId}. Sent my GETADDR')
         # self.state = TLCProtocol.NODE_STATUS_CONNECTED
         self.transport.write(getAddrMessage)
 
@@ -421,7 +430,7 @@ class TLCProtocol(Protocol):
         :param versionMessage: json string
         :return:
         """
-        print(f'--> Node {self.nodeId}. Got the VERSION.')
+        # print(f'--> Node {self.nodeId}. Got the VERSION.')
 
         versionMessage = json.loads(versionMsg)  # load the json version message from the string
         # If the protocol versions of the two nodes are compatible, decide how to answer
@@ -474,7 +483,7 @@ class TLCProtocol(Protocol):
                 self.factory.peers.append(address)
 
     def handleVerAck(self):
-        print(f'--> Node {self.nodeId}. Got the VERACK')
+        # print(f'--> Node {self.nodeId}. Got the VERACK')
 
         if self.state == TLCProtocol.NODE_STATUS_WAITING_VERACK:
 
@@ -522,20 +531,22 @@ class TLCFactory(Factory):
     meaning holding configuration that will be used in various protocols.
     various things
     """
-    def __init__(self, serverPort: int, protocolVersion):
+    def __init__(self, serverPort: int, protocolVersion, nodeType: int = NodeTypes.FULL_NODE):
         """
         Constructor method
         :param serverPort: the port of the server when receiving connections (int)
         :param protocolVersion: the version of the protocol for the node
+        :param nodeType: the type of the Node. The default is full node
         """
         self.serverPort = serverPort  # keep the port of the application, to sent it to peers
         self.protocolVersion = protocolVersion
-        # self.protocols = list()  # list of the protocols-connections
+        self.nodeType = nodeType
+        self.peers = list()  # initialize the list containing the peers
 
     def startFactory(self):
         self.nodeId = generateNodeId()  # generate a node id
         # self.peers = dict()  # initialize the dictionary containing the peers
-        self.peers = list()  # initialize the list containing the peers
+
         # print('Start factory for the node ' + self.nodeId)
         print(f' Node <<{self.nodeId}>> online.')
 

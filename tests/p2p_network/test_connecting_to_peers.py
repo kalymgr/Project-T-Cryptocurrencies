@@ -1,5 +1,5 @@
 """
-Includes various tests for the "1.1.1 connecting to peers" feature
+Includes various tests for the "0.1.1 connecting to peers" feature
 """
 
 import unittest

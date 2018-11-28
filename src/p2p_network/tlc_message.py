@@ -124,9 +124,11 @@ class TLCVersionMessage(TLCMessage):
     """
     class specifically for the version messages. Extends the TLC Message class
     """
-    def __init__(self, ipAddress: str = None, port: int = None, protocolVersion = Parameters.PROTOCOL_VERSION):
+    def __init__(self, nodeType: int, ipAddress: str = None, port: int = None,
+                 protocolVersion = Parameters.PROTOCOL_VERSION):
         """
         Constructor method for the version message
+        :param nodeType: the type of the node (eg full node, seed etc.)
         :param ipAddress: the ip address of the transmitting node. The default used, if None
         :param port: the port of the transmitting node. The default used, if None
         :param protocolVersion: the version of the protocol. If ommitted, it uses the default from the Params
@@ -136,7 +138,7 @@ class TLCVersionMessage(TLCMessage):
         if ipAddress is None:
             ipAddress = Parameters.NODE_IP_ADDRESS
         if port is None:
-            port = Parameters.NODE_DEFAULT_PORT
+            port = Parameters.NODE_DEFAULT_PORT_MAINNET
 
         # call the constructor of the parent class
         super().__init__(TLCMessage.CTRLMSGTYPE_VERSION)
@@ -147,7 +149,7 @@ class TLCVersionMessage(TLCMessage):
                 'version': protocolVersion,
                 'services': Parameters.NODE_TYPE,
                 'timestamp': time(),
-                'addrReceivServices': Parameters.NODE_TYPE,  # this is about the receiving node. Suppose it's a full n
+                'addrReceivServices': nodeType,  # this is about the receiving node. Suppose it's a full n
                 'ipAddress': ipAddress,  # ip of the transmitting node
                 'port': port  # port of the transmitting node
             }
