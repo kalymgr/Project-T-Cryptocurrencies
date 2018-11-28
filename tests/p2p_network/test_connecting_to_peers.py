@@ -4,6 +4,8 @@ Includes various tests for the "1.1.1 connecting to peers" feature
 
 import unittest
 from twisted.internet import reactor
+
+from src.p2p_network.parameters import Parameters
 from src.p2p_network.tlc_network import TLCNode
 from src.utilities.tlc_exceptions import TLCNetworkException
 
@@ -145,16 +147,40 @@ class TestConnectingToPeers(unittest.TestCase):
         reactor.callLater(self.reactorDelay * 3, reactor.stop)  # after some time, stop the reactor
         reactor.run()
 
-    def test_pingNode(self):
+    def test_checkInactivity(self):
         """
-        Testing the functionality that checks if a peer node is still connected.
-        A node should ping to show it's active before x minutes (or seconds) of inactivity.
-
-        Scenarios:
-        a) test ping to a node that is connected
-        b) test ping to a node that is not connected
+        Method that tests the functionality related to the inactivity between two nodes
+        and the closing of the connection. Scenarios:
+        a) Connect a node to two more nodes. Check that the connection to the first node is open before the time limit
+        and closed after the time limit.
+        For now, testing has taken place by observing TCP Connections Status in TCPView Windows Tool.
+        In the future, a better implementation of the network code (eg using ClientFactory) will lead to
+        improved handling of network operations.
         :return:
         """
+
+        # Scenario (a)
+        self.nodeV1Port8010.connectTo(self.nodeV1Port8014)
+
+        self.nodeV1Port8010.connectTo(self.nodeV1Port8013)
+
+        def makeAssertionsOpen():
+            p1 = self.nodeV1Port8010.getLastUsedProtocol()
+            print(1)  # this connection is still open. Should have a peer.
+        # call the assertions before the connection is closed
+        reactor.callLater(Parameters.CLOSE_CONNECTION_TIME_LIMIT - 2, makeAssertionsOpen)
+
+        def makeAssertionsClosed():
+            p1 = self.nodeV1Port8010.getLastUsedProtocol()
+            print(1)  # the peer of this con should be none. Connection closed.
+        # call the assertions after the connection is closed
+        reactor.callLater(Parameters.CLOSE_CONNECTION_TIME_LIMIT + 20, makeAssertionsClosed)
+
+        # run the reactor and stop after the connection is closed and assertions are completed
+
+        reactor.callLater(Parameters.CLOSE_CONNECTION_TIME_LIMIT + 22, reactor.stop)
+        reactor.run()
+
 
 
 

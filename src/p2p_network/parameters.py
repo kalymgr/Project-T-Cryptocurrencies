@@ -19,3 +19,8 @@ class Parameters:
     NODE_TYPE = NodeTypes.FULL_NODE  # the type of the node - let's suppose this is a full node
     NODE_IP_ADDRESS = 'localhost'  # the ip address of the node
     NODE_DEFAULT_PORT = 8010  # the default port of the node
+
+    TIME_OF_CON_INACTIVITY_INTERVAL = 5 * 60  # the interval for increasing the time of connection inactivity
+    CHECK_CON_INACTIVITY_INTERVAL = 5 * 60  # the interval for checking the time of connection inactivity
+    CLOSE_CONNECTION_TIME_LIMIT = 90 * 60  # the time of inactivity after which the connection should be closed
+    CON_INACTIVITY_PING_LIMIT = 30 * 60  # the time limit after which the node should send a ping to his peer

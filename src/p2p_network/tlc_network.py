@@ -44,6 +44,8 @@ class TLCNode:
         self.__tlcFactory = TLCFactory(port, self.protocolVersion)  # the TLC Factory for the node
         # self.d = None  # the deferred object
 
+        self.lastUsedProtocol = None  # variable that holds the last used protocol
+
     def getTLCFactory(self):
         """
         returns the TLC Factory of the node
@@ -136,6 +138,22 @@ class TLCNode:
 
         d = connectProtocol(point, TLCProtocol(self.getTLCFactory()))
         d.addCallback(self.initConnection)
+        d.addCallback(self.setLastUsedProtocol)
+
+    def setLastUsedProtocol(self, p: Protocol):
+        """
+        Method that sets the lastUsedProtocolVariable. Called via callback.
+        :param p:
+        :return:
+        """
+        self.lastUsedProtocol = p
+
+    def getLastUsedProtocol(self) -> Protocol:
+        """
+        Method that returns the last used protocol
+        :return:
+        """
+        return self.lastUsedProtocol
 
     def getNodePeers(self, node):
         """
@@ -149,6 +167,7 @@ class TLCNode:
         d = connectProtocol(point, TLCProtocol(self.getTLCFactory()))
         # the parameter of the following callback defines the type of request
         d.addCallback(self.initSendRequest, TLCMessage.CTRLMSGTYPE_GETADDR)
+        d.addCallback(self.setLastUsedProtocol)
 
     def initSendRequest(self, p: Protocol, typeOfRequest: int):
         """
@@ -181,8 +200,28 @@ class TLCProtocol(Protocol):
         self.nodeId = self.factory.nodeId  # keep the node id
         self.remoteNodeId = None
 
+        # some code for handling connection inactivity
+        self.timeOfConInactivity = 0  # time of connection inactivity
+        # the interval for increasing the time of connection inactivity
+        self.timeOfConInactivityInterval = Parameters.TIME_OF_CON_INACTIVITY_INTERVAL
+        # call the method that updates the time of inactivity
+        self.measureConInactivity = LoopingCall(self.updateTimeOfConInactivity)
+
+        # the interval for checking the time of connection inactivity
+        self.checkConInactivityInterval = Parameters.CHECK_CON_INACTIVITY_INTERVAL
+        # the time of inactivity after which the connection should be closed
+        self.closeConnectionTimeLimit = Parameters.CLOSE_CONNECTION_TIME_LIMIT
+        # the time limit after which the node should send a ping to his peer
+        self.conInactivityPingLimit = Parameters.CON_INACTIVITY_PING_LIMIT
+        # call the method that checks the time of connection inactivity
+        self.checkConInactivity = LoopingCall(self.checkInactivityTime)
+
+        self.pingpongInterval = 60  # the interval for ping-pong communication
+        self.considerDeadPeriod = 20  # the period since the last successful ping-pong communication, after which the
+
+        # peer is considered dead
+        self.lastPingPong = None  # keeps the time of the last successful pinging (ping-pong)
         self.lcPing = LoopingCall(self.sendPing)  # Calls the sendPing method repeatedly to ping nodes
-        self.lastPing = None
 
         self.typeOfRequest = None  # the type of request.
 
@@ -190,7 +229,14 @@ class TLCProtocol(Protocol):
         self.remoteIp = self.transport.getPeer()
         self.hostIp = self.transport.getHost()
         print(f"Connection from ip: {str(self.remoteIp)} to {self.hostIp}")
-        self.lcPing.start(5)
+
+        # run the method that updates the variable that measures the time of connection inactivity periodically
+        self.measureConInactivity.start(self.timeOfConInactivityInterval)
+        # run the method that checks the time of connection inactivity periodically
+        self.checkConInactivity.start(self.checkConInactivityInterval)
+
+        # start pinging and checking if a peer is alive
+        self.lcPing.start(self.pingpongInterval)
 
     def connectionLost(self, reason):
         # remove the node that disconnected from the peer dictionary, if it exists in the peer list
@@ -200,6 +246,9 @@ class TLCProtocol(Protocol):
         print(self.nodeId + " disconnected")
 
     def dataReceived(self, data):
+        # each time some data is received, the connection inactivity counter is reset to zero
+        self.timeOfConInactivity = 0
+
         # for each line of data
         for line in data.splitlines():
             line = line.strip()
@@ -246,6 +295,33 @@ class TLCProtocol(Protocol):
                     self.handleGetAddr()
                 elif msgType == TLCMessage.CTRLMSGTYPE_ADDR:
                     self.handleAddr(line)
+
+    def updateTimeOfConInactivity(self):
+        """
+        Method that updates the variable (counter) that measures the time of connection inactivity
+        :return:
+        """
+        self.timeOfConInactivity += self.timeOfConInactivityInterval
+        print(f'Time of connection inactivity: {self.timeOfConInactivity}')
+
+    def checkInactivityTime(self):
+        """
+        Method that checks the time of inactivity. If this time surpasses a limit, then a ping is sent.
+        If the time of inactivity surpasses another limit, then the connection is closed.
+        :return:
+        """
+        pingLimit = self.conInactivityPingLimit  # the limit (sec) for connection inactivity
+        if self.timeOfConInactivity > pingLimit:
+            print('Inactive for some time. Sending ping')
+            self.sendPing()
+
+        closeConLimit = self.closeConnectionTimeLimit  # the time limit for closing the connection
+        if self.timeOfConInactivity > closeConLimit:
+            print('Inactive for a long time. Time to close the connection')
+            self.transport.loseConnection()  # close the connection
+            self.measureConInactivity.stop()  # stop the method that measures connection inactivity for this connection
+            self.checkConInactivity.stop()  # stop the method that checks connection inactivity for this connection
+
 
     def sendVersion(self):
         """
@@ -339,7 +415,7 @@ class TLCProtocol(Protocol):
 
     def handlePong(self):
         print(f'Pong received \t {self.nodeId} <-- {self.remoteNodeId}')
-        self.lastPing = time()  # keep the timestamp
+        self.lastPingPong = time()  # keep the timestamp of the last successful ping-pong communication
 
     def handleVersion(self, versionMsg):
         """
@@ -444,6 +520,11 @@ class TLCProtocol(Protocol):
 
 # in the example, Factory is used instead of ClientFactory
 class TLCFactory(Factory):
+    """
+    This is the class that manages connections (protocols). It can be used for persistent configuration storage,
+    meaning holding configuration that will be used in various protocols.
+    various things
+    """
     def __init__(self, serverPort: int, protocolVersion):
         """
         Constructor method
