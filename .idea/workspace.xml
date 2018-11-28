@@ -4,11 +4,7 @@
     <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project Management.mpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project Management.mpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p2p_network/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/parameters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/p2p_network/.pytest_cache/v/cache/lastfailed" beforeDir="false" afterPath="$PROJECT_DIR$/tests/p2p_network/.pytest_cache/v/cache/lastfailed" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/p2p_network/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/tests/p2p_network/.pytest_cache/v/cache/nodeids" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utilities/tlc_exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/tlc_exceptions.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,8 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/utilities/tlc_exceptions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+            <state relative-caret-position="58">
+              <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -30,7 +26,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
+            <state relative-caret-position="3393">
               <caret line="129" column="8" selection-start-line="129" selection-start-column="8" selection-end-line="129" selection-end-column="8" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -42,8 +38,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/p2p_network/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="86">
-              <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+            <state relative-caret-position="551">
+              <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -51,7 +47,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4190">
+            <state relative-caret-position="4408">
               <caret line="157" column="48" selection-start-line="157" selection-start-column="48" selection-end-line="157" selection-end-column="48" />
               <folding>
                 <element signature="e#76#91#0" expanded="true" />
@@ -63,7 +59,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
+            <state relative-caret-position="7888">
               <caret line="275" column="70" selection-start-line="275" selection-start-column="70" selection-end-line="275" selection-end-column="70" />
               <folding>
                 <element signature="e#61#72#0" expanded="true" />
@@ -75,7 +71,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
+            <state relative-caret-position="580">
               <caret line="21" selection-start-line="21" selection-end-line="21" />
               <folding>
                 <element signature="e#94#130#0" expanded="true" />
@@ -165,18 +161,18 @@
         <option value="$PROJECT_DIR$/src/p2p_network/simple_p2p_network_client.py" />
         <option value="$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py" />
         <option value="$PROJECT_DIR$/tests/p2p_network/test_tlc_node.py" />
-        <option value="$PROJECT_DIR$/src/utilities/tlc_exceptions.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/tlc_node.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/tlc_message.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/tlc_network.py" />
         <option value="$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/parameters.py" />
+        <option value="$PROJECT_DIR$/src/utilities/tlc_exceptions.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="353" />
-    <option name="y" value="172" />
+    <option name="x" value="347" />
+    <option name="y" value="136" />
     <option name="width" value="1255" />
     <option name="height" value="715" />
   </component>
@@ -558,7 +554,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543309334608</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="- Completed story '1.1.1 Connecting to Peers'">
+      <created>1543391151338</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1543391151338</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -605,8 +608,8 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4706767" visible="true" weight="0.1227608" />
-      <window_info id="Structure" order="1" sideWeight="0.5293233" side_tool="true" visible="true" weight="0.1227608" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.46766916" visible="true" weight="0.1227608" />
+      <window_info id="Structure" order="1" sideWeight="0.5323308" side_tool="true" visible="true" weight="0.1227608" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.16398714" />
@@ -615,7 +618,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.23726977" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.27952328" />
+      <window_info anchor="bottom" id="Version Control" order="7" visible="true" weight="0.27952328" />
       <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.25723472" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.48754063" />
@@ -684,7 +687,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Started working on the v2 verification." />
     <MESSAGE value="- Changed the code. Now the coin transfer happens in two steps.&#10;a) The sender submits a transaction.&#10;b) The list of transactions submitted is verified.&#10;The verification (for now) includes (a) checking that the account balance of the sender is enough (b) verifying the sender's signature. Of course mining functionality must be added (nonce etc.)&#10;Also, the existing functionality needs more testing." />
     <MESSAGE value="- Completed the proof of work algorithm and did some testing" />
     <MESSAGE value="- Started running more tests. Now I have an error with the Blockchain method that signs the transactions" />
@@ -709,7 +711,8 @@
     <MESSAGE value="- Tested &amp; fixed the connectTo method. if the versions of the nodes are different, then the connection is closed and none of them is added to the other one's peers list." />
     <MESSAGE value="- Finished with the getNodePeers method. Now the node that has successfully initiated a communication with another node, can ask for his peer list.&#10;- Made some changes to various methods." />
     <MESSAGE value="- Started writing the ping-pong communication between two nodes." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Started writing the ping-pong communication between two nodes." />
+    <MESSAGE value="- Completed story '1.1.1 Connecting to Peers'" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Completed story '1.1.1 Connecting to Peers'" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1101,46 +1104,16 @@
     <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py" />
     <entry file="file://E:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py" />
     <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py" />
-    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
+    <entry file="file://$PROJECT_DIR$/src/utilities/tlc_exceptions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#94#130#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="275" column="70" selection-start-line="275" selection-start-column="70" selection-end-line="275" selection-end-column="70" />
-          <folding>
-            <element signature="e#61#72#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4190">
-          <caret line="157" column="48" selection-start-line="157" selection-start-column="48" selection-end-line="157" selection-end-column="48" />
-          <folding>
-            <element signature="e#76#91#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/p2p_network/parameters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+        <state relative-caret-position="58">
+          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
+        <state relative-caret-position="3393">
           <caret line="129" column="8" selection-start-line="129" selection-start-column="8" selection-end-line="129" selection-end-column="8" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -1148,10 +1121,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utilities/tlc_exceptions.py">
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+        <state relative-caret-position="551">
+          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4408">
+          <caret line="157" column="48" selection-start-line="157" selection-start-column="48" selection-end-line="157" selection-end-column="48" />
+          <folding>
+            <element signature="e#76#91#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7888">
+          <caret line="275" column="70" selection-start-line="275" selection-start-column="70" selection-end-line="275" selection-end-column="70" />
+          <folding>
+            <element signature="e#61#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#94#130#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

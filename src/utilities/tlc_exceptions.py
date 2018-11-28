@@ -7,6 +7,7 @@ class TLCNetworkException(Exception):
     """
     class for network exceptions happening on tlc network
     """
+
     def __init__(self, msg=None):
         """
 
