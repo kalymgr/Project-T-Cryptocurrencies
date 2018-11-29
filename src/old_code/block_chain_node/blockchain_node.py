@@ -19,7 +19,7 @@ References      : [1] https://github.com/dvf/blockchain/blob/master/blockchain_o
 
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-from src.block_chain.blockchain_old import Blockchain, Block
+from src.old_code.blockchain_old import Blockchain, Block
 
 # Instantiate the Node
 app = Flask(__name__)

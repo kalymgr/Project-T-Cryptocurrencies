@@ -101,10 +101,10 @@ class TestTransactions(unittest.TestCase):
         lastBlock = self.blockchain.getChain()[len(self.blockchain.getChain())-1]
 
         # get the blockTransactionsHash
-        blockHash = lastBlock.getBlockHash()
+        blockHash = lastBlock.getBlockHeaderHash()
 
         # get the hash of the previous block
-        prevBlockHash = self.blockchain.getChain()[len(self.blockchain.getChain())-2].getBlockHash()
+        prevBlockHash = self.blockchain.getChain()[len(self.blockchain.getChain())-2].getBlockHeaderHash()
 
         # try to find a valid nonce
         validNonce = self.blockchain._Blockchain__getProofOfWork(lastBlock)

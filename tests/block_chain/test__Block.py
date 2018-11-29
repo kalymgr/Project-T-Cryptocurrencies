@@ -77,7 +77,7 @@ class TestBlock(unittest.TestCase):
         Check the get block hash method
         :return:
         """
-        print(self.testBlock.getBlockHash())
+        print(self.testBlock.getBlockHeaderHash())
 
     def test_getMerkleRoot(self):
         """

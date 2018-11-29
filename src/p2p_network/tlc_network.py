@@ -7,6 +7,7 @@ from twisted.internet.endpoints import TCP4ClientEndpoint, TCP4ServerEndpoint, c
 from twisted.internet.protocol import Protocol, Factory
 from twisted.internet.task import LoopingCall
 
+from src.block_chain.transactions import Blockchain
 from src.p2p_network.parameters import Parameters, NodeTypes
 from src.p2p_network.tlc_message import TLCMessage, TLCVersionMessage, TLCVerAckMessage, TLCGetAddrMessage, \
     TLCRejectMessage, TLCAddrMessage, TLCPingMessage, TLCPongMessage
@@ -20,7 +21,14 @@ MAINNET_MAX_NBITS = 0x1d00ffff  # big endian order. Sent in little endian order
 
 class TLCNode:
     """
-    class for managing the node data and operations
+    class for managing the node data and operations.
+    According to online info, a full node should:
+    - maintain a wallet
+    - make transactions
+    - enforce bitcoin rules and protocols
+    - store all data
+    - relay transaction information from users to miners
+    - download and verify blocks and transactions
     """
 
     def __init__(self, reactor: reactor, address: str = '127.0.0.1', port: int = Parameters.NODE_DEFAULT_PORT_MAINNET,
@@ -39,6 +47,9 @@ class TLCNode:
         self.__serverEndPoint = self.__createServerEndPoint()  # create the server endpoint
         self.__tlcFactory = TLCFactory(port, self.protocolVersion, nodeType)  # the TLC Factory for the node
         self.lastUsedProtocol = None  # variable that holds the last used protocol
+
+        # initialize the node blockchain
+        self.blockchain = Blockchain()
 
     def addNodePeersList(self, nodePeersList: list):
         """
@@ -188,6 +199,15 @@ class TLCNode:
         """
         p.sendRequest(typeOfRequest)
         return p
+
+    def initialBlockDownload(self):
+        """
+        Method that executes an initial block download, to sync the blockchain of the node. It can be called
+        either after the node starts or when the node needs to be synced, according to some circumstances.
+        :return:
+        """
+        # TODO: implement the method
+        pass
 
 
 class TLCProtocol(Protocol):

@@ -2,11 +2,9 @@ import binascii
 
 import Crypto
 import Crypto.Random
-from Crypto.Hash import RIPEMD, SHA256
 from Crypto.PublicKey import RSA
-from Crypto.Signature import PKCS1_v1_5
 
-from src.block_chain.utilities import TLCUtilities
+from src.utilities.utilities import TLCUtilities
 
 
 class CryptoAccount:

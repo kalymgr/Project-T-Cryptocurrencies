@@ -5,7 +5,7 @@ testing the functionality in the utilities python file
 import unittest
 
 from src.block_chain.crypto_account import CryptoAccount
-from src.block_chain.utilities import TLCUtilities
+from src.utilities.utilities import TLCUtilities
 
 
 class TestTLCUtilities(unittest.TestCase):

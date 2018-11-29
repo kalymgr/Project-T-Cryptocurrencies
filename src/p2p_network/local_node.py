@@ -34,6 +34,9 @@ def startLocalNode() -> TLCNode:
 # start my full node
 localNode = startLocalNode()
 
+# make an IBD (Initial Block Download)
+localNode.initialBlockDownload()
+
 # start a second node
 secondNode = TLCNode(reactor, 'localhost', 8011, 1)
 secondNode.startNode()

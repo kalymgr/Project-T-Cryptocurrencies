@@ -1,7 +1,7 @@
 """
 File trying to implement some smart contracts functionality
 """
-from src.block_chain.utilities import TLCUtilities
+from src.utilities.utilities import TLCUtilities
 
 
 class SmartContractTransactionTypes:

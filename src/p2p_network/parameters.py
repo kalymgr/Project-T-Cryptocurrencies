@@ -26,3 +26,6 @@ class Parameters:
     CHECK_CON_INACTIVITY_INTERVAL = 5 * 60  # the interval for checking the time of connection inactivity
     CLOSE_CONNECTION_TIME_LIMIT = 90 * 60  # the time of inactivity after which the connection should be closed
     CON_INACTIVITY_PING_LIMIT = 30 * 60  # the time limit after which the node should send a ping to his peer
+
+    BLOCK_VERSION = 1  # the block version. Used to choose validation rules
+    TARGET_THRESHOLD = 2  # the target threshold for the proof of work mining algorithm

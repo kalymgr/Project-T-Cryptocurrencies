@@ -3,14 +3,15 @@
 # It will be called in the constructor method. Or a transaction can be executed each time one wishes to transfer money
 import binascii
 from collections import OrderedDict
-from Crypto.Hash import SHA256, SHA
+from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from time import time
 import hashlib, json
 from src.block_chain.crypto_account import CryptoAccount
 from src.block_chain.smart_contracts import SmartContractTransactionTypes, SmartContractScripts, SmartContractLanguage
-from src.block_chain.utilities import TLCUtilities
+from src.p2p_network.parameters import Parameters
+from src.utilities.utilities import TLCUtilities
 
 
 class CoinTransfer:
@@ -442,6 +443,29 @@ class Transaction:
         self.__outCounter += 1  # increase the out-counter
 
 
+class BlockHeader:
+    """
+    Class for managing block headers
+    """
+    def __init__(self, version: int, targetThreshold: int, prevBlockHeaderHash: str, nonce: int,
+                 merkleRoot: str = None, timeStartHashing: int = None):
+        """
+        :param version: the version of the block. Defines validation rules.
+        :param prevBlockHeaderHash: the hash of the previous block header
+        :param merkleRoot: the merkle root of the block transactions
+        :param timeStartHashing: the time the miner started mining the header
+        :param targetThreshold: the target threshold for the PoW algorithm
+        :param nonce: the nonce that is used by the proof of work algorithm
+        """
+
+        self.version = version
+        self.prevBlockHeaderHash = prevBlockHeaderHash
+        self.merkleRoot = merkleRoot
+        self.timeStartHashing = timeStartHashing
+        self.targetThreshold = targetThreshold
+        self.nonce = nonce  # the nonce that is used by the proof of work algorithm
+
+
 class Block:
     """
     Class for implementing the transaction Blocks
@@ -449,24 +473,27 @@ class Block:
 
     BLOCK_VERSION = 1  # the version of the blocks
 
-    def __init__(self, chain: list, nonce: int = None, previousBlockHash: str = None):
+    def __init__(self, chain: list, nonce: int = None, targetThreshold: int = Parameters.TARGET_THRESHOLD,
+                 previousBlockHash: str = None, version: int = Parameters.BLOCK_VERSION):
         """
         Constructor method for the block. Sets the block content
         :param chain: the chain that contains the blocks
         :param nonce: the nonce
         that will be included in the block
+        :param targetThreshold: the target threshold for the PoW mining algorithm
         :param previousBlockHash: the hash of the previous block
+        :param version: the block version
         """
 
         if chain is not None:  # if the constructor has data to initialize the object
-            self.__version = Block.BLOCK_VERSION
-            self.__blockNumber = len(chain) + 1
-            self.__timeStamp = time()
+            timeOfStartMining = time()  # time the mining has started
+            # set the block header
+            self.blockHeader = BlockHeader(prevBlockHeaderHash=previousBlockHash,
+                                           version=version, timeStartHashing=timeOfStartMining,
+                                           targetThreshold=targetThreshold, nonce=nonce)
+            self.__blockNumber = len(chain)
             # self.__transactions = transactions
-            self.__nonce = nonce
-            self.__previousBlockHash = previousBlockHash
             self.__transactions = list()
-            self.__merkleRoot = None  # set the merkle root of the block
 
     def setTransactionList(self, transactionList: list):
         """
@@ -475,7 +502,7 @@ class Block:
         :return:
         """
         self.__transactions = transactionList
-        self.__merkleRoot = self.getMerkleRoot()  # set the merkle root of the block
+        self.blockHeader.merkleRoot = self.getMerkleRoot()  # set the merkle root of the block
 
     def getTransactionList(self) -> list:
         """
@@ -491,7 +518,7 @@ class Block:
         :return:
         """
         self.__transactions.append(transaction)
-        self.__merkleRoot = self.getMerkleRoot()
+        self.blockHeader.merkleRoot = self.getMerkleRoot()
 
     def getBlockNumber(self) -> int:
         """
@@ -508,13 +535,13 @@ class Block:
         """
         return OrderedDict({
             'block_number': self.__blockNumber,
-            'timestamp': self.__timeStamp,
-            'previous_hash': self.__previousBlockHash,
-            'merkle_root': self.__merkleRoot,
-            'version': self.__version
+            'timestamp': self.blockHeader.timeStartHashing,
+            'previous_hash': self.blockHeader.prevBlockHeaderHash,
+            'merkle_root': self.blockHeader.merkleRoot,
+            'version': self.blockHeader.version
         })
 
-    def getBlockHash(self) -> str:
+    def getBlockHeaderHash(self) -> str:
         """
         returns the SHA-256 hash of the block header. It will be used for the proof of work.
         :return: the hash of the block header as string
@@ -524,20 +551,20 @@ class Block:
 
         return SHA256.new(block_string).hexdigest()
 
-    def getPreviousBlockHash(self) -> str:
+    def getPreviousBlockHeaderHash(self) -> str:
         """
         returns the block hash of the previous block
         :return: __previousHash property (string)
         """
-        return self.__previousBlockHash
+        return self.blockHeader.prevBlockHeaderHash
 
-    def setPreviousBlockHash(self, prevBlockHash: str):
+    def setPreviousBlockHeaderHash(self, prevBlockHash: str):
         """
         Method that sets the previous block hash property of the block
         :param prevBlockHash: the hash of the previous block
         :return:
         """
-        self.__previousBlockHash = prevBlockHash
+        self.blockHeader.prevBlockHeaderHash = prevBlockHash
 
     def setNonce(self, nonce: int):
         """
@@ -545,14 +572,14 @@ class Block:
         :param nonce:
         :return:
         """
-        self.__nonce = nonce
+        self.blockHeader.nonce = nonce
 
     def getNonce(self) -> int:
         """
         returns the nonce of the block
         :return: __nonce object property
         """
-        return self.__nonce
+        return self.blockHeader.nonce
 
     def getMerkleRoot(self) -> str:
         """
@@ -591,7 +618,9 @@ class Block:
                 for i in range(0, l, 2):
                     finalDoubleHashes[iterNo].append(
                         TLCUtilities.
-                            getDoubleHash256AsString(finalDoubleHashes[iterNo - 1][i] + finalDoubleHashes[iterNo - 1][i + 1])
+                            getDoubleHash256AsString(
+                            finalDoubleHashes[iterNo - 1][i] + finalDoubleHashes[iterNo - 1][i + 1]
+                        )
                     )
                 l = int(l / 2)  # divide to 2, to get the number of elements of the tree level above
 
@@ -1045,7 +1074,7 @@ class Blockchain:
         if transactionsAdded > 0:  # if at least one transaction is valid
             # set the __previousBlockHash property of the block
             previousBlock = self.__chain[len(self.__chain)-1]
-            currentBlock.setPreviousBlockHash(previousBlock.getBlockHash())
+            currentBlock.setPreviousBlockHeaderHash(previousBlock.getBlockHeaderHash())
 
             # mine the block
             nonce = self.__getProofOfWork(currentBlock)
@@ -1084,8 +1113,8 @@ class Blockchain:
         :return: the nonce (int)
         """
         # blockTransactionsHash = block.getTransactionsHash()  # get the block transactions hash
-        blockHash = block.getBlockHash()  # get the blockHash
-        prevBlockHash = block.getPreviousBlockHash()
+        blockHash = block.getBlockHeaderHash()  # get the blockHash
+        prevBlockHash = block.getPreviousBlockHeaderHash()
 
         nonce = 0  # nonce - starts from zero
         # search while you find a valid proof
@@ -1121,11 +1150,11 @@ class Blockchain:
             currentBlock = self.__chain[i]
             if i > 0:   # check the block hashes for all blocks except from the first one (i>0)
                 previousBlock = self.__chain[i-1]
-                if currentBlock.getPreviousBlockHash() != previousBlock.getBlockHash():
+                if currentBlock.getPreviousBlockHeaderHash() != previousBlock.getBlockHeaderHash():
                     chainValid = False
 
-            if not self.__validProof(currentBlock.getNonce(), currentBlock.getBlockHash(),
-                                     currentBlock.getPreviousBlockHash()):
+            if not self.__validProof(currentBlock.getNonce(), currentBlock.getBlockHeaderHash(),
+                                     currentBlock.getPreviousBlockHeaderHash()):
                 chainValid = False
 
             i += 1  # go to the next block

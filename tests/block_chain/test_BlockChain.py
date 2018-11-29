@@ -1,10 +1,9 @@
 import unittest
-import random
 from src.block_chain.crypto_account import CryptoAccount
 from src.block_chain.smart_contracts import SmartContractScripts
 from src.block_chain.transactions import Transaction, TransactionInput, TransactionOutput, Block, Blockchain, \
     CoinTransfer
-from src.block_chain.utilities import TLCUtilities
+from src.utilities.utilities import TLCUtilities
 
 
 class TestBlockchain(unittest.TestCase):
@@ -209,7 +208,7 @@ class TestBlockchain(unittest.TestCase):
         assert validBlock._Block__blockNumber == 2
         # hash of the previous block
         assert \
-            validBlock._Block__previousBlockHash == self.blockchain.getChain()[0].getBlockHash()
+            validBlock._Block__previousBlockHash == self.blockchain.getChain()[0].getBlockHeaderHash()
         # merkle root
         assert validBlock._Block__merkleRoot == validBlock.getMerkleRoot()
 

@@ -5,7 +5,7 @@ import unittest
 
 from src.block_chain.crypto_account import CryptoAccount
 from src.block_chain.smart_contracts import SmartContractLanguage, SmartContractOperations, SmartContractScripts
-from src.block_chain.utilities import TLCUtilities
+from src.utilities.utilities import TLCUtilities
 
 
 class TestSmartContractsLanguage(unittest.TestCase):
