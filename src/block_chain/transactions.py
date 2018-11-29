@@ -653,6 +653,8 @@ class Blockchain:
         self.__confirmedTransactionList = list()  # the list of executed (confirmed) transactions
         self.__chain = list()  # the chain of confirmed blocks
 
+        self.__headerChain = list()  # a list with block headers
+
         """
         UTXO SET. 
         It will have Bitcoin 0.15 format. Also, Bitcoin stores UTXO set on the hard disk using LEVELDB database. 
@@ -669,6 +671,20 @@ class Blockchain:
         # the genesis transaction of the system
         self.__executeGenesisTransaction(Blockchain.BLOCKCHAIN_INITIAL_AMOUNT)
 
+    def getHeaderChain(self) -> list:
+        """
+        returns the chain of block headers
+        :return:
+        """
+        return self.__headerChain
+
+    def addToHeaderChain(self, blockHeader: BlockHeader):
+        """
+        Adds a block header to the block header chain
+        :param blockHeader: a BlockHeader object
+        :return:
+        """
+        self.__headerChain.append(blockHeader)
 
     def getUTXOSetTxOutputKey(self, transactionHash: str, txOutputIndex: int) -> str:
         """
@@ -783,7 +799,7 @@ class Blockchain:
         """
 
         # create the genesis transaction and block and add it to the chain
-        genesisBlock = Block(self.__chain, -1, '-')  # genesis block
+        genesisBlock = Block(chain=self.__chain, targetThreshold=-1, previousBlockHash='-')  # genesis block
 
         genesisTxOutput = TransactionOutput(value, self.__cryptoAccount.getAddress(),
                                             self.__cryptoAccount.getAddress())

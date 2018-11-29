@@ -3,6 +3,7 @@ from time import time
 from uuid import uuid4
 import socket
 from twisted.internet import reactor
+from twisted.internet.defer import Deferred
 from twisted.internet.endpoints import TCP4ClientEndpoint, TCP4ServerEndpoint, connectProtocol
 from twisted.internet.protocol import Protocol, Factory
 from twisted.internet.task import LoopingCall
@@ -154,9 +155,7 @@ class TLCNode:
         :return:
         """
         # create a client endpoint to connect to the target address:port
-        point = TCP4ClientEndpoint(reactor, node.__address, node.__port)
-
-        d = connectProtocol(point, TLCProtocol(self.getTLCFactory()))
+        d = self.makeConnection(node.__address, node.__port)
         d.addCallback(self.initConnection)
         d.addCallback(self.setLastUsedProtocol)
 
@@ -175,16 +174,39 @@ class TLCNode:
         """
         return self.lastUsedProtocol
 
+    def makeConnection(self, nodeAddress: str, nodePort: int) -> Deferred:
+        """
+        method for making a connection to a node
+        :param nodeAddress: the peer node address
+        :param nodePort: the port of the peer node
+        :return: the twisted Deferred object of the connection
+        """
+        # create a client endpoint to connect to the target address:port
+        point = TCP4ClientEndpoint(reactor, nodeAddress, nodePort)
+        # make the connection
+        d = connectProtocol(point, TLCProtocol(self.getTLCFactory()))
+
+        def raiseExc(p: Protocol):
+            """
+            Method used to raise an exception in case of connection error
+            :param p: the protocol
+            :return:
+            """
+            errorMsg = f'Could not connect to peer node {nodeAddress}_{nodePort}'
+            print(errorMsg)
+            # TODO: exception not properly raised
+            raise TLCNetworkException(errorMsg)
+
+        d.addErrback(raiseExc)  # add error callback in case of error
+        return d
+
     def getNodePeers(self, node):
         """
         Asks a node to give him his peers (nodes on his network)
         :param node: the node(TLCNode objects), whose peers we want
         :return:
         """
-        # create a client endpoint to connect to the target address:port
-        point = TCP4ClientEndpoint(reactor, node.__address, node.__port)
-        # make the connection
-        d = connectProtocol(point, TLCProtocol(self.getTLCFactory()))
+        d = self.makeConnection(node.__address, node.__port)
         # the parameter of the following callback defines the type of request
         d.addCallback(self.initSendRequest, TLCMessage.CTRLMSGTYPE_GETADDR)
         d.addCallback(self.setLastUsedProtocol)
@@ -200,14 +222,32 @@ class TLCNode:
         p.sendRequest(typeOfRequest)
         return p
 
-    def initialBlockDownload(self):
+    def initialBlockDownload(self, peerNode):
         """
         Method that executes an initial block download, to sync the blockchain of the node. It can be called
         either after the node starts or when the node needs to be synced, according to some circumstances.
+        :param peerNode: the TLC node used for syncing (TLCNode object)
         :return:
         """
         # TODO: implement the method
-        pass
+
+        # get the last block header
+        lastBlock = self.blockchain.getChain()[len(self.blockchain.getChain())-1]
+        lastBlockHeader = lastBlock.blockHeader
+
+        # if the last block header time is more than 24 hours in the past
+        # OR the local best block chain is more than 144 blocks lower than it's local best header chain,
+        # start syncing
+        # TODO: uncomment the real if statement.
+        # if (time() - lastBlockHeader.timeStartHashing > 24 * 60 * 60) or \
+        #     (len(self.blockchain.getHeaderChain()) - len(self.blockchain.getChain()) > 144):
+        if True:
+            # make a connection
+            d = self.makeConnection(peerNode.__address, peerNode.__port)
+
+            # initialize a request for a getBlocks message
+            d.addCallback(self.initSendRequest, TLCMessage.DATAMSGTYPE_GETBLOCKS)
+            d.addCallback(self.setLastUsedProtocol)
 
 
 class TLCProtocol(Protocol):
@@ -355,6 +395,7 @@ class TLCProtocol(Protocol):
         :return:
         """
         # create the version message, in a sendable form
+        print('Sending version')
         versionMsg = TLCVersionMessage(self.nodeType, self.hostIp.host, self.factory.serverPort,
                                        self.factory.protocolVersion).getMessageAsSendable()
         self.state = TLCProtocol.NODE_STATUS_WAITING_VERACK

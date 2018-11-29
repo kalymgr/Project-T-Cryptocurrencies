@@ -55,6 +55,11 @@ class TestInitialBlockDownload(unittest.TestCase):
     Testing class
     """
 
+    def setUp(self):
+        # create and start a test node
+        self.testNode = TLCNode(reactor)
+        self.testNode.startNode()
+
     def test_nodeBlockchainInitialization(self):
         """
         testing the initialization of a node blockchain.
@@ -63,7 +68,7 @@ class TestInitialBlockDownload(unittest.TestCase):
         :return:
         """
 
-        node = TLCNode(reactor)
+        node = TLCNode(reactor, port=8013)
         node.startNode()
 
         def examineNodeStatus(node: TLCNode):
@@ -77,4 +82,21 @@ class TestInitialBlockDownload(unittest.TestCase):
 
         reactor.callLater(3, reactor.stop)
         reactor.callLater(0.1, examineNodeStatus, node)
+        reactor.run()
+
+    def test_initialBlockDownload(self):
+        """
+        Testing the initial block download
+        :return:
+        """
+        # create a second node with some blocks
+        peerNode = TLCNode(reactor, port=8011)
+        peerNode.startNode()
+
+        # TODO: The node must not connect to the peerNode if the peerNode hasn't started
+        self.testNode.initialBlockDownload(peerNode)
+        self.testNode.connectTo(peerNode)
+
+        reactor.callLater(3, reactor.stop)
+        # reactor.callLater(0.1, makeAssertions, node)
         reactor.run()

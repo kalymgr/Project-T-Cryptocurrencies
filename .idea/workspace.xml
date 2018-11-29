@@ -2,88 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project Management.mpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project Management.mpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/blockchain_full_node.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/blockchain_miner.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/blockchain_old.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/blockchain_old.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/crypto_account.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/crypto_account.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/smart_contracts.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/smart_contracts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/block_chain/transactions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/block_chain/transactions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/blockchain_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/blockchain_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc_disabled.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc_disabled.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_both.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_both.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc_disabled.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc_disabled.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/DataTables/css/datatables.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/DataTables/css/datatables.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/DataTables/js/datatables.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/DataTables/js/datatables.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/DataTables/js/ellipsis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/DataTables/js/ellipsis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/css/bootstrap.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/css/bootstrap.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/css/bootstrap.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/js/bootstrap.bundle.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/js/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/js/bootstrap.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/js/bootstrap.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/js/bootstrap.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/bootstrap/js/bootstrap.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/bootstrap/js/bootstrap.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/jquery/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/jquery/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/jquery/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/jquery/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/jquery/jquery.min.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/jquery/jquery.min.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/jquery/jquery.slim.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/jquery/jquery.slim.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/jquery/jquery.slim.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/jquery/jquery.slim.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/static/vendor/jquery/jquery.slim.min.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/static/vendor/jquery/jquery.slim.min.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/templates/make_transaction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/templates/make_transaction.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_client/templates/view_transactions.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/templates/view_transactions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_client/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/blockchain_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/blockchain_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc_disabled.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_asc_disabled.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_both.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_both.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc_disabled.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/DataTables/css/DataTables-1.10.16/images/sort_desc_disabled.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/DataTables/css/datatables.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/DataTables/css/datatables.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/DataTables/js/datatables.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/DataTables/js/datatables.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/DataTables/js/ellipsis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/DataTables/js/ellipsis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/css/bootstrap.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/css/bootstrap.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/css/bootstrap.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/js/bootstrap.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/js/bootstrap.bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/js/bootstrap.bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/js/bootstrap.bundle.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/js/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/js/bootstrap.bundle.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/js/bootstrap.bundle.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/js/bootstrap.bundle.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/js/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/js/bootstrap.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/js/bootstrap.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/js/bootstrap.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/bootstrap/js/bootstrap.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/bootstrap/js/bootstrap.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/jquery/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/jquery/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/jquery/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/jquery/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/jquery/jquery.min.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/jquery/jquery.min.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/jquery/jquery.slim.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/jquery/jquery.slim.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/jquery/jquery.slim.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/jquery/jquery.slim.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/static/vendor/jquery/jquery.slim.min.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/static/vendor/jquery/jquery.slim.min.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/templates/configure.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/templates/configure.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/block_chain_node/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/old_code/block_chain_node/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p2p_network/local_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/local_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p2p_network/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/parameters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/block_chain/test_BlockChain.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/test_BlockChain.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/block_chain/test__Block.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/test__Block.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/block_chain/test_smart_contracts.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/test_smart_contracts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/block_chain/test_transactions.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/test_transactions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/block_chain/test_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/block_chain/test_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utilities/tlc_exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/tlc_exceptions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/p2p_network/.pytest_cache/v/cache/nodeids" beforeDir="false" afterPath="$PROJECT_DIR$/tests/p2p_network/.pytest_cache/v/cache/nodeids" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -94,10 +18,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
+        <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="617" column="40" lean-forward="true" selection-start-line="617" selection-start-column="40" selection-end-line="617" selection-end-column="40" />
+            <state relative-caret-position="370">
+              <caret line="248" column="28" selection-start-line="248" selection-start-column="28" selection-end-line="248" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -105,11 +29,23 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+            <state relative-caret-position="285">
+              <caret line="96" column="52" lean-forward="true" selection-start-line="96" selection-start-column="52" selection-end-line="96" selection-end-column="52" />
               <folding>
                 <element signature="e#74#89#0" expanded="true" />
-                <element signature="e#234#489#0" />
+                <element signature="e#333#1855#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="70" column="18" lean-forward="true" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="18" />
+              <folding>
+                <element signature="e#61#72#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -129,18 +65,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="488">
               <caret line="30" column="87" selection-start-line="30" selection-start-column="87" selection-end-line="30" selection-end-column="87" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-              <folding>
-                <element signature="e#61#72#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -178,6 +102,7 @@
       <find>disconnected</find>
       <find>Got the VERACK</find>
       <find>socket</find>
+      <find>TLCNet</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -228,18 +153,18 @@
         <option value="$PROJECT_DIR$/src/p2p_network/tlc_node.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/tlc_message.py" />
         <option value="$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py" />
-        <option value="$PROJECT_DIR$/src/utilities/tlc_exceptions.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/local_node.py" />
-        <option value="$PROJECT_DIR$/src/p2p_network/tlc_network.py" />
         <option value="$PROJECT_DIR$/src/p2p_network/parameters.py" />
         <option value="$PROJECT_DIR$/src/block_chain/transactions.py" />
+        <option value="$PROJECT_DIR$/src/utilities/tlc_exceptions.py" />
         <option value="$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py" />
+        <option value="$PROJECT_DIR$/src/p2p_network/tlc_network.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="347" />
-    <option name="y" value="136" />
+    <option name="x" value="241" />
+    <option name="y" value="71" />
     <option name="width" value="1255" />
     <option name="height" value="715" />
   </component>
@@ -271,18 +196,12 @@
               <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
               <item name="project-t" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="p2p_network" type="462c0819:PsiDirectoryNode" />
+              <item name="utilities" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
               <item name="project-t" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project-t" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="p2p_network" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -315,8 +234,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.pytest for test_initial_block_download.TestBlockChain.test_BlockOperations">
-    <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockCreation" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload">
+    <configuration name="pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="project-t" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -327,7 +246,22 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_initial_block_download.TestBlockChain.test_BlockCreation&quot;" />
+      <option name="_new_target" value="&quot;test_connecting_to_peers.TestConnectingToPeers.test_version&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_initial_block_download.TestBlockChain" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="project-t" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/p2p_network" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_initial_block_download.TestBlockChain&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -343,6 +277,21 @@
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_initial_block_download.TestBlockChain.test_BlockOperations&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="project-t" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/p2p_network" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -363,9 +312,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" />
-        <item itemvalue="Python tests.pytest for test_initial_block_download.TestBlockChain.test_BlockCreation" />
+        <item itemvalue="Python tests.pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" />
+        <item itemvalue="Python tests.pytest for test_connecting_to_peers.TestConnectingToPeers.test_version" />
         <item itemvalue="Python tests.pytest for test_initial_block_download.TestInitialBlockDownload.test_nodeBlockchainInitialization" />
+        <item itemvalue="Python tests.pytest for test_initial_block_download.TestBlockChain" />
+        <item itemvalue="Python tests.pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" />
       </list>
     </recent_temporary>
   </component>
@@ -597,39 +548,46 @@
       <option name="project" value="LOCAL" />
       <updated>1543470173427</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="- Added a BlockHeader class and made changes to the Block class. Tested the changes.">
+      <created>1543476508567</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1543476508567</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_initial_block_download_TestBlockChain_test_BlockOperations - 2018.11.29 at 09h 12m 36s.xml">
-      <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" configurationId="tests" />
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.11.29 at 11h 00m 30s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_initial_block_download_TestBlockChain_test_BlockOperations - 2018.11.29 at 09h 13m 48s.xml">
-      <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" configurationId="tests" />
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.11.29 at 11h 01m 12s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_initial_block_download_TestBlockChain_test_BlockOperations - 2018.11.29 at 09h 14m 18s.xml">
-      <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" configurationId="tests" />
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.11.29 at 11h 02m 27s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_initial_block_download_TestBlockChain_test_BlockOperations - 2018.11.29 at 09h 14m 35s.xml">
-      <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" configurationId="tests" />
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.11.29 at 11h 03m 13s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_initial_block_download_TestBlockChain_test_BlockOperations - 2018.11.29 at 09h 16m 30s.xml">
-      <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" configurationId="tests" />
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.11.29 at 11h 05m 31s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_initial_block_download_TestBlockChain_test_BlockOperations - 2018.11.29 at 09h 17m 06s.xml">
-      <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" configurationId="tests" />
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.11.29 at 11h 05m 41s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_initial_block_download_TestBlockChain_test_BlockOperations - 2018.11.29 at 09h 19m 12s.xml">
-      <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" configurationId="tests" />
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.11.29 at 11h 05m 59s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_initial_block_download_TestBlockChain_test_BlockOperations - 2018.11.29 at 09h 21m 20s.xml">
-      <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" configurationId="tests" />
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.11.29 at 11h 06m 17s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_initial_block_download_TestBlockChain_test_BlockOperations - 2018.11.29 at 09h 22m 44s.xml">
-      <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" configurationId="tests" />
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.11.29 at 11h 12m 07s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
-    <history-entry file="pytest_for_test_initial_block_download_TestBlockChain_test_BlockOperations - 2018.11.29 at 09h 24m 14s.xml">
-      <configuration name="pytest for test_initial_block_download.TestBlockChain.test_BlockOperations" configurationId="tests" />
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.11.29 at 11h 12m 25s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -644,19 +602,19 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.44827586" visible="true" weight="0.09694415" />
-      <window_info id="Structure" order="1" sideWeight="0.55172414" side_tool="true" visible="true" weight="0.09694415" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4493865" visible="true" weight="0.17650159" />
+      <window_info id="Structure" order="1" sideWeight="0.5506135" side_tool="true" visible="true" weight="0.17650159" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49789253" weight="0.37486458" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.91412014" weight="0.4626219" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8303477" weight="0.6511376" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.90990514" weight="0.39653304" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8256059" weight="0.42036837" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49947312" weight="0.23726977" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.4963119" visible="true" weight="0.49729145" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49841937" weight="0.23726977" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49578503" visible="true" weight="0.2936078" />
       <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.25723472" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5036881" side_tool="true" weight="0.49729145" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50421494" side_tool="true" weight="0.2936078" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.85827184" weight="0.48754063" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -723,7 +681,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Completed the proof of work algorithm and did some testing" />
     <MESSAGE value="- Started running more tests. Now I have an error with the Blockchain method that signs the transactions" />
     <MESSAGE value="- Almost completed testing my blockchain. One more test to write." />
     <MESSAGE value="- Minor changes to transactions.py" />
@@ -748,35 +705,36 @@
     <MESSAGE value="- Started writing the ping-pong communication between two nodes." />
     <MESSAGE value="- Completed story '1.1.1 Connecting to Peers'" />
     <MESSAGE value="- Changes to project management file" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Changes to project management file" />
+    <MESSAGE value="- Added a BlockHeader class and made changes to the Block class. Tested the changes." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Added a BlockHeader class and made changes to the Block class. Tested the changes." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py</url>
-          <line>73</line>
+          <line>78</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py</url>
-          <line>37</line>
-          <option name="timeStamp" value="7" />
+          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
+          <line>137</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py</url>
-          <line>38</line>
-          <option name="timeStamp" value="8" />
+          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
+          <line>418</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="9" />
+          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
+          <line>402</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py</url>
-          <line>41</line>
-          <option name="timeStamp" value="10" />
+          <url>file://$PROJECT_DIR$/src/p2p_network/tlc_network.py</url>
+          <line>221</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>
@@ -798,47 +756,48 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
+        <expression-string>time() - lastBlockHeader.timeStartHashing</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>lastBlockHeader.timeStartHashing</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>(time() - lastBlockHeader.timeStartHashing &gt; 24 * 60 * 60) or \
+            (len(self.blockchain.getHeaderChain()) - len(self.blockchain.getChain()) &gt; 144)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.transport.write(versionMsg)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.isPortAvailable(self._TLCNode__address, self._TLCNode__port)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.isPortAvailable(self.__address, self.__port)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>block.getPreviousBlockHeaderHash()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>b.getTransactionList()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
         <expression-string>b</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>b.getMerkleRoot()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>b.blockHeader.merkleRoot</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>self.getMerkleRoot()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>p1.transport.loseConnection()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>p1.transport.looseConnection()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>p1.transport.write('n'.encode('utf8'))</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>p1.transport.getPeer()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -1115,13 +1074,6 @@
     <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_tlc_network_message.py" />
     <entry file="file://E:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py" />
     <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py" />
-    <entry file="file://$PROJECT_DIR$/src/utilities/tlc_exceptions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_node.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="580">
@@ -1175,29 +1127,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/unittest/case.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="51" column="38" lean-forward="true" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1044">
-          <folding>
-            <element signature="e#76#91#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-          <folding>
-            <element signature="e#61#72#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="184">
+          <caret line="617" selection-start-line="617" selection-end-line="617" />
         </state>
       </provider>
     </entry>
@@ -1208,27 +1141,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/unittest/case.py">
+    <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_connecting_to_peers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="617" selection-start-line="617" selection-end-line="617" />
+        <state relative-caret-position="348">
+          <caret line="87" column="34" selection-start-line="87" selection-start-column="34" selection-end-line="87" selection-end-column="34" />
+          <folding>
+            <element signature="e#76#91#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utilities/tlc_exceptions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="617" column="40" lean-forward="true" selection-start-line="617" selection-start-column="40" selection-end-line="617" selection-end-column="40" />
+        <state relative-caret-position="152">
+          <caret line="1151" selection-start-line="1151" selection-end-line="1151" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="70" column="18" lean-forward="true" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="18" />
+          <folding>
+            <element signature="e#61#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="248" column="28" selection-start-line="248" selection-start-column="28" selection-end-line="248" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+        <state relative-caret-position="285">
+          <caret line="96" column="52" lean-forward="true" selection-start-line="96" selection-start-column="52" selection-end-line="96" selection-end-column="52" />
           <folding>
             <element signature="e#74#89#0" expanded="true" />
-            <element signature="e#234#489#0" />
+            <element signature="e#333#1855#0" />
           </folding>
         </state>
       </provider>
