@@ -777,6 +777,26 @@ class Blockchain:
         """
         return self.__chain
 
+    def getBlockByBlockHeaderHash(self, blockHeaderHash: str) -> Block:
+        """
+        Method tha searches the block chain and gets a block by it's block header hash.
+        If it is not found, it returns None.
+        :param blockHeaderHash: the hash of the block header
+        :return: the block if found, else None
+        """
+        # search every block in the chain until you find what you are looking for
+        found = False  # flag that show if found or not
+        i = 0  # index for the while loop
+        b = None  # the block that will be returned
+        while i<len(self.__chain) and found == False:
+            # while not found and not at the end of the blockchain
+            if self.__chain[i].getBlockHeaderHash() == blockHeaderHash:
+                # if found
+                b = self.__chain[i]
+                found = True
+            i += 1
+        return b
+
     def getTransactionInputPool(self) -> dict:
         """
         method that returns the transaction input pool of the blockchain

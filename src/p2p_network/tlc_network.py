@@ -11,7 +11,8 @@ from twisted.internet.task import LoopingCall
 from src.block_chain.transactions import Blockchain
 from src.p2p_network.parameters import Parameters, NodeTypes
 from src.p2p_network.tlc_message import TLCMessage, TLCVersionMessage, TLCVerAckMessage, TLCGetAddrMessage, \
-    TLCRejectMessage, TLCAddrMessage, TLCPingMessage, TLCPongMessage
+    TLCRejectMessage, TLCAddrMessage, TLCPingMessage, TLCPongMessage, TLCGetBlocksMessage, TLCInvMessage, \
+    TLCGetDataMessage, TLCBlockMessage
 from src.utilities.tlc_exceptions import TLCNetworkException
 
 generateNodeId = lambda: str(uuid4())  # function that generates the node id
@@ -50,7 +51,8 @@ class TLCNode:
         self.lastUsedProtocol = None  # variable that holds the last used protocol
 
         # initialize the node blockchain
-        self.blockchain = Blockchain()
+        self.__tlcFactory.blockchain = Blockchain()
+        self.blockchain = self.__tlcFactory.blockchain
 
     def addNodePeersList(self, nodePeersList: list):
         """
@@ -222,6 +224,16 @@ class TLCNode:
         p.sendRequest(typeOfRequest)
         return p
 
+    def setConnectionExtraData(self, p: Protocol, dataKey: str, dataValue):
+        """
+        Method that sets extra data in the connection, depending on what is needed
+        :param dataKey: the key of the data (string)
+        :param dataValue: the value of the data, for the specific key
+        :return: the TLCProtocol
+        """
+        p.addExtraData(dataKey, dataValue)
+        return p
+
     def initialBlockDownload(self, peerNode):
         """
         Method that executes an initial block download, to sync the blockchain of the node. It can be called
@@ -229,8 +241,6 @@ class TLCNode:
         :param peerNode: the TLC node used for syncing (TLCNode object)
         :return:
         """
-        # TODO: implement the method
-
         # get the last block header
         lastBlock = self.blockchain.getChain()[len(self.blockchain.getChain())-1]
         lastBlockHeader = lastBlock.blockHeader
@@ -238,14 +248,13 @@ class TLCNode:
         # if the last block header time is more than 24 hours in the past
         # OR the local best block chain is more than 144 blocks lower than it's local best header chain,
         # start syncing
-        # TODO: uncomment the real if statement.
-        # if (time() - lastBlockHeader.timeStartHashing > 24 * 60 * 60) or \
-        #     (len(self.blockchain.getHeaderChain()) - len(self.blockchain.getChain()) > 144):
-        if True:
+        if (time() - lastBlockHeader.timeStartHashing > 24 * 60 * 60) or \
+            (len(self.blockchain.getHeaderChain()) - len(self.blockchain.getChain()) > 144):
             # make a connection
             d = self.makeConnection(peerNode.__address, peerNode.__port)
 
             # initialize a request for a getBlocks message
+            d.addCallback(self.setConnectionExtraData, 'headerHashes', lastBlock.getBlockHeaderHash())
             d.addCallback(self.initSendRequest, TLCMessage.DATAMSGTYPE_GETBLOCKS)
             d.addCallback(self.setLastUsedProtocol)
 
@@ -291,6 +300,17 @@ class TLCProtocol(Protocol):
         # self.lcPing = LoopingCall(self.sendPing)  # Calls the sendPing method repeatedly to ping nodes
 
         self.typeOfRequest = None  # the type of request.
+
+        self.extraData = dict()  # extra data that may be needed for some operations
+
+    def addExtraData(self, key, value):
+        """
+        Method that adds key-value pairs to the dictionary of the extraData
+        :param key:
+        :param value:
+        :return:
+        """
+        self.extraData[key] = value
 
     def connectionMade(self):
         self.remoteIp = self.transport.getPeer()
@@ -355,6 +375,8 @@ class TLCProtocol(Protocol):
                     """
                     if self.typeOfRequest == TLCMessage.CTRLMSGTYPE_GETADDR:  # getaddr request
                         self.sendGetAddr()
+                    elif self.typeOfRequest == TLCMessage.DATAMSGTYPE_GETBLOCKS:  # getBlocks request
+                        self.sendGetBlocks()
                     """
                     After this point, we put all the message handlers, depending on the operation desired.
                     """
@@ -362,6 +384,12 @@ class TLCProtocol(Protocol):
                     self.handleGetAddr()
                 elif msgType == TLCMessage.CTRLMSGTYPE_ADDR:
                     self.handleAddr(line)
+                elif msgType == TLCMessage.DATAMSGTYPE_GETBLOCKS:
+                    self.handleGetBlocks(line)
+                elif msgType == TLCMessage.DATAMSGTYPE_INV:
+                    self.handleInv(line)
+                elif msgType == TLCMessage.DATAMSGTYPE_GETDATA:
+                    self.handleGetData(line)
 
     def updateTimeOfConInactivity(self):
         """
@@ -470,6 +498,14 @@ class TLCProtocol(Protocol):
         pongMsg = TLCPongMessage(nonce).getMessageAsSendable()
         self.transport.write(pongMsg)
 
+    def sendGetBlocks(self):
+        """
+        Method that sends the getBlocks message
+        :return:
+        """
+        getBlocksMsg = TLCGetBlocksMessage(self.extraData['headerHashes']).getMessageAsSendable()
+        self.transport.write(getBlocksMsg)
+
     def handlePing(self, pingData: str):
         """
         handle ping.
@@ -543,6 +579,89 @@ class TLCProtocol(Protocol):
                 # if the address does not already exist and isn't the node's ip address
                 self.factory.peers.append(address)
 
+    def handleGetBlocks(self, getBlocksMsg: str):
+        """
+        Method for handling the getBlocks messages
+        :param getBlocksMsg: the getBlocks message (string)
+        :return:
+        """
+        jsonGetBlocksMsg = json.loads(getBlocksMsg)
+        headerHash = jsonGetBlocksMsg['msgData']['headerHash']  # the header hash of the block message
+
+        # find the block that matches the header hash
+        i = 0  # index of the block in the blockchain
+        found = False  # flag showing if a block with a specific header hash has been found
+        positionFound = -1
+        while i < len(self.factory.blockchain.getChain()) and not found:
+            curBlock = self.factory.blockchain.getChain()[i]
+            if headerHash == curBlock.getBlockHeaderHash():  # if you find the block header hash in the chain
+                found = True
+                positionFound = i  # keep the index of the block where you found it
+            i += 1  # increase the index by one
+
+        # create the list of inventory entries and send it with an inv message
+        inventoryEntries = list()  # the list of block header hashes
+        invCounter = 0
+        invCounterMax = 500  # max of 500 inventory entries
+        i = positionFound + 1  # start creating the inventory right after the position the block was found
+        while i < invCounterMax and i < len(self.factory.blockchain.getChain()):
+            # while not surpassed the max of inv entries and while not at the end of the list of blocks
+            # append the header hashes of the blocks in the inventory
+            inventoryEntries.append(
+                {
+                    'type': TLCInvMessage.INV_TYPE_BLOCK,
+                    'identifier': self.factory.blockchain.getChain()[i].getBlockHeaderHash()
+                }
+            )
+            i += 1
+
+        invMsg = TLCInvMessage(inventoryEntries)  # create the message
+        self.transport.write(invMsg.getMessageAsSendable())  # send the message
+
+    def handleInv(self, invMessage: str):
+        """
+        Method that handles inventory messages
+        :param invMessage: the inventory message
+        :return:
+        """
+        jsonInvMessage = json.loads(invMessage)
+        inventoryEntries = jsonInvMessage['msgData']['inventory']  # the inventory entries
+        noOfInventoryEntries = jsonInvMessage['msgData']['count']  # the number of inventory entries
+
+        # request some blocks using a getData message
+        noOfBlocksToRequest = 128  # number of items to request
+
+        # set the list of items to request
+        if noOfInventoryEntries > noOfBlocksToRequest:
+            # case that the inv list has more than the blocks the node wants to request
+            blockHeadersToRequest = inventoryEntries[0:noOfBlocksToRequest]
+        else:
+            # case that the inv list has equal or less than the blocks the node wants to request
+            blockHeadersToRequest = inventoryEntries[0:noOfInventoryEntries]
+
+        # send the message
+        msgGetData = TLCGetDataMessage(blockHeadersToRequest)
+        self.transport.write(msgGetData.getMessageAsSendable())
+
+    def handleGetData(self, getDataMessage: str):
+        jsonGetDataMessage = json.loads(getDataMessage)
+        dataEntries = jsonGetDataMessage['msgData']['inventory']  # the data entries
+        dataEntriesCount = jsonGetDataMessage['msgData']['count']  # the number of data entries
+
+        # for each data entry, send the data
+        for i in range(0, dataEntriesCount):
+            if dataEntries[i]['type'] == TLCGetDataMessage.INV_TYPE_BLOCK:
+                # if the entry is block type, send the block via a block message
+                # get the block that corresponds to the block header hash and send it
+                b = self.factory.blockchain.getBlockByBlockHeaderHash(dataEntries[i]['identifier'])
+                # send it via a block message
+                # TODO: complete the method
+                blockMsg = TLCBlockMessage(b.get)
+                print(1)
+
+
+        print(1)
+
     def handleVerAck(self):
         # print(f'--> Node {self.nodeId}. Got the VERACK')
 
@@ -603,6 +722,8 @@ class TLCFactory(Factory):
         self.protocolVersion = protocolVersion
         self.nodeType = nodeType
         self.peers = list()  # initialize the list containing the peers
+
+        self.blockchain = None  # the blockchain related to the node that runs the connection factory
 
     def startFactory(self):
         self.nodeId = generateNodeId()  # generate a node id

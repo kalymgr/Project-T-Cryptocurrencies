@@ -280,3 +280,95 @@ class TLCPongMessage(TLCMessage):
 
         # set the payload size
         self.msgHeader.payloadSize = len(self.getMessageAsSendable())
+
+
+class TLCGetBlocksMessage(TLCMessage):
+    """
+    class for getBlocks messages
+    """
+    def __init__(self, headerHash: str):
+        """
+        constructor method
+        :param headerHash: the header hash of the last block existing in the node's blockchain
+        """
+        # call the constructor of the parent class, stating the type of this message
+        super().__init__(TLCMessage.DATAMSGTYPE_GETBLOCKS)
+
+        # set the data
+        self.msgData = {
+            'headerHash': headerHash  # the nonce received from the ping message
+        }
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())
+
+
+class TLCInvMessage(TLCMessage):
+    """
+    class for handling inv messages
+    """
+
+    INV_TYPE_BLOCK = 1  # type of inventory is block
+
+    def __init__(self, inventoryEntries: list):
+        """
+        constructor method
+        :param inventoryEntries: a list of inventory entries (list)
+        """
+        # call the constructor of the parent class, stating the type of this message
+        super().__init__(TLCMessage.DATAMSGTYPE_INV)
+
+        # set the data
+        self.msgData = {
+            'inventory': inventoryEntries,
+            'count': len(inventoryEntries)
+        }
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())
+
+
+class TLCGetDataMessage(TLCMessage):
+    """
+    class for handling getData messages
+    """
+
+    INV_TYPE_BLOCK = TLCInvMessage.INV_TYPE_BLOCK  # type of inventory is block
+
+    def __init__(self, dataEntries: list):
+        """
+        constructor method
+        :param dataEntries: a list of inventory entries (list)
+        """
+        # call the constructor of the parent class, stating the type of this message
+        super().__init__(TLCMessage.DATAMSGTYPE_GETDATA)
+
+        # set the data
+        self.msgData = {
+            'inventory': dataEntries,
+            'count': len(dataEntries)
+        }
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())
+
+
+class TLCBlockMessage(TLCMessage):
+    """
+    class for block messages
+    """
+    def __init__(self, block: str):
+        """
+        constructor method
+        :param block: the block that will be sent
+        """
+        # call the constructor of the parent class, stating the type of this message
+        super().__init__(TLCMessage.DATAMSGTYPE_BLOCK)
+
+        # set the data
+        self.msgData = {
+            'block': block
+        }
+
+        # set the payload size
+        self.msgHeader.payloadSize = len(self.getMessageAsSendable())

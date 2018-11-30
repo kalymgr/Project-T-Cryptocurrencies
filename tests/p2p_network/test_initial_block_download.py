@@ -89,14 +89,33 @@ class TestInitialBlockDownload(unittest.TestCase):
         Testing the initial block download
         :return:
         """
-        # create a second node with some blocks
+
+        # append a block to the blockchain of the node, that is old
+        newBlock = Block(self.testNode.blockchain.getChain(), nonce=1, previousBlockHash='a')
+        newBlock.blockHeader.timeStartHashing = 0  # set the age of the block as 1/1/1970
+        self.testNode.blockchain.getChain().append(newBlock)
+
+        # create a second node with some fresh blocks
         peerNode = TLCNode(reactor, port=8011)
         peerNode.startNode()
 
-        # TODO: The node must not connect to the peerNode if the peerNode hasn't started
+        # initially, use the same genesis block with the other node
+        peerChain = list(self.testNode.getTLCFactory().blockchain.getChain())
+        peerNode.getTLCFactory().blockchain._Blockchain__chain = peerChain
+        noOfBlocks = 1000  # number of blocks to add
+        for i in range(1, noOfBlocks + 1):  # add the blocks to the peer node
+            peerNode.blockchain.getChain().append(
+                Block(peerNode.blockchain.getChain(), nonce=1, previousBlockHash='b')
+            )
+
+        # TODO: the two nodes must share the same genesis block. Find why the hash header cannot
+        #   be found in the peer node.
         self.testNode.initialBlockDownload(peerNode)
         self.testNode.connectTo(peerNode)
 
+        def makeAssertions(node: TLCNode, peerNode: TLCNode):
+            print(1)
+
         reactor.callLater(3, reactor.stop)
-        # reactor.callLater(0.1, makeAssertions, node)
+        reactor.callLater(0.1, makeAssertions, self.testNode, peerNode)
         reactor.run()
