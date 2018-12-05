@@ -635,7 +635,7 @@ class Blockchain:
     class that handles the blockchain
     """
 
-    MINING_DIFFICULTY = 2  # the mining difficulty
+    MINING_DIFFICULTY = Parameters.TARGET_THRESHOLD  # the mining difficulty
     BLOCKCHAIN_INITIAL_AMOUNT = 100  # taliroshis used for the genesis transaction
 
     def __init__(self):
@@ -838,7 +838,7 @@ class Blockchain:
 
         genesisBlock.setTransactionList([genesisTransaction])  # set the genesis block transaction list
         genesisBlock.setNonce(  # set the nonce
-            self.__getProofOfWork(genesisBlock)
+            self.getProofOfWork(genesisBlock)
         )
         self.__chain.append(genesisBlock)
 
@@ -1113,7 +1113,7 @@ class Blockchain:
             currentBlock.setPreviousBlockHeaderHash(previousBlock.getBlockHeaderHash())
 
             # mine the block
-            nonce = self.__getProofOfWork(currentBlock)
+            nonce = self.getProofOfWork(currentBlock)
             currentBlock.setNonce(nonce)  # set the nonce of the block
 
             # add the block to the chain
@@ -1142,7 +1142,7 @@ class Blockchain:
         else:
             return False
 
-    def __getProofOfWork(self, block: Block) -> int:
+    def getProofOfWork(self, block: Block) -> int:
         """
         Proof of work algorithm. Returns the nonce, when successfully completed
         :param block: the block on which the proof of work process will take place
@@ -1154,13 +1154,13 @@ class Blockchain:
 
         nonce = 0  # nonce - starts from zero
         # search while you find a valid proof
-        while not self.__validProof(nonce, blockHash, prevBlockHash):
+        while not self.validProof(nonce, blockHash, prevBlockHash):
             nonce += 1
 
         return nonce
 
-    def __validProof(self, nonce: int, blockHash: str,
-                     prevBlockHash: str, miningDifficulty: int = MINING_DIFFICULTY) -> bool:
+    def validProof(self, nonce: int, blockHash: str,
+                   prevBlockHash: str, miningDifficulty: int = MINING_DIFFICULTY) -> bool:
         """
         Method that checks the proof for a specific nonce. If ok, returns True, else returns False
         :param nonce: the nonce to be checked
@@ -1189,8 +1189,8 @@ class Blockchain:
                 if currentBlock.getPreviousBlockHeaderHash() != previousBlock.getBlockHeaderHash():
                     chainValid = False
 
-            if not self.__validProof(currentBlock.getNonce(), currentBlock.getBlockHeaderHash(),
-                                     currentBlock.getPreviousBlockHeaderHash()):
+            if not self.validProof(currentBlock.getNonce(), currentBlock.getBlockHeaderHash(),
+                                   currentBlock.getPreviousBlockHeaderHash()):
                 chainValid = False
 
             i += 1  # go to the next block

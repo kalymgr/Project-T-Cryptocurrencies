@@ -1,4 +1,5 @@
 import json
+import pickle
 from time import time
 from uuid import uuid4
 import socket
@@ -8,7 +9,7 @@ from twisted.internet.endpoints import TCP4ClientEndpoint, TCP4ServerEndpoint, c
 from twisted.internet.protocol import Protocol, Factory
 from twisted.internet.task import LoopingCall
 
-from src.block_chain.transactions import Blockchain
+from src.block_chain.transactions import Blockchain, Block
 from src.p2p_network.parameters import Parameters, NodeTypes
 from src.p2p_network.tlc_message import TLCMessage, TLCVersionMessage, TLCVerAckMessage, TLCGetAddrMessage, \
     TLCRejectMessage, TLCAddrMessage, TLCPingMessage, TLCPongMessage, TLCGetBlocksMessage, TLCInvMessage, \
@@ -302,6 +303,10 @@ class TLCProtocol(Protocol):
         self.typeOfRequest = None  # the type of request.
 
         self.extraData = dict()  # extra data that may be needed for some operations
+        # initialize some variables used for inventories
+        self.inventoryEntries = list()  # inventory entries sent by an inv message
+        self.noOfInventoryEntries = 0  # no of inventory entries sent by an inv message
+        self.noOfInvRecordsSent = 0  # initialize the no of inv records sent as a reply (used by handleInv method)
 
     def addExtraData(self, key, value):
         """
@@ -335,7 +340,6 @@ class TLCProtocol(Protocol):
     def dataReceived(self, data):
         # each time some data is received, the connection inactivity counter is reset to zero
         self.timeOfConInactivity = 0
-
         # for each line of data
         for line in data.splitlines():
             line = line.strip()
@@ -390,6 +394,9 @@ class TLCProtocol(Protocol):
                     self.handleInv(line)
                 elif msgType == TLCMessage.DATAMSGTYPE_GETDATA:
                     self.handleGetData(line)
+                elif msgType == TLCMessage.DATAMSGTYPE_BLOCK:
+                    self.handleBlock(line)
+
 
     def updateTimeOfConInactivity(self):
         """
@@ -498,6 +505,36 @@ class TLCProtocol(Protocol):
         pongMsg = TLCPongMessage(nonce).getMessageAsSendable()
         self.transport.write(pongMsg)
 
+    def sendGetData(self):
+        """
+        Method implementing the send of a GetData message
+        :return:
+        """
+        # request some blocks using a getData message
+        noOfBlocksToRequest = Parameters.MAX_NUMBER_OF_BLOCKS_SENT  # number of items to request
+
+        # set the list of items to request
+        if self.noOfInventoryEntries > noOfBlocksToRequest:
+            # case that the inv list has more than the blocks the node wants to request
+            blockHeaderHashesToRequest = self.inventoryEntries[
+                                         self.noOfInvRecordsSent + 0: self.noOfInvRecordsSent + noOfBlocksToRequest
+                                         ]
+        else:
+            # case that the inv list has equal or less than the blocks the node wants to request
+            blockHeaderHashesToRequest = self.inventoryEntries[0:self.noOfInventoryEntries - 1]
+
+        msgGetData = TLCGetDataMessage(blockHeaderHashesToRequest)
+        self.transport.write(msgGetData.getMessageAsSendable())
+
+    def sendInv(self, inventoryEntries: list):
+        """
+        Method for sending Inv messages
+        :param inventoryEntries: a list of inventory entries (dictionaries with the type and value of each entry)
+        :return:
+        """
+        invMsg = TLCInvMessage(inventoryEntries)  # create the message
+        self.transport.write(invMsg.getMessageAsSendable())  # send the message
+
     def sendGetBlocks(self):
         """
         Method that sends the getBlocks message
@@ -505,6 +542,21 @@ class TLCProtocol(Protocol):
         """
         getBlocksMsg = TLCGetBlocksMessage(self.extraData['headerHashes']).getMessageAsSendable()
         self.transport.write(getBlocksMsg)
+
+    def sendBlock(self, b: Block):
+        """
+        Method used for sending blocks. Each time it is called, it sends one block
+        :param b: the block that will be sent (Block object)
+        :return:
+        """
+        # serialize the block
+        serBlock = pickle.dumps(b)
+        # convert the block to a list of ints so it can be json dumped
+        intSerBlock = list(serBlock)
+        # send the serialized block via a block message
+        blockMsg = TLCBlockMessage(intSerBlock).getMessageAsSendable()
+        # self.transport.write(blockMsg)
+        self.transport.write(blockMsg)
 
     def handlePing(self, pingData: str):
         """
@@ -614,9 +666,7 @@ class TLCProtocol(Protocol):
                 }
             )
             i += 1
-
-        invMsg = TLCInvMessage(inventoryEntries)  # create the message
-        self.transport.write(invMsg.getMessageAsSendable())  # send the message
+        self.sendInv(inventoryEntries)
 
     def handleInv(self, invMessage: str):
         """
@@ -625,23 +675,11 @@ class TLCProtocol(Protocol):
         :return:
         """
         jsonInvMessage = json.loads(invMessage)
-        inventoryEntries = jsonInvMessage['msgData']['inventory']  # the inventory entries
-        noOfInventoryEntries = jsonInvMessage['msgData']['count']  # the number of inventory entries
-
-        # request some blocks using a getData message
-        noOfBlocksToRequest = 128  # number of items to request
-
-        # set the list of items to request
-        if noOfInventoryEntries > noOfBlocksToRequest:
-            # case that the inv list has more than the blocks the node wants to request
-            blockHeadersToRequest = inventoryEntries[0:noOfBlocksToRequest]
-        else:
-            # case that the inv list has equal or less than the blocks the node wants to request
-            blockHeadersToRequest = inventoryEntries[0:noOfInventoryEntries]
+        self.inventoryEntries = jsonInvMessage['msgData']['inventory']  # the inventory entries
+        self.noOfInventoryEntries = jsonInvMessage['msgData']['count']  # the number of inventory entries
 
         # send the message
-        msgGetData = TLCGetDataMessage(blockHeadersToRequest)
-        self.transport.write(msgGetData.getMessageAsSendable())
+        self.sendGetData()
 
     def handleGetData(self, getDataMessage: str):
         jsonGetDataMessage = json.loads(getDataMessage)
@@ -654,13 +692,33 @@ class TLCProtocol(Protocol):
                 # if the entry is block type, send the block via a block message
                 # get the block that corresponds to the block header hash and send it
                 b = self.factory.blockchain.getBlockByBlockHeaderHash(dataEntries[i]['identifier'])
-                # send it via a block message
-                # TODO: complete the method
-                blockMsg = TLCBlockMessage(b.get)
-                print(1)
+                # send the block
+                self.sendBlock(b)
 
+    def handleBlock(self, blockMsg: TLCBlockMessage):
+        """
+        Method for handling block messages
+        :param blockMsg: the TLCBlockMessage
+        :return:
+        """
+        # load the json message
+        jsonBlockMessage = json.loads(blockMsg)
+        # get the block object
+        block = pickle.loads(bytes(jsonBlockMessage['msgData']['block']))
+        # validate the block
+        chain = self.factory.blockchain.getChain()
+        isBlockValid = self.factory.blockchain.validProof(nonce=block.getNonce(), blockHash=block.getBlockHeaderHash(),
+                                           prevBlockHash=chain[len(chain)-1].getBlockHeaderHash(),
+                                           miningDifficulty=Blockchain.MINING_DIFFICULTY)
+        # add the block to the local block chain, if it is valid
+        if isBlockValid:
+            self.factory.blockchain.getChain().append(block)
 
-        print(1)
+        self.noOfInvRecordsSent += 1  # each time you send a block, increase the counter of inv entries sent
+
+        # when each set of blocks is sent (it is a multiple of the max number of blocks sent), then ask for more
+        if self.noOfInvRecordsSent % Parameters.MAX_NUMBER_OF_BLOCKS_SENT == 0:
+            self.sendGetData()
 
     def handleVerAck(self):
         # print(f'--> Node {self.nodeId}. Got the VERACK')
@@ -722,7 +780,6 @@ class TLCFactory(Factory):
         self.protocolVersion = protocolVersion
         self.nodeType = nodeType
         self.peers = list()  # initialize the list containing the peers
-
         self.blockchain = None  # the blockchain related to the node that runs the connection factory
 
     def startFactory(self):

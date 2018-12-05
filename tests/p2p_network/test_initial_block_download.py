@@ -1,11 +1,13 @@
 """
 Various tests related to the "0.1.3 initial block download" story
 """
+import pickle
 import unittest
 from twisted.internet import reactor
 
 from src.block_chain.transactions import Block, Transaction
 from src.p2p_network.parameters import Parameters
+from src.p2p_network.tlc_message import TLCBlockMessage
 from src.p2p_network.tlc_network import TLCNode
 
 
@@ -104,9 +106,12 @@ class TestInitialBlockDownload(unittest.TestCase):
         peerNode.getTLCFactory().blockchain._Blockchain__chain = peerChain
         noOfBlocks = 1000  # number of blocks to add
         for i in range(1, noOfBlocks + 1):  # add the blocks to the peer node
-            peerNode.blockchain.getChain().append(
-                Block(peerNode.blockchain.getChain(), nonce=1, previousBlockHash='b')
-            )
+            prevBlockHash = peerChain[len(peerChain)-1].getBlockHeaderHash()  # previous block hash
+            b = Block(chain=peerChain,  # create the block
+                      previousBlockHash=prevBlockHash,
+                      )
+            b.setNonce(peerNode.getTLCFactory().blockchain.getProofOfWork(b))  # set the block nonce
+            peerNode.blockchain.getChain().append(b)  # append the block to the chain
 
         # TODO: the two nodes must share the same genesis block. Find why the hash header cannot
         #   be found in the peer node.
@@ -116,6 +121,19 @@ class TestInitialBlockDownload(unittest.TestCase):
         def makeAssertions(node: TLCNode, peerNode: TLCNode):
             print(1)
 
-        reactor.callLater(3, reactor.stop)
-        reactor.callLater(0.1, makeAssertions, self.testNode, peerNode)
+        reactor.callLater(50, makeAssertions, self.testNode, peerNode)
+        reactor.callLater(70, reactor.stop)
         reactor.run()
+
+    def testBlockMessageCreation(self):
+        """
+        testing the creation of a TLCBlockMessage
+        :return:
+        """
+        # create a block and serialize it
+        block = Block(chain=list(), previousBlockHash='abc')  # block creation
+        serBlock = pickle.dumps(block)  # block serialization
+        intSerBlock = list(serBlock)  # conversion to list of ints, so it can be json dumped
+
+        # create the TLCBlockMessage
+        blockMessage = TLCBlockMessage(intSerBlock)
