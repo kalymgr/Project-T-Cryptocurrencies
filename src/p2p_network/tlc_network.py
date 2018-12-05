@@ -654,9 +654,10 @@ class TLCProtocol(Protocol):
         # create the list of inventory entries and send it with an inv message
         inventoryEntries = list()  # the list of block header hashes
         invCounter = 0
-        invCounterMax = 500  # max of 500 inventory entries
+        invCounterMax = Parameters.MAX_INVENTORY_ENTRIES  # maximum number of inventory entries to be sent
         i = positionFound + 1  # start creating the inventory right after the position the block was found
-        while i < invCounterMax and i < len(self.factory.blockchain.getChain()):
+        invEntriesCounter = 0
+        while invEntriesCounter < invCounterMax and i < len(self.factory.blockchain.getChain()):
             # while not surpassed the max of inv entries and while not at the end of the list of blocks
             # append the header hashes of the blocks in the inventory
             inventoryEntries.append(
@@ -666,6 +667,7 @@ class TLCProtocol(Protocol):
                 }
             )
             i += 1
+            invEntriesCounter += 1
         self.sendInv(inventoryEntries)
 
     def handleInv(self, invMessage: str):
@@ -716,9 +718,16 @@ class TLCProtocol(Protocol):
 
         self.noOfInvRecordsSent += 1  # each time you send a block, increase the counter of inv entries sent
 
-        # when each set of blocks is sent (it is a multiple of the max number of blocks sent), then ask for more
+        # Ask for more blocks
         if self.noOfInvRecordsSent % Parameters.MAX_NUMBER_OF_BLOCKS_SENT == 0:
+            # when each set of blocks is sent (it is a multiple of the max number of blocks sent), then ask for more
             self.sendGetData()
+        elif self.noOfInvRecordsSent % Parameters.MAX_INVENTORY_ENTRIES == 0:
+            # if you have received the max_inventory_entries (500 for bitcoin), ask for more blocks
+            self.extraData['headerHashes'] = block.getBlockHeaderHash()  # set in the message the header hash of
+            # the last block received
+            self.noOfInvRecordsSent = 0  # reset the counter of inventory records sent
+            self.sendGetBlocks()
 
     def handleVerAck(self):
         # print(f'--> Node {self.nodeId}. Got the VERACK')

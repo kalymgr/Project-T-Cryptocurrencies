@@ -113,8 +113,6 @@ class TestInitialBlockDownload(unittest.TestCase):
             b.setNonce(peerNode.getTLCFactory().blockchain.getProofOfWork(b))  # set the block nonce
             peerNode.blockchain.getChain().append(b)  # append the block to the chain
 
-        # TODO: the two nodes must share the same genesis block. Find why the hash header cannot
-        #   be found in the peer node.
         self.testNode.initialBlockDownload(peerNode)
         self.testNode.connectTo(peerNode)
 
@@ -122,7 +120,7 @@ class TestInitialBlockDownload(unittest.TestCase):
             print(1)
 
         reactor.callLater(50, makeAssertions, self.testNode, peerNode)
-        reactor.callLater(70, reactor.stop)
+        reactor.callLater(700, reactor.stop)
         reactor.run()
 
     def testBlockMessageCreation(self):
