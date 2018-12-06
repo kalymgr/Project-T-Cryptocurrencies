@@ -29,6 +29,6 @@ class Parameters:
 
     BLOCK_VERSION = 1  # the block version. Used to choose validation rules
     TARGET_THRESHOLD = 1  # the target threshold for the proof of work mining algorithm (mining difficulty)
-    MAX_NUMBER_OF_BLOCKS_SENT = 16  # the maximum number that can be sent in one group. Bitcoin uses 128.
+    MAX_NUMBER_OF_BLOCKS_TO_REQUEST = 16  # the maximum number that can be sent in one group. Bitcoin uses 128.
     # Problem is that, due to the tcp methods I use, 128 is too large (not all bytes are sent). So I use 16
     MAX_INVENTORY_ENTRIES = 500  # the maximum number of inventory entries sent via an Inv message

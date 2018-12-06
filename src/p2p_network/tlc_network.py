@@ -511,7 +511,7 @@ class TLCProtocol(Protocol):
         :return:
         """
         # request some blocks using a getData message
-        noOfBlocksToRequest = Parameters.MAX_NUMBER_OF_BLOCKS_SENT  # number of items to request
+        noOfBlocksToRequest = Parameters.MAX_NUMBER_OF_BLOCKS_TO_REQUEST  # number of items to request
 
         # set the list of items to request
         if self.noOfInventoryEntries > noOfBlocksToRequest:
@@ -719,7 +719,7 @@ class TLCProtocol(Protocol):
         self.noOfInvRecordsSent += 1  # each time you send a block, increase the counter of inv entries sent
 
         # Ask for more blocks
-        if self.noOfInvRecordsSent % Parameters.MAX_NUMBER_OF_BLOCKS_SENT == 0:
+        if self.noOfInvRecordsSent % Parameters.MAX_NUMBER_OF_BLOCKS_TO_REQUEST == 0:
             # when each set of blocks is sent (it is a multiple of the max number of blocks sent), then ask for more
             self.sendGetData()
         elif self.noOfInvRecordsSent % Parameters.MAX_INVENTORY_ENTRIES == 0:

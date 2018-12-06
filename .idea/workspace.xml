@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="">
+    <list default="true" id="53b0ceb8-a69c-421e-83e4-a997b9410bc2" name="Default Changelist" comment="- Wrote basic description">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project Management.mpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project Management.mpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p2p_network/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/parameters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/p2p_network/tlc_network.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py" afterDir="false" />
@@ -14,60 +15,21 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="688" selection-start-line="688" selection-end-line="688" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://E:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="124" selection-start-line="124" selection-end-line="124" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="637" column="45" selection-start-line="637" selection-start-column="45" selection-end-line="637" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/p2p_network/parameters.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="33" column="98" selection-start-line="33" selection-start-column="98" selection-end-line="33" selection-end-column="98" />
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="121" column="27" selection-start-line="121" selection-start-column="27" selection-end-line="121" selection-end-column="27" />
+            <state relative-caret-position="310">
+              <caret line="120" column="12" selection-start-line="120" selection-start-column="12" selection-end-line="120" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
+        <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="284" column="18" lean-forward="true" selection-start-line="284" selection-start-column="18" selection-end-line="284" selection-end-column="18" />
-              <folding>
-                <element signature="e#61#72#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="178">
+              <caret line="720" column="29" lean-forward="true" selection-start-line="720" selection-start-column="29" selection-end-line="720" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -211,6 +173,12 @@
               <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
               <item name="project-t" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="project-t" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project-t" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+              <item name="p2p_network" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -585,16 +553,17 @@
       <option name="project" value="LOCAL" />
       <updated>1544030475574</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="- Completed the IBD story and tested for a node with 1002 nodes.&#10;- Have to write some documentation about how it works.">
+      <created>1544032647325</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1544032647325</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.12.05 at 19h 34m 47s.xml">
-      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.12.05 at 19h 35m 27s.xml">
-      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.12.05 at 19h 36m 54s.xml">
       <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
@@ -619,6 +588,12 @@
     <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.12.05 at 19h 54m 18s.xml">
       <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.12.05 at 19h 58m 59s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_for_test_initial_block_download_TestInitialBlockDownload_test_initialBlockDownload - 2018.12.06 at 08h 25m 19s.xml">
+      <configuration name="pytest for test_initial_block_download.TestInitialBlockDownload.test_initialBlockDownload" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -633,17 +608,17 @@
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4717742" visible="true" weight="0.1227608" />
-      <window_info id="Structure" order="1" sideWeight="0.5282258" side_tool="true" visible="true" weight="0.1227608" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47112462" visible="true" weight="0.1227608" />
+      <window_info id="Structure" order="1" sideWeight="0.52887535" side_tool="true" visible="true" weight="0.1227608" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49789253" weight="0.24330118" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.90990514" weight="0.2636656" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.8256059" visible="true" weight="0.46838155" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8256059" weight="0.46838155" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49841937" weight="0.2368703" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49578503" weight="0.29474813" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49578503" visible="true" weight="0.29474813" />
       <window_info anchor="bottom" x="21" y="414" width="1898" height="542" id="Terminal" order="8" weight="0.25568798" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50421494" side_tool="true" weight="0.2936078" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.85827184" weight="0.47052518" />
@@ -712,7 +687,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Wrote a small language that can do some simple mathematical operations using the reverse polish notation." />
     <MESSAGE value="- Started adding operations to my smart contract language. Each operation is added and tested." />
     <MESSAGE value="- Changed the proof of work code, to check only the block header hash and not the block transactions hash. This way, as the bitcoin developer guide claims, proof of work won't take too long because it won't have to recalculate each time the hash of the transactions (the merkle root is enough)" />
     <MESSAGE value="- Added code for tx output scripts. Now, while submitting a transaction, the sender can set the type of transaction (essentially the type of the smart contract). The default type is standard." />
@@ -737,7 +711,8 @@
     <MESSAGE value="- Started working on the IBD story. Now I have to implement the messages and functionality of the p2p network." />
     <MESSAGE value="- Now writing the getData method, when answering to a getBlocks message. Now, it must send a block message as response." />
     <MESSAGE value="- Finally, the node can download the first 500 blocks from the peer node." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Finally, the node can download the first 500 blocks from the peer node." />
+    <MESSAGE value="- Completed the IBD story and tested for a node with 1002 nodes.&#10;- Have to write some documentation about how it works." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Completed the IBD story and tested for a node with 1002 nodes.&#10;- Have to write some documentation about how it works." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -771,6 +746,8 @@
         <watch expression="self.factory.blockchain._Blockchain__chain" />
         <watch expression="len(node.blockchain._Blockchain__chain)" language="Python" />
         <watch expression="len(peerNode.blockchain._Blockchain__chain)" language="Python" />
+        <watch expression="node._TLCNode__tlcFactory.blockchain._Blockchain__chain" />
+        <watch expression="peerNode._TLCNode__tlcFactory.blockchain._Blockchain__chain" />
       </configuration>
       <configuration name="PythonConfigurationType">
         <watch expression="time()-self.lastPingPong" language="Python" />
@@ -1157,13 +1134,6 @@
     <entry file="file://C:/ProgramData/Anaconda3/Lib/unittest/case.py" />
     <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/tcp.py" />
     <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py" />
-    <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="637" column="45" selection-start-line="637" selection-start-column="45" selection-end-line="637" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://E:/ProgramData/Anaconda3/Lib/site-packages/twisted/internet/endpoints.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1173,14 +1143,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/p2p_network/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
+        <state relative-caret-position="435">
           <caret line="33" column="98" selection-start-line="33" selection-start-column="98" selection-end-line="33" selection-end-column="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/block_chain/transactions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-12490">
+          <caret line="637" column="45" selection-start-line="637" selection-start-column="45" selection-end-line="637" selection-end-column="45" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_message.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
+        <state relative-caret-position="-1790">
           <caret line="284" column="18" lean-forward="true" selection-start-line="284" selection-start-column="18" selection-end-line="284" selection-end-column="18" />
           <folding>
             <element signature="e#61#72#0" expanded="true" />
@@ -1190,15 +1167,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/p2p_network/tlc_network.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="688" selection-start-line="688" selection-end-line="688" />
+        <state relative-caret-position="178">
+          <caret line="720" column="29" lean-forward="true" selection-start-line="720" selection-start-column="29" selection-end-line="720" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/p2p_network/test_initial_block_download.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="121" column="27" selection-start-line="121" selection-start-column="27" selection-end-line="121" selection-end-column="27" />
+        <state relative-caret-position="310">
+          <caret line="120" column="12" selection-start-line="120" selection-start-column="12" selection-end-line="120" selection-end-column="12" />
         </state>
       </provider>
     </entry>
